@@ -1,0 +1,50 @@
+/* Keyframe animations for the Catechist Toolkit */
+
+@keyframes tw {
+  0%, 100% { opacity: .3; }
+  50% { opacity: 1; }
+}
+
+@keyframes su {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pi {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bi {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes gl {
+  0%, 100% { box-shadow: 0 0 16px rgba(212,168,67,.3); }
+  50% { box-shadow: 0 0 32px rgba(212,168,67,.5); }
+}
+
+@keyframes fl {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Interactive element transitions */
+.ch {
+  transition: all .2s;
+  cursor: pointer;
+}
+.ch:hover {
+  transform: translateY(-3px) !important;
+}
+
+.bh {
+  transition: all .2s;
+  cursor: pointer;
+}
+.bh:hover {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
