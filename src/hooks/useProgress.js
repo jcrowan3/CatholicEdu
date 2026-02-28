@@ -1,7 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 
-const STORAGE_KEY = "catechist_progress_v1";
-
 const STAR_VALUES = {
   discover: 2,
   sort: 3,
@@ -11,9 +9,17 @@ const STAR_VALUES = {
   prayer: 1,
 };
 
-function loadProgress(userId) {
+function storageKey(grade, userId) {
+  if (!grade) return null;
+  return userId
+    ? `catechist_progress_g${grade}_${userId}`
+    : `catechist_progress_g${grade}_v1`;
+}
+
+function loadProgress(grade, userId) {
   try {
-    const key = userId ? `catechist_progress_${userId}` : STORAGE_KEY;
+    const key = storageKey(grade, userId);
+    if (!key) return null;
     const raw = localStorage.getItem(key);
     if (!raw) return null;
     const data = JSON.parse(raw);
@@ -24,9 +30,10 @@ function loadProgress(userId) {
   }
 }
 
-function saveProgress(userId, data) {
+function saveProgress(grade, userId, data) {
   try {
-    const key = userId ? `catechist_progress_${userId}` : STORAGE_KEY;
+    const key = storageKey(grade, userId);
+    if (!key) return;
     localStorage.setItem(
       key,
       JSON.stringify({ ...data, lastUpdated: new Date().toISOString() })
@@ -36,23 +43,27 @@ function saveProgress(userId, data) {
   }
 }
 
-export function useProgress(userId = null) {
+const EMPTY = { stars: 0, completed: {} };
+
+export function useProgress(grade, userId = null) {
   const [state, setState] = useState(() => {
-    const saved = loadProgress(userId);
+    if (!grade) return EMPTY;
+    const saved = loadProgress(grade, userId);
     if (saved) {
       return { stars: saved.stars, completed: saved.completed };
     }
-    return { stars: 0, completed: {} };
+    return EMPTY;
   });
 
   useEffect(() => {
-    saveProgress(userId, {
+    if (!grade) return;
+    saveProgress(grade, userId, {
       version: 1,
       userId,
       stars: state.stars,
       completed: state.completed,
     });
-  }, [state, userId]);
+  }, [state, grade, userId]);
 
   const earn = useCallback((week, activity, amt) => {
     const key = `${week}-${activity}`;

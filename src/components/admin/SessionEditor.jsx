@@ -404,8 +404,8 @@ function FillBlankEditor({ fillblank, onChange }) {
 }
 
 /* ─── Main Session Editor ─── */
-export default function SessionEditor({ weekNum, onBack, onSessionsChange }) {
-  const [sessions, setSessions] = useState(getSessions);
+export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange }) {
+  const [sessions, setSessions] = useState(() => getSessions(grade));
   const session = sessions.find((s) => s.week === weekNum);
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -421,14 +421,14 @@ export default function SessionEditor({ weekNum, onBack, onSessionsChange }) {
   };
 
   const handleSave = () => {
-    saveSessions(sessions);
+    saveSessions(grade, sessions);
     setSaved(true);
     onSessionsChange?.(sessions);
     setTimeout(() => setSaved(false), 2000);
   };
 
   const handleReset = () => {
-    const updated = resetSessionToDefault(weekNum);
+    const updated = resetSessionToDefault(grade, weekNum);
     setSessions(updated);
     onSessionsChange?.(updated);
     setConfirmReset(false);

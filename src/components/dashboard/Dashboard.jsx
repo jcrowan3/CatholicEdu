@@ -1,12 +1,15 @@
-import { getUsers, getSessions, getAllProgress, getProgramName, PILLAR_COLORS } from "../../data/store";
+import { getUsers, getSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
+import { GRADES } from "../../data/grades";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function Dashboard({ onNavigate }) {
-  const users = getUsers();
-  const sessions = getSessions();
-  const programName = getProgramName();
-  const allProgress = getAllProgress(users.map((u) => u.id));
+export default function Dashboard({ grade, onNavigate }) {
+  const users = getUsers(grade);
+  const sessions = getSessions(grade);
+  const programName = getProgramName(grade);
+  const allProgress = getAllProgress(grade, users.map((u) => u.id));
+  const PILLAR_COLORS = getPillarColors(grade);
+  const gradeInfo = GRADES.find((g) => g.grade === grade);
 
   const totalActivities = sessions.length * 4; // discover + secondary + quiz + prayer
   const totalPossibleStars = sessions.reduce((sum, s) => {
@@ -57,7 +60,7 @@ export default function Dashboard({ onNavigate }) {
           {programName || "Catechist Dashboard"}
         </h1>
         <p style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>
-          Grade 3 — The Church &amp; the Sacraments
+          {gradeInfo ? `${gradeInfo.title} — ${gradeInfo.subtitle}` : ""}
         </p>
       </div>
 

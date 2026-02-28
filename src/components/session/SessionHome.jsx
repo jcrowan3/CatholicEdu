@@ -1,8 +1,7 @@
-import { PILLAR_COLORS } from "../../data/grade3";
-
 const displayFont = "'Lilita One', cursive";
 
-export default function SessionHome({ session, onNavigate, isDone }) {
+export default function SessionHome({ session, pillarColors = {}, onNavigate, isDone }) {
+  const PILLAR_COLORS = pillarColors;
   const acts = [];
   acts.push({
     id: "discover",

@@ -1,6 +1,13 @@
 import { useState, useCallback } from "react";
-import { getSessions, getPin, getUsers } from "./data/store";
+import {
+  getSessions,
+  getPin,
+  migrateOldKeys,
+  seedDemoStudent,
+  getPillarColors,
+} from "./data/store";
 import { useProgress } from "./hooks/useProgress";
+import LandingPage from "./components/landing/LandingPage";
 import TopBar from "./components/session/TopBar";
 import SessionHome from "./components/session/SessionHome";
 import SessionPicker from "./components/session/SessionPicker";
@@ -17,36 +24,59 @@ import UserManager from "./components/dashboard/UserManager";
 import ProgressGrid from "./components/dashboard/ProgressGrid";
 import SessionEditor from "./components/admin/SessionEditor";
 
+// Run migration once on app load
+migrateOldKeys();
+
 export default function App() {
-  // Mode: "setup" | "login" | "student" | "catechist"
-  const [mode, setMode] = useState(() => {
-    const pin = getPin();
-    if (!pin) return "setup";
-    return "login";
-  });
+  // Grade selection
+  const [grade, setGrade] = useState(null);
+
+  // Mode: "landing" | "setup" | "login" | "student" | "catechist"
+  const [mode, setMode] = useState("landing");
   const [activeUser, setActiveUser] = useState(null);
   const [sessionIdx, setSessionIdx] = useState(0);
   const [screen, setScreen] = useState("home");
-  const [sessions, setSessions] = useState(getSessions);
+  const [sessions, setSessions] = useState([]);
   const [editWeek, setEditWeek] = useState(null);
 
-  const { stars, earn, isDone } = useProgress(activeUser?.id);
+  const { stars, earn, isDone } = useProgress(grade, activeUser?.id);
 
   const session = sessions[sessionIdx];
+  const pillarColors = grade ? getPillarColors(grade) : {};
 
   const earnForSession = useCallback(
-    (activity, amount) => earn(session.week, activity, amount),
-    [earn, session.week]
+    (activity, amount) => session && earn(session.week, activity, amount),
+    [earn, session]
   );
 
   const checkDone = useCallback(
-    (activity) => isDone(session.week, activity),
-    [isDone, session.week]
+    (activity) => (session ? isDone(session.week, activity) : false),
+    [isDone, session]
   );
 
   const go = (s) => {
     window.scrollTo(0, 0);
     setScreen(s);
+  };
+
+  const handleSelectGrade = (g) => {
+    setGrade(g);
+    setSessions(getSessions(g));
+    const pin = getPin(g);
+    if (!pin) {
+      setMode("setup");
+    } else {
+      setMode("login");
+    }
+  };
+
+  const handleBackToGrades = () => {
+    setGrade(null);
+    setMode("landing");
+    setActiveUser(null);
+    setScreen("home");
+    setSessionIdx(0);
+    setSessions([]);
   };
 
   const switchUser = () => {
@@ -101,16 +131,27 @@ export default function App() {
     >
       {background}
 
+      {/* ─── Landing Page ─── */}
+      {mode === "landing" && (
+        <LandingPage onSelectGrade={handleSelectGrade} />
+      )}
+
       {/* ─── Setup Mode ─── */}
       {mode === "setup" && (
         <CatechistSetup
-          onComplete={() => setMode("login")}
+          grade={grade}
+          onComplete={() => {
+            seedDemoStudent(grade);
+            setSessions(getSessions(grade));
+            setMode("login");
+          }}
         />
       )}
 
       {/* ─── Login Mode ─── */}
       {mode === "login" && (
         <LoginScreen
+          grade={grade}
           onSelectStudent={(user) => {
             setActiveUser(user);
             setMode("student");
@@ -121,11 +162,12 @@ export default function App() {
             setMode("catechist");
             setScreen("dashboard");
           }}
+          onBackToGrades={handleBackToGrades}
         />
       )}
 
       {/* ─── Student Mode ─── */}
-      {mode === "student" && (
+      {mode === "student" && session && (
         <>
           <TopBar
             session={session}
@@ -158,6 +200,7 @@ export default function App() {
             {screen === "home" && (
               <SessionHome
                 session={session}
+                pillarColors={pillarColors}
                 onNavigate={go}
                 isDone={checkDone}
               />
@@ -244,6 +287,7 @@ export default function App() {
           >
             {screen === "dashboard" && (
               <Dashboard
+                grade={grade}
                 onNavigate={(target, weekNum) => {
                   if (target === "admin-users") go("admin-users");
                   else if (target === "admin-progress") go("admin-progress");
@@ -257,17 +301,22 @@ export default function App() {
 
             {screen === "admin-users" && (
               <UserManager
+                grade={grade}
                 onBack={() => go("dashboard")}
                 onRefresh={() => {}}
               />
             )}
 
             {screen === "admin-progress" && (
-              <ProgressGrid onBack={() => go("dashboard")} />
+              <ProgressGrid
+                grade={grade}
+                onBack={() => go("dashboard")}
+              />
             )}
 
             {screen === "admin-session" && editWeek && (
               <SessionEditor
+                grade={grade}
                 weekNum={editWeek}
                 onBack={() => go("dashboard")}
                 onSessionsChange={(updated) => setSessions(updated)}

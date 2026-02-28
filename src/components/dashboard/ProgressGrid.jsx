@@ -1,11 +1,12 @@
-import { getUsers, getSessions, getAllProgress, PILLAR_COLORS } from "../../data/store";
+import { getUsers, getSessions, getAllProgress, getPillarColors } from "../../data/store";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function ProgressGrid({ onBack }) {
-  const users = getUsers();
-  const sessions = getSessions();
-  const allProgress = getAllProgress(users.map((u) => u.id));
+export default function ProgressGrid({ grade, onBack }) {
+  const users = getUsers(grade);
+  const sessions = getSessions(grade);
+  const allProgress = getAllProgress(grade, users.map((u) => u.id));
+  const PILLAR_COLORS = getPillarColors(grade);
 
   // Build activity IDs per session
   const sessionActs = sessions.map((s) => {

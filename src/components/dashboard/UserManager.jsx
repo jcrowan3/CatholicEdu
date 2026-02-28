@@ -10,8 +10,8 @@ const AVATARS = [
   "🎵", "📚", "🌻", "🕊️", "💫",
 ];
 
-export default function UserManager({ onBack, onRefresh }) {
-  const [users, setUsers] = useState(getUsers);
+export default function UserManager({ grade, onBack, onRefresh }) {
+  const [users, setUsers] = useState(() => getUsers(grade));
   const [adding, setAdding] = useState(false);
   const [newName, setNewName] = useState("");
   const [newAvatar, setNewAvatar] = useState("😊");
@@ -22,7 +22,7 @@ export default function UserManager({ onBack, onRefresh }) {
 
   const handleAdd = () => {
     if (!newName.trim()) return;
-    const user = addUser(newName.trim(), newAvatar);
+    const user = addUser(grade, newName.trim(), newAvatar);
     setUsers((prev) => [...prev, user]);
     setNewName("");
     setNewAvatar("😊");
@@ -32,14 +32,14 @@ export default function UserManager({ onBack, onRefresh }) {
 
   const handleEdit = (id) => {
     if (!editName.trim()) return;
-    const updated = updateUser(id, { name: editName.trim(), avatarEmoji: editAvatar });
+    const updated = updateUser(grade, id, { name: editName.trim(), avatarEmoji: editAvatar });
     setUsers(updated);
     setEditing(null);
     onRefresh?.();
   };
 
   const handleDelete = (id) => {
-    const updated = removeUser(id);
+    const updated = removeUser(grade, id);
     setUsers(updated);
     setConfirmDelete(null);
     onRefresh?.();

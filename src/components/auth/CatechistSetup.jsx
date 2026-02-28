@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { setPin, setProgramName } from "../../data/store";
+import { GRADES } from "../../data/grades";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function CatechistSetup({ onComplete }) {
+export default function CatechistSetup({ grade, onComplete }) {
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
   const [pin, setPinVal] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
 
+  const gradeInfo = GRADES.find((g) => g.grade === grade);
+
   const handleNameNext = () => {
-    setProgramName(name.trim());
+    setProgramName(grade, name.trim());
     setStep(1);
   };
 
@@ -24,7 +27,7 @@ export default function CatechistSetup({ onComplete }) {
       setError("PINs do not match");
       return;
     }
-    setPin(pin);
+    setPin(grade, pin);
     onComplete();
   };
 
@@ -50,7 +53,9 @@ export default function CatechistSetup({ onComplete }) {
           Welcome, Catechist!
         </h1>
         <p style={{ color: "rgba(255,255,255,.5)", fontSize: 13 }}>
-          Let&rsquo;s set up your program.
+          {gradeInfo
+            ? `Setting up ${gradeInfo.title} — ${gradeInfo.subtitle}`
+            : "Let\u2019s set up your program."}
         </p>
       </div>
 

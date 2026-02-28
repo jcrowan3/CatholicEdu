@@ -1,18 +1,25 @@
 import { useState } from "react";
 import { getUsers, getPin, getProgramName } from "../../data/store";
+import { GRADES } from "../../data/grades";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function LoginScreen({ onSelectStudent, onCatechistLogin }) {
+export default function LoginScreen({
+  grade,
+  onSelectStudent,
+  onCatechistLogin,
+  onBackToGrades,
+}) {
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
-  const users = getUsers();
-  const programName = getProgramName();
+  const users = getUsers(grade);
+  const programName = getProgramName(grade);
+  const gradeInfo = GRADES.find((g) => g.grade === grade);
 
   const handlePinSubmit = () => {
-    if (pin === getPin()) {
+    if (pin === getPin(grade)) {
       onCatechistLogin();
     } else {
       setError("Incorrect PIN");
@@ -47,65 +54,66 @@ export default function LoginScreen({ onSelectStudent, onCatechistLogin }) {
           {programName || "Catholic Catechist Toolkit"}
         </h1>
         <p style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>
-          Grade 3 — The Church &amp; the Sacraments
+          {gradeInfo
+            ? `${gradeInfo.title} — ${gradeInfo.subtitle}`
+            : ""}
         </p>
       </div>
 
-      {/* Student grid */}
+      {/* Student section */}
+      <p
+        style={{
+          color: "rgba(255,255,255,.45)",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        STUDENTS
+      </p>
+
       {users.length > 0 ? (
-        <>
-          <p
-            style={{
-              color: "rgba(255,255,255,.45)",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: 1,
-              marginBottom: 8,
-            }}
-          >
-            WHO ARE YOU?
-          </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 8,
-              marginBottom: 20,
-            }}
-          >
-            {users.map((user, i) => (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          {users.map((user, i) => (
+            <div
+              key={user.id}
+              className="ch"
+              onClick={() => onSelectStudent(user)}
+              style={{
+                background: "rgba(255,255,255,.05)",
+                borderRadius: 12,
+                padding: "14px 8px",
+                textAlign: "center",
+                border: "1px solid rgba(255,255,255,.06)",
+                animation: `pi .3s ease ${i * 0.04}s both`,
+              }}
+            >
+              <div style={{ fontSize: 32, marginBottom: 4 }}>
+                {user.avatarEmoji}
+              </div>
               <div
-                key={user.id}
-                className="ch"
-                onClick={() => onSelectStudent(user)}
                 style={{
-                  background: "rgba(255,255,255,.05)",
-                  borderRadius: 12,
-                  padding: "14px 8px",
-                  textAlign: "center",
-                  border: "1px solid rgba(255,255,255,.06)",
-                  animation: `pi .3s ease ${i * 0.04}s both`,
+                  color: "#fff",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
-                <div style={{ fontSize: 32, marginBottom: 4 }}>
-                  {user.avatarEmoji}
-                </div>
-                <div
-                  style={{
-                    color: "#fff",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {user.name}
-                </div>
+                {user.name}
               </div>
-            ))}
-          </div>
-        </>
+            </div>
+          ))}
+        </div>
       ) : (
         <div
           style={{
@@ -124,7 +132,28 @@ export default function LoginScreen({ onSelectStudent, onCatechistLogin }) {
         </div>
       )}
 
-      {/* Catechist login */}
+      {/* Divider */}
+      <div
+        style={{
+          height: 1,
+          background: "rgba(255,255,255,.06)",
+          margin: "8px 0 16px",
+        }}
+      />
+
+      {/* Catechist section */}
+      <p
+        style={{
+          color: "rgba(155,109,184,.6)",
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: 1,
+          marginBottom: 8,
+        }}
+      >
+        CATECHIST / TEACHER
+      </p>
+
       {!showPin ? (
         <button
           onClick={() => setShowPin(true)}
@@ -236,6 +265,24 @@ export default function LoginScreen({ onSelectStudent, onCatechistLogin }) {
             Cancel
           </button>
         </div>
+      )}
+
+      {/* Back to Grades */}
+      {onBackToGrades && (
+        <button
+          onClick={onBackToGrades}
+          style={{
+            display: "block",
+            margin: "20px auto 0",
+            color: "rgba(255,255,255,.3)",
+            fontSize: 11,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          ← Back to Grades
+        </button>
       )}
     </div>
   );
