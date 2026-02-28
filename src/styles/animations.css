@@ -31,6 +31,12 @@
   50% { transform: translateY(-6px); }
 }
 
+@keyframes correctPulse {
+  0% { box-shadow: 0 0 0 rgba(109,184,123,0); }
+  50% { box-shadow: 0 0 18px rgba(109,184,123,.4); }
+  100% { box-shadow: 0 0 0 rgba(109,184,123,0); }
+}
+
 /* Interactive element transitions */
 .ch {
   transition: all .2s;

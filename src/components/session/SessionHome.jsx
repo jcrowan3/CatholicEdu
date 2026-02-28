@@ -110,7 +110,7 @@ export default function SessionHome({ session, onNavigate, isDone }) {
         </h1>
         <p
           style={{
-            color: "rgba(255,255,255,.4)",
+            color: "rgba(255,255,255,.65)",
             fontSize: 12,
             margin: 0,
             fontStyle: "italic",
@@ -233,7 +233,7 @@ export default function SessionHome({ session, onNavigate, isDone }) {
               </div>
               <div
                 style={{
-                  color: "rgba(255,255,255,.35)",
+                  color: "rgba(255,255,255,.5)",
                   fontSize: 10,
                   lineHeight: 1.3,
                   marginBottom: 6,

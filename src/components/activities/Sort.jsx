@@ -46,7 +46,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.4)",
+          color: "rgba(255,255,255,.5)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
