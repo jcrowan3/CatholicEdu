@@ -51,7 +51,7 @@ export function migrateOldKeys() {
   }
 
   // Phase 2: grade-scoped users → class-scoped (wrap into "Default Class")
-  for (const g of [3, 5, 6, 7, 8]) {
+  for (const g of [3, 4, 5, 6, 7, 8]) {
     const oldUsersKey = `catechist_users_g${g}_v1`;
     const classListKey = classesKey(g);
 
