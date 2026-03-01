@@ -6,5 +6,5 @@ export const GRADES = [
   { grade: 5, title: "Grade 5", subtitle: "The Sacraments & Christian Living", status: "coming_soon" },
   { grade: 6, title: "Grade 6", subtitle: "The Old Testament & Salvation History", status: "coming_soon" },
   { grade: 7, title: "Grade 7", subtitle: "The New Testament & the Life of Christ", status: "coming_soon" },
-  { grade: 8, title: "Grade 8", subtitle: "Church History & Catholic Social Teaching", status: "coming_soon" },
+  { grade: 8, title: "Grade 8", subtitle: "Discipleship, Conscience & Mission", status: "active" },
 ];
