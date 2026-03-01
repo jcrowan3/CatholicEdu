@@ -1,9 +1,11 @@
 import { SESSIONS as GRADE3_SESSIONS, PILLAR_COLORS as GRADE3_COLORS } from "./grade3";
+import { SESSIONS as GRADE6_SESSIONS, PILLAR_COLORS as GRADE6_COLORS } from "./grade6";
 import { SESSIONS as GRADE7_SESSIONS, PILLAR_COLORS as GRADE7_COLORS } from "./grade7";
 import { SESSIONS as GRADE8_SESSIONS, PILLAR_COLORS as GRADE8_COLORS } from "./grade8";
 
 const GRADE_DATA = {
   3: { sessions: GRADE3_SESSIONS, pillarColors: GRADE3_COLORS },
+  6: { sessions: GRADE6_SESSIONS, pillarColors: GRADE6_COLORS },
   7: { sessions: GRADE7_SESSIONS, pillarColors: GRADE7_COLORS },
   8: { sessions: GRADE8_SESSIONS, pillarColors: GRADE8_COLORS },
 };
