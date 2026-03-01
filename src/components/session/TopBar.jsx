@@ -1,3 +1,5 @@
+import ThemeToggle from "../ui/ThemeToggle";
+
 const displayFont = "'Lilita One', cursive";
 
 export default function TopBar({
@@ -23,7 +25,7 @@ export default function TopBar({
         position: "sticky",
         top: 0,
         zIndex: 10,
-        background: "rgba(26,26,62,.85)",
+        background: "var(--topbar-bg)",
         backdropFilter: "blur(10px)",
       }}
     >
@@ -33,11 +35,11 @@ export default function TopBar({
             className="bh"
             onClick={onBack}
             style={{
-              background: "rgba(255,255,255,.06)",
-              border: "1px solid rgba(255,255,255,.08)",
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
               borderRadius: 8,
               padding: "6px 10px",
-              color: "#fff",
+              color: "var(--text-primary)",
               fontSize: 13,
             }}
           >
@@ -49,11 +51,11 @@ export default function TopBar({
             className="bh"
             onClick={onBack}
             style={{
-              background: "rgba(255,255,255,.06)",
-              border: "1px solid rgba(255,255,255,.08)",
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
               borderRadius: 8,
               padding: "6px 10px",
-              color: "#fff",
+              color: "var(--text-primary)",
               fontSize: 13,
             }}
           >
@@ -67,11 +69,11 @@ export default function TopBar({
             className="bh"
             onClick={onPicker}
             style={{
-              background: "rgba(255,255,255,.06)",
-              border: "1px solid rgba(255,255,255,.08)",
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
               borderRadius: 8,
               padding: "6px 12px",
-              color: "#fff",
+              color: "var(--text-primary)",
               fontSize: 13,
               fontFamily: displayFont,
             }}
@@ -108,7 +110,7 @@ export default function TopBar({
               display: "flex",
               alignItems: "center",
               gap: 4,
-              color: "rgba(255,255,255,.45)",
+              color: "var(--text-muted)",
               fontSize: 11,
             }}
           >
@@ -156,7 +158,7 @@ export default function TopBar({
               style={{
                 fontFamily: displayFont,
                 fontSize: 16,
-                color: "#1a1a3e",
+                color: "var(--grade-dark-text)",
               }}
             >
               {stars}
@@ -164,16 +166,19 @@ export default function TopBar({
           </div>
         )}
 
+        {/* Theme toggle */}
+        <ThemeToggle />
+
         {/* Switch user button */}
         {onSwitchUser && (
           <button
             onClick={onSwitchUser}
             style={{
-              background: "rgba(255,255,255,.06)",
-              border: "1px solid rgba(255,255,255,.08)",
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
               borderRadius: 8,
               padding: "6px 8px",
-              color: "rgba(255,255,255,.3)",
+              color: "var(--text-ghost)",
               fontSize: 11,
               cursor: "pointer",
             }}

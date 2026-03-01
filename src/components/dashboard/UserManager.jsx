@@ -10,8 +10,8 @@ const AVATARS = [
   "🎵", "📚", "🌻", "🕊️", "💫",
 ];
 
-export default function UserManager({ grade, onBack, onRefresh }) {
-  const [users, setUsers] = useState(() => getUsers(grade));
+export default function UserManager({ grade, classId, onBack, onRefresh }) {
+  const [users, setUsers] = useState(() => getUsers(grade, classId));
   const [adding, setAdding] = useState(false);
   const [newName, setNewName] = useState("");
   const [newAvatar, setNewAvatar] = useState("😊");
@@ -22,7 +22,7 @@ export default function UserManager({ grade, onBack, onRefresh }) {
 
   const handleAdd = () => {
     if (!newName.trim()) return;
-    const user = addUser(grade, newName.trim(), newAvatar);
+    const user = addUser(grade, classId, newName.trim(), newAvatar);
     setUsers((prev) => [...prev, user]);
     setNewName("");
     setNewAvatar("😊");
@@ -32,14 +32,14 @@ export default function UserManager({ grade, onBack, onRefresh }) {
 
   const handleEdit = (id) => {
     if (!editName.trim()) return;
-    const updated = updateUser(grade, id, { name: editName.trim(), avatarEmoji: editAvatar });
+    const updated = updateUser(grade, classId, id, { name: editName.trim(), avatarEmoji: editAvatar });
     setUsers(updated);
     setEditing(null);
     onRefresh?.();
   };
 
   const handleDelete = (id) => {
-    const updated = removeUser(grade, id);
+    const updated = removeUser(grade, classId, id);
     setUsers(updated);
     setConfirmDelete(null);
     onRefresh?.();
@@ -65,7 +65,7 @@ export default function UserManager({ grade, onBack, onRefresh }) {
           style={{
             fontFamily: displayFont,
             fontSize: 22,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: 0,
           }}
         >
@@ -113,9 +113,9 @@ export default function UserManager({ grade, onBack, onRefresh }) {
               width: "100%",
               padding: "10px 12px",
               borderRadius: 8,
-              border: "1px solid rgba(255,255,255,.12)",
-              background: "rgba(255,255,255,.06)",
-              color: "#fff",
+              border: "1px solid var(--border-strong)",
+              background: "var(--surface-input)",
+              color: "var(--text-primary)",
               fontSize: 14,
               fontFamily: "inherit",
               outline: "none",
@@ -125,7 +125,7 @@ export default function UserManager({ grade, onBack, onRefresh }) {
           />
           <p
             style={{
-              color: "rgba(255,255,255,.4)",
+              color: "var(--text-faint)",
               fontSize: 10,
               fontWeight: 700,
               letterSpacing: 1,
@@ -191,8 +191,8 @@ export default function UserManager({ grade, onBack, onRefresh }) {
               style={{
                 padding: "10px 14px",
                 borderRadius: 8,
-                background: "rgba(255,255,255,.06)",
-                color: "rgba(255,255,255,.4)",
+                background: "var(--surface-input)",
+                color: "var(--text-faint)",
                 fontSize: 12,
                 border: "none",
                 cursor: "pointer",
@@ -210,7 +210,7 @@ export default function UserManager({ grade, onBack, onRefresh }) {
           style={{
             textAlign: "center",
             padding: "30px 0",
-            color: "rgba(255,255,255,.35)",
+            color: "var(--text-faint)",
             fontSize: 13,
           }}
         >
@@ -243,9 +243,9 @@ export default function UserManager({ grade, onBack, onRefresh }) {
                       flex: 1,
                       padding: "8px 10px",
                       borderRadius: 6,
-                      border: "1px solid rgba(255,255,255,.12)",
-                      background: "rgba(255,255,255,.06)",
-                      color: "#fff",
+                      border: "1px solid var(--border-strong)",
+                      background: "var(--surface-input)",
+                      color: "var(--text-primary)",
                       fontSize: 13,
                       fontFamily: "inherit",
                       outline: "none",
@@ -306,8 +306,8 @@ export default function UserManager({ grade, onBack, onRefresh }) {
                     style={{
                       padding: "8px 12px",
                       borderRadius: 6,
-                      background: "rgba(255,255,255,.06)",
-                      color: "rgba(255,255,255,.4)",
+                      background: "var(--surface-input)",
+                      color: "var(--text-faint)",
                       fontSize: 12,
                       border: "none",
                       cursor: "pointer",
@@ -331,7 +331,7 @@ export default function UserManager({ grade, onBack, onRefresh }) {
               >
                 <p
                   style={{
-                    color: "rgba(255,255,255,.6)",
+                    color: "var(--text-tertiary)",
                     fontSize: 12,
                     marginBottom: 10,
                   }}
@@ -366,8 +366,8 @@ export default function UserManager({ grade, onBack, onRefresh }) {
                     style={{
                       padding: "8px 16px",
                       borderRadius: 6,
-                      background: "rgba(255,255,255,.06)",
-                      color: "rgba(255,255,255,.4)",
+                      background: "var(--surface-input)",
+                      color: "var(--text-faint)",
                       fontSize: 12,
                       border: "none",
                       cursor: "pointer",
@@ -384,17 +384,17 @@ export default function UserManager({ grade, onBack, onRefresh }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 10,
-                  background: "rgba(255,255,255,.04)",
+                  background: "var(--surface-card)",
                   borderRadius: 10,
                   padding: "10px 12px",
-                  border: "1px solid rgba(255,255,255,.06)",
+                  border: "1px solid var(--border-default)",
                   animation: `pi .3s ease ${i * 0.03}s both`,
                 }}
               >
                 <div style={{ fontSize: 24 }}>{user.avatarEmoji}</div>
                 <div style={{ flex: 1 }}>
                   <div
-                    style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}
+                    style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}
                   >
                     {user.name}
                   </div>
@@ -404,8 +404,8 @@ export default function UserManager({ grade, onBack, onRefresh }) {
                   style={{
                     padding: "5px 10px",
                     borderRadius: 6,
-                    background: "rgba(255,255,255,.06)",
-                    color: "rgba(255,255,255,.4)",
+                    background: "var(--surface-input)",
+                    color: "var(--text-faint)",
                     fontSize: 11,
                     border: "none",
                     cursor: "pointer",

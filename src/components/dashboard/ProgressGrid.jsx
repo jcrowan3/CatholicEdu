@@ -2,10 +2,10 @@ import { getUsers, getSessions, getAllProgress, getPillarColors } from "../../da
 
 const displayFont = "'Lilita One', cursive";
 
-export default function ProgressGrid({ grade, onBack }) {
-  const users = getUsers(grade);
+export default function ProgressGrid({ grade, classId, onBack }) {
+  const users = getUsers(grade, classId);
   const sessions = getSessions(grade);
-  const allProgress = getAllProgress(grade, users.map((u) => u.id));
+  const allProgress = getAllProgress(grade, classId, users.map((u) => u.id));
   const PILLAR_COLORS = getPillarColors(grade);
 
   // Build activity IDs per session
@@ -34,7 +34,7 @@ export default function ProgressGrid({ grade, onBack }) {
     return (
       <div style={{ animation: "su .4s ease", textAlign: "center", padding: "40px 0" }}>
         <div style={{ fontSize: 40, marginBottom: 10 }}>📊</div>
-        <p style={{ color: "rgba(255,255,255,.5)", fontSize: 14 }}>
+        <p style={{ color: "var(--text-tertiary)", fontSize: 14 }}>
           No students enrolled yet. Add students first.
         </p>
       </div>
@@ -47,7 +47,7 @@ export default function ProgressGrid({ grade, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 14px",
         }}
       >
@@ -59,7 +59,7 @@ export default function ProgressGrid({ grade, onBack }) {
         style={{
           overflowX: "auto",
           borderRadius: 12,
-          border: "1px solid rgba(255,255,255,.06)",
+          border: "1px solid var(--border-default)",
         }}
       >
         <table
@@ -75,15 +75,15 @@ export default function ProgressGrid({ grade, onBack }) {
                 style={{
                   position: "sticky",
                   left: 0,
-                  background: "#1e2450",
+                  background: "var(--table-bg-even)",
                   zIndex: 2,
                   padding: "8px 10px",
                   textAlign: "left",
-                  color: "rgba(255,255,255,.5)",
+                  color: "var(--text-tertiary)",
                   fontWeight: 700,
                   fontSize: 10,
                   letterSpacing: 1,
-                  borderBottom: "1px solid rgba(255,255,255,.06)",
+                  borderBottom: "1px solid var(--border-default)",
                   minWidth: 110,
                 }}
               >
@@ -95,7 +95,7 @@ export default function ProgressGrid({ grade, onBack }) {
                   color: "#D4A843",
                   fontWeight: 700,
                   fontSize: 10,
-                  borderBottom: "1px solid rgba(255,255,255,.06)",
+                  borderBottom: "1px solid var(--border-default)",
                   textAlign: "center",
                 }}
               >
@@ -107,10 +107,10 @@ export default function ProgressGrid({ grade, onBack }) {
                   style={{
                     padding: "8px 4px",
                     textAlign: "center",
-                    color: "rgba(255,255,255,.4)",
+                    color: "var(--text-faint)",
                     fontWeight: 700,
                     fontSize: 9,
-                    borderBottom: "1px solid rgba(255,255,255,.06)",
+                    borderBottom: "1px solid var(--border-default)",
                     minWidth: 28,
                   }}
                 >
@@ -125,7 +125,7 @@ export default function ProgressGrid({ grade, onBack }) {
                       justifyContent: "center",
                       fontSize: 8,
                       fontWeight: 800,
-                      color: "#fff",
+                      color: "var(--text-primary)",
                     }}
                   >
                     {s.week}
@@ -144,10 +144,10 @@ export default function ProgressGrid({ grade, onBack }) {
                     style={{
                       position: "sticky",
                       left: 0,
-                      background: ri % 2 ? "#1c2148" : "#1e2450",
+                      background: ri % 2 ? "var(--table-bg-odd)" : "var(--table-bg-even)",
                       zIndex: 1,
                       padding: "7px 10px",
-                      borderBottom: "1px solid rgba(255,255,255,.04)",
+                      borderBottom: "1px solid var(--border-light)",
                       whiteSpace: "nowrap",
                     }}
                   >
@@ -163,7 +163,7 @@ export default function ProgressGrid({ grade, onBack }) {
                       </span>
                       <span
                         style={{
-                          color: "#fff",
+                          color: "var(--text-primary)",
                           fontSize: 11,
                           fontWeight: 700,
                         }}
@@ -179,8 +179,8 @@ export default function ProgressGrid({ grade, onBack }) {
                       color: "#D4A843",
                       fontWeight: 700,
                       fontSize: 11,
-                      borderBottom: "1px solid rgba(255,255,255,.04)",
-                      background: ri % 2 ? "#1c2148" : "#1e2450",
+                      borderBottom: "1px solid var(--border-light)",
+                      background: ri % 2 ? "var(--table-bg-odd)" : "var(--table-bg-even)",
                     }}
                   >
                     {row.stars}
@@ -211,10 +211,10 @@ export default function ProgressGrid({ grade, onBack }) {
                               ? "#6DB87B"
                               : pct > 0
                               ? "#D4A843"
-                              : "rgba(255,255,255,.12)",
-                          borderBottom: "1px solid rgba(255,255,255,.04)",
+                              : "var(--text-invisible)",
+                          borderBottom: "1px solid var(--border-light)",
                           background:
-                            ri % 2 ? "#1c2148" : "#1e2450",
+                            ri % 2 ? "var(--table-bg-odd)" : "var(--table-bg-even)",
                         }}
                         title={`${w.done}/${w.total} activities`}
                       >
@@ -239,7 +239,7 @@ export default function ProgressGrid({ grade, onBack }) {
         }}
       >
         {[
-          { symbol: "○", label: "Not started", color: "rgba(255,255,255,.2)" },
+          { symbol: "○", label: "Not started", color: "var(--text-ghost)" },
           { symbol: "◐", label: "In progress", color: "#D4A843" },
           { symbol: "●", label: "Complete", color: "#6DB87B" },
         ].map((item) => (
@@ -255,7 +255,7 @@ export default function ProgressGrid({ grade, onBack }) {
               {item.symbol}
             </span>
             <span
-              style={{ color: "rgba(255,255,255,.35)", fontSize: 10 }}
+              style={{ color: "var(--text-faint)", fontSize: 10 }}
             >
               {item.label}
             </span>

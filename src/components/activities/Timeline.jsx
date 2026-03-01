@@ -41,7 +41,7 @@ function GripIcon() {
             width: 4,
             height: 4,
             borderRadius: "50%",
-            background: "#fff",
+            background: "var(--text-primary)",
           }}
         />
       ))}
@@ -71,12 +71,12 @@ function SortableItem({ item, index, isCorrect, isSelected, onTap, isDragging })
       ? "rgba(109,184,123,.12)"
       : isSelected
       ? "rgba(212,168,67,.12)"
-      : "rgba(255,255,255,.04)",
+      : "var(--surface-card)",
     border: isCorrect
       ? "2px solid rgba(109,184,123,.35)"
       : isSelected
       ? "2px solid #D4A843"
-      : "1px solid rgba(255,255,255,.06)",
+      : "1px solid var(--border-default)",
     animation: isCorrect
       ? "correctPulse .6s ease"
       : `pi .3s ease ${index * 0.05}s both`,
@@ -107,19 +107,19 @@ function SortableItem({ item, index, isCorrect, isSelected, onTap, isDragging })
             width: 28,
             height: 28,
             borderRadius: 7,
-            background: isCorrect ? "#6DB87B" : "rgba(255,255,255,.07)",
+            background: isCorrect ? "#6DB87B" : "var(--surface-input)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontSize: 12,
             fontWeight: 800,
-            color: isCorrect ? "#fff" : "rgba(255,255,255,.3)",
+            color: isCorrect ? "#fff" : "var(--text-ghost)",
             transition: "all .3s ease",
           }}
         >
           {isCorrect ? "✓" : index + 1}
         </div>
-        <span style={{ color: "#fff", fontSize: 13, fontWeight: 600, flex: 1 }}>
+        <span style={{ color: "var(--text-primary)", fontSize: 13, fontWeight: 600, flex: 1 }}>
           {item.text}
         </span>
       </div>
@@ -162,7 +162,7 @@ function OverlayItem({ item }) {
       >
         ⇅
       </div>
-      <span style={{ color: "#fff", fontSize: 13, fontWeight: 600 }}>
+      <span style={{ color: "var(--text-primary)", fontSize: 13, fontWeight: 600 }}>
         {item.text}
       </span>
     </div>
@@ -239,7 +239,7 @@ export default function Timeline({ data, earn, isDone, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 5px",
         }}
       >
@@ -247,7 +247,7 @@ export default function Timeline({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.5)",
+          color: "var(--text-tertiary)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
@@ -289,7 +289,7 @@ export default function Timeline({ data, earn, isDone, onBack }) {
       {!solved && (
         <p
           style={{
-            color: "rgba(255,255,255,.35)",
+            color: "var(--text-faint)",
             fontSize: 11,
             textAlign: "center",
             marginTop: 10,

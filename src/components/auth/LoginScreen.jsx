@@ -6,6 +6,7 @@ const displayFont = "'Lilita One', cursive";
 
 export default function LoginScreen({
   grade,
+  classId,
   onSelectStudent,
   onCatechistLogin,
   onBackToGrades,
@@ -14,7 +15,7 @@ export default function LoginScreen({
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
-  const users = getUsers(grade);
+  const users = getUsers(grade, classId);
   const programName = getProgramName(grade);
   const gradeInfo = GRADES.find((g) => g.grade === grade);
 
@@ -47,13 +48,13 @@ export default function LoginScreen({
           style={{
             fontFamily: displayFont,
             fontSize: 22,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 4px",
           }}
         >
           {programName || "Catholic Catechist Toolkit"}
         </h1>
-        <p style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>
+        <p style={{ color: "var(--text-tertiary)", fontSize: 12 }}>
           {gradeInfo
             ? `${gradeInfo.title} — ${gradeInfo.subtitle}`
             : ""}
@@ -63,7 +64,7 @@ export default function LoginScreen({
       {/* Student section */}
       <p
         style={{
-          color: "rgba(255,255,255,.45)",
+          color: "var(--text-muted)",
           fontSize: 11,
           fontWeight: 700,
           letterSpacing: 1,
@@ -88,11 +89,11 @@ export default function LoginScreen({
               className="ch"
               onClick={() => onSelectStudent(user)}
               style={{
-                background: "rgba(255,255,255,.05)",
+                background: "var(--surface-card)",
                 borderRadius: 12,
                 padding: "14px 8px",
                 textAlign: "center",
-                border: "1px solid rgba(255,255,255,.06)",
+                border: "1px solid var(--border-default)",
                 animation: `pi .3s ease ${i * 0.04}s both`,
               }}
             >
@@ -101,7 +102,7 @@ export default function LoginScreen({
               </div>
               <div
                 style={{
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   fontSize: 12,
                   fontWeight: 700,
                   overflow: "hidden",
@@ -117,16 +118,16 @@ export default function LoginScreen({
       ) : (
         <div
           style={{
-            background: "rgba(255,255,255,.04)",
+            background: "var(--surface-card)",
             borderRadius: 12,
             padding: "24px 16px",
             textAlign: "center",
             marginBottom: 20,
-            border: "1px solid rgba(255,255,255,.06)",
+            border: "1px solid var(--border-default)",
           }}
         >
           <div style={{ fontSize: 36, marginBottom: 8 }}>👋</div>
-          <p style={{ color: "rgba(255,255,255,.5)", fontSize: 13 }}>
+          <p style={{ color: "var(--text-tertiary)", fontSize: 13 }}>
             No students yet. Log in as catechist to add students.
           </p>
         </div>
@@ -136,7 +137,7 @@ export default function LoginScreen({
       <div
         style={{
           height: 1,
-          background: "rgba(255,255,255,.06)",
+          background: "var(--border-default)",
           margin: "8px 0 16px",
         }}
       />
@@ -183,7 +184,7 @@ export default function LoginScreen({
         >
           <p
             style={{
-              color: "rgba(255,255,255,.5)",
+              color: "var(--text-tertiary)",
               fontSize: 11,
               textAlign: "center",
               marginBottom: 10,
@@ -208,9 +209,9 @@ export default function LoginScreen({
                 flex: 1,
                 padding: "10px 12px",
                 borderRadius: 8,
-                border: "1px solid rgba(255,255,255,.12)",
-                background: "rgba(255,255,255,.06)",
-                color: "#fff",
+                border: "1px solid var(--border-strong)",
+                background: "var(--surface-input)",
+                color: "var(--text-primary)",
                 fontSize: 18,
                 fontFamily: "inherit",
                 outline: "none",
@@ -255,7 +256,7 @@ export default function LoginScreen({
             style={{
               display: "block",
               margin: "8px auto 0",
-              color: "rgba(255,255,255,.3)",
+              color: "var(--text-ghost)",
               fontSize: 11,
               background: "none",
               border: "none",
@@ -274,7 +275,7 @@ export default function LoginScreen({
           style={{
             display: "block",
             margin: "20px auto 0",
-            color: "rgba(255,255,255,.3)",
+            color: "var(--text-ghost)",
             fontSize: 11,
             background: "none",
             border: "none",

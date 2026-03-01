@@ -46,13 +46,13 @@ export default function CatechistSetup({ grade, onComplete }) {
           style={{
             fontFamily: displayFont,
             fontSize: 24,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 6px",
           }}
         >
           Welcome, Catechist!
         </h1>
-        <p style={{ color: "rgba(255,255,255,.5)", fontSize: 13 }}>
+        <p style={{ color: "var(--text-tertiary)", fontSize: 13 }}>
           {gradeInfo
             ? `Setting up ${gradeInfo.title} — ${gradeInfo.subtitle}`
             : "Let\u2019s set up your program."}
@@ -63,7 +63,7 @@ export default function CatechistSetup({ grade, onComplete }) {
         <div style={{ animation: "pi .3s ease" }}>
           <label
             style={{
-              color: "rgba(255,255,255,.6)",
+              color: "var(--text-tertiary)",
               fontSize: 11,
               fontWeight: 700,
               letterSpacing: 1,
@@ -82,9 +82,9 @@ export default function CatechistSetup({ grade, onComplete }) {
               width: "100%",
               padding: "12px 14px",
               borderRadius: 10,
-              border: "1px solid rgba(255,255,255,.12)",
-              background: "rgba(255,255,255,.06)",
-              color: "#fff",
+              border: "1px solid var(--border-strong)",
+              background: "var(--surface-input)",
+              color: "var(--text-primary)",
               fontSize: 15,
               fontFamily: "inherit",
               outline: "none",
@@ -115,7 +115,7 @@ export default function CatechistSetup({ grade, onComplete }) {
         <div style={{ animation: "pi .3s ease" }}>
           <p
             style={{
-              color: "rgba(255,255,255,.5)",
+              color: "var(--text-tertiary)",
               fontSize: 12,
               marginBottom: 16,
               textAlign: "center",
@@ -126,7 +126,7 @@ export default function CatechistSetup({ grade, onComplete }) {
 
           <label
             style={{
-              color: "rgba(255,255,255,.6)",
+              color: "var(--text-tertiary)",
               fontSize: 11,
               fontWeight: 700,
               letterSpacing: 1,
@@ -150,9 +150,9 @@ export default function CatechistSetup({ grade, onComplete }) {
               width: "100%",
               padding: "12px 14px",
               borderRadius: 10,
-              border: "1px solid rgba(255,255,255,.12)",
-              background: "rgba(255,255,255,.06)",
-              color: "#fff",
+              border: "1px solid var(--border-strong)",
+              background: "var(--surface-input)",
+              color: "var(--text-primary)",
               fontSize: 22,
               fontFamily: "inherit",
               outline: "none",
@@ -164,7 +164,7 @@ export default function CatechistSetup({ grade, onComplete }) {
 
           <label
             style={{
-              color: "rgba(255,255,255,.6)",
+              color: "var(--text-tertiary)",
               fontSize: 11,
               fontWeight: 700,
               letterSpacing: 1,
@@ -189,9 +189,9 @@ export default function CatechistSetup({ grade, onComplete }) {
               width: "100%",
               padding: "12px 14px",
               borderRadius: 10,
-              border: "1px solid rgba(255,255,255,.12)",
-              background: "rgba(255,255,255,.06)",
-              color: "#fff",
+              border: "1px solid var(--border-strong)",
+              background: "var(--surface-input)",
+              color: "var(--text-primary)",
               fontSize: 22,
               fontFamily: "inherit",
               outline: "none",

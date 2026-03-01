@@ -41,13 +41,13 @@ export default function Quiz({ data, earn, isDone, onBack }) {
           style={{
             fontFamily: displayFont,
             fontSize: 24,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 6px",
           }}
         >
           {perfect ? "Perfect Score!" : score >= 3 ? "Great Job!" : "Keep Learning!"}
         </h2>
-        <p style={{ color: "rgba(255,255,255,.45)", fontSize: 14 }}>
+        <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
           {score}/{data.questions.length} correct
         </p>
         <div
@@ -107,7 +107,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
           style={{
             fontFamily: displayFont,
             fontSize: 20,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: 0,
           }}
         >
@@ -115,7 +115,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
         </h2>
         <span
           style={{
-            color: "rgba(255,255,255,.3)",
+            color: "var(--text-ghost)",
             fontSize: 12,
             fontWeight: 700,
           }}
@@ -140,7 +140,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
                     : "#D94A4A"
                   : i === qIdx
                   ? "#D4A843"
-                  : "rgba(255,255,255,.1)",
+                  : "var(--text-invisible)",
             }}
           />
         ))}
@@ -150,7 +150,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
       <div
         key={qIdx}
         style={{
-          background: "rgba(255,255,255,.05)",
+          background: "var(--surface-elevated)",
           borderRadius: 14,
           padding: "22px 20px",
           marginBottom: 14,
@@ -161,7 +161,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
           style={{
             fontFamily: displayFont,
             fontSize: 17,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: 0,
             lineHeight: 1.4,
           }}
@@ -173,7 +173,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
       {/* Options */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
         {q.opts.map((opt, i) => {
-          let bg = "rgba(255,255,255,.04)";
+          let bg = "var(--surface-card)";
           let bc = "rgba(255,255,255,.07)";
           if (selected !== null) {
             if (i === q.correct) {
@@ -197,7 +197,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
                 textAlign: "center",
               }}
             >
-              <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>
+              <span style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}>
                 {opt}
               </span>
             </div>

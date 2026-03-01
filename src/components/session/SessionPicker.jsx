@@ -1,15 +1,13 @@
-import { PILLAR_COLORS } from "../../data/grade3";
-
 const displayFont = "'Lilita One', cursive";
 
-export default function SessionPicker({ sessions, current, onPick }) {
+export default function SessionPicker({ sessions, current, onPick, pillarColors = {} }) {
   return (
     <div style={{ animation: "su .4s ease" }}>
       <h2
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 14px",
         }}
       >
@@ -25,11 +23,11 @@ export default function SessionPicker({ sessions, current, onPick }) {
               background:
                 i === current
                   ? "rgba(212,168,67,.12)"
-                  : "rgba(255,255,255,.04)",
+                  : "var(--surface-card)",
               border:
                 i === current
                   ? "2px solid rgba(212,168,67,.35)"
-                  : "1px solid rgba(255,255,255,.06)",
+                  : "1px solid var(--border-default)",
               borderRadius: 10,
               padding: "12px 16px",
               display: "flex",
@@ -40,7 +38,7 @@ export default function SessionPicker({ sessions, current, onPick }) {
           >
             <div
               style={{
-                background: PILLAR_COLORS[s.pillar] || "#888",
+                background: pillarColors[s.pillar] || "#888",
                 width: 32,
                 height: 32,
                 borderRadius: 8,
@@ -59,13 +57,13 @@ export default function SessionPicker({ sessions, current, onPick }) {
                 style={{
                   fontFamily: displayFont,
                   fontSize: 14,
-                  color: "#fff",
+                  color: "var(--text-primary)",
                 }}
               >
                 {s.title}
               </div>
               <div
-                style={{ fontSize: 10, color: "rgba(255,255,255,.35)" }}
+                style={{ fontSize: 10, color: "var(--text-faint)" }}
               >
                 {s.pillar}
               </div>
@@ -86,7 +84,7 @@ export default function SessionPicker({ sessions, current, onPick }) {
       </div>
       <p
         style={{
-          color: "rgba(255,255,255,.25)",
+          color: "var(--text-ghost)",
           fontSize: 11,
           textAlign: "center",
           marginTop: 14,

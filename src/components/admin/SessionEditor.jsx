@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
+import { generateSessionPdf } from "../../utils/generateSessionPdf";
 
 const displayFont = "'Lilita One', cursive";
 
@@ -8,9 +9,9 @@ const inputStyle = {
   width: "100%",
   padding: "8px 10px",
   borderRadius: 6,
-  border: "1px solid rgba(255,255,255,.12)",
-  background: "rgba(255,255,255,.06)",
-  color: "#fff",
+  border: "1px solid var(--border-strong)",
+  background: "var(--surface-input)",
+  color: "var(--text-primary)",
   fontSize: 13,
   fontFamily: "inherit",
   outline: "none",
@@ -18,7 +19,7 @@ const inputStyle = {
 };
 
 const labelStyle = {
-  color: "rgba(255,255,255,.5)",
+  color: "var(--text-tertiary)",
   fontSize: 10,
   fontWeight: 700,
   letterSpacing: 1,
@@ -41,9 +42,9 @@ function Section({ title, icon, children, defaultOpen = false }) {
   return (
     <div
       style={{
-        background: "rgba(255,255,255,.03)",
+        background: "var(--surface-card)",
         borderRadius: 10,
-        border: "1px solid rgba(255,255,255,.06)",
+        border: "1px solid var(--border-default)",
         marginBottom: 8,
         overflow: "hidden",
       }}
@@ -64,14 +65,14 @@ function Section({ title, icon, children, defaultOpen = false }) {
             flex: 1,
             fontFamily: displayFont,
             fontSize: 13,
-            color: "#fff",
+            color: "var(--text-primary)",
           }}
         >
           {title}
         </span>
         <span
           style={{
-            color: "rgba(255,255,255,.25)",
+            color: "var(--text-ghost)",
             fontSize: 12,
             transition: "transform .2s",
             transform: open ? "rotate(180deg)" : "rotate(0)",
@@ -184,15 +185,15 @@ function QuizEditor({ quiz, onChange }) {
         <div
           key={qi}
           style={{
-            background: "rgba(255,255,255,.02)",
+            background: "var(--surface-card)",
             borderRadius: 8,
             padding: 8,
             marginBottom: 6,
-            border: "1px solid rgba(255,255,255,.04)",
+            border: "1px solid var(--border-light)",
           }}
         >
           <div style={{ display: "flex", gap: 4, alignItems: "center", marginBottom: 4 }}>
-            <span style={{ color: "rgba(255,255,255,.3)", fontSize: 10, fontWeight: 800 }}>
+            <span style={{ color: "var(--text-ghost)", fontSize: 10, fontWeight: 800 }}>
               Q{qi + 1}
             </span>
             <input
@@ -386,12 +387,12 @@ function FillBlankEditor({ fillblank, onChange }) {
       <input style={inputStyle} value={fillblank.instruction} onChange={(e) => update("instruction", e.target.value)} />
       <label style={labelStyle}>SENTENCES (use ___ for blank)</label>
       {fillblank.sentences.map((s, si) => (
-        <div key={si} style={{ background: "rgba(255,255,255,.02)", borderRadius: 6, padding: 6, marginBottom: 4, border: "1px solid rgba(255,255,255,.04)" }}>
+        <div key={si} style={{ background: "var(--surface-card)", borderRadius: 6, padding: 6, marginBottom: 4, border: "1px solid var(--border-light)" }}>
           <input style={{ ...inputStyle, marginBottom: 3 }} value={s.text} onChange={(e) => updateSentence(si, "text", e.target.value)} />
           <div style={{ display: "flex", gap: 3, flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ color: "rgba(255,255,255,.3)", fontSize: 9, fontWeight: 700 }}>ANS:</span>
+            <span style={{ color: "var(--text-ghost)", fontSize: 9, fontWeight: 700 }}>ANS:</span>
             <input style={{ ...inputStyle, width: 80 }} value={s.answer} onChange={(e) => updateSentence(si, "answer", e.target.value)} />
-            <span style={{ color: "rgba(255,255,255,.3)", fontSize: 9, fontWeight: 700, marginLeft: 4 }}>OPTS:</span>
+            <span style={{ color: "var(--text-ghost)", fontSize: 9, fontWeight: 700, marginLeft: 4 }}>OPTS:</span>
             {s.options.map((opt, oi) => (
               <input key={oi} style={{ ...inputStyle, width: 70 }} value={opt} onChange={(e) => updateOpt(si, oi, e.target.value)} />
             ))}
@@ -410,7 +411,7 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
 
-  if (!session) return <p style={{ color: "#fff" }}>Session not found.</p>;
+  if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
 
   const updateSession = (field, val) => {
     const updated = sessions.map((s) =>
@@ -438,9 +439,24 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
   return (
     <div style={{ animation: "su .4s ease" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-        <h2 style={{ fontFamily: displayFont, fontSize: 20, color: "#fff", margin: 0 }}>
+        <h2 style={{ fontFamily: displayFont, fontSize: 20, color: "var(--text-primary)", margin: 0 }}>
           Week {weekNum}: {session.title}
         </h2>
+        <button
+          onClick={() => generateSessionPdf(session)}
+          title="Print session as PDF"
+          style={{
+            background: "var(--surface-input)",
+            border: "1px solid var(--border-medium)",
+            borderRadius: 8,
+            padding: "6px 12px",
+            cursor: "pointer",
+            fontSize: 13,
+            color: "var(--text-faint)",
+          }}
+        >
+          🖨️ PDF
+        </button>
       </div>
 
       {/* Meta fields */}
@@ -517,8 +533,8 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
             style={{
               padding: "14px 16px",
               borderRadius: 10,
-              background: "rgba(255,255,255,.06)",
-              color: "rgba(255,255,255,.4)",
+              background: "var(--surface-input)",
+              color: "var(--text-faint)",
               fontSize: 12,
               border: "none",
               cursor: "pointer",

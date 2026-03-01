@@ -44,13 +44,13 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
           style={{
             fontFamily: displayFont,
             fontSize: 24,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 6px",
           }}
         >
           {score === data.sentences.length ? "Perfect!" : "Great Try!"}
         </h2>
-        <p style={{ color: "rgba(255,255,255,.45)", fontSize: 14 }}>
+        <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
           {score}/{data.sentences.length} correct
         </p>
         {!done && (
@@ -75,7 +75,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 5px",
         }}
       >
@@ -83,7 +83,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.5)",
+          color: "var(--text-tertiary)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
@@ -107,7 +107,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
                     : "#D94A4A"
                   : i === idx
                   ? "#D4A843"
-                  : "rgba(255,255,255,.1)",
+                  : "var(--text-invisible)",
             }}
           />
         ))}
@@ -117,7 +117,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
       <div
         key={idx}
         style={{
-          background: "rgba(255,255,255,.05)",
+          background: "var(--surface-elevated)",
           borderRadius: 14,
           padding: "22px 20px",
           marginBottom: 14,
@@ -128,7 +128,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
           style={{
             fontFamily: displayFont,
             fontSize: 18,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: 0,
             lineHeight: 1.5,
           }}
@@ -153,7 +153,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
       {/* Options */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
         {shuffled[idx].map((opt) => {
-          let bg = "rgba(255,255,255,.04)";
+          let bg = "var(--surface-card)";
           let bc = "rgba(255,255,255,.07)";
           if (picked !== null) {
             if (opt === current.answer) {
@@ -177,7 +177,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
                 textAlign: "center",
               }}
             >
-              <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>
+              <span style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}>
                 {opt}
               </span>
             </div>

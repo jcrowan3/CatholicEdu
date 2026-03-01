@@ -38,7 +38,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 5px",
         }}
       >
@@ -46,7 +46,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.5)",
+          color: "var(--text-tertiary)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
@@ -77,15 +77,15 @@ export default function Sort({ data, earn, isDone, onBack }) {
                 borderRadius: 8,
                 fontSize: 12,
                 fontWeight: 700,
-                color: "#fff",
+                color: "var(--text-primary)",
                 background:
                   selected === i
                     ? "rgba(212,168,67,.2)"
-                    : "rgba(255,255,255,.06)",
+                    : "var(--surface-input)",
                 border:
                   selected === i
                     ? "2px solid #D4A843"
-                    : "1px solid rgba(255,255,255,.08)",
+                    : "1px solid var(--border-medium)",
                 animation: `pi .3s ease ${i * 0.05}s both`,
               }}
             >
@@ -105,10 +105,10 @@ export default function Sort({ data, earn, isDone, onBack }) {
             className="bh"
             onClick={() => hitGroup(group)}
             style={{
-              background: "rgba(255,255,255,.03)",
+              background: "var(--surface-card)",
               borderRadius: 10,
               padding: "10px 12px",
-              border: "1px solid rgba(255,255,255,.06)",
+              border: "1px solid var(--border-default)",
             }}
           >
             <div
@@ -142,7 +142,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
                       borderRadius: 6,
                       padding: "3px 8px",
                       fontSize: 11,
-                      color: "#fff",
+                      color: "var(--text-primary)",
                       animation: "bi .3s ease",
                     }}
                   >

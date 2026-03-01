@@ -1,3 +1,5 @@
+import { generateSessionPdf } from "../../utils/generateSessionPdf";
+
 const displayFont = "'Lilita One', cursive";
 
 export default function SessionHome({ session, pillarColors = {}, onNavigate, isDone }) {
@@ -57,11 +59,11 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
       {/* Header card */}
       <div
         style={{
-          background: "rgba(255,255,255,.05)",
+          background: "var(--surface-elevated)",
           borderRadius: 16,
           padding: "24px 20px",
           marginBottom: 14,
-          border: "1px solid rgba(255,255,255,.06)",
+          border: "1px solid var(--border-default)",
           position: "relative",
           overflow: "hidden",
         }}
@@ -77,6 +79,24 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
         >
           ✝️
         </div>
+        <button
+          onClick={() => generateSessionPdf(session)}
+          title="Print session as PDF"
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            background: "var(--surface-input)",
+            border: "1px solid var(--border-medium)",
+            borderRadius: 8,
+            padding: "5px 10px",
+            cursor: "pointer",
+            fontSize: 14,
+            zIndex: 1,
+          }}
+        >
+          🖨️
+        </button>
         <div
           style={{
             display: "inline-block",
@@ -101,7 +121,7 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
           style={{
             fontFamily: displayFont,
             fontSize: 24,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 5px",
           }}
         >
@@ -129,7 +149,7 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
           >
             <span
               style={{
-                color: "rgba(255,255,255,.35)",
+                color: "var(--text-faint)",
                 fontSize: 10,
                 fontWeight: 700,
               }}
@@ -181,12 +201,12 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
               style={{
                 background: d
                   ? "rgba(109,184,123,.1)"
-                  : "rgba(255,255,255,.04)",
+                  : "var(--surface-card)",
                 borderRadius: 12,
                 padding: "16px 12px",
                 border: d
                   ? "2px solid rgba(109,184,123,.3)"
-                  : "1px solid rgba(255,255,255,.06)",
+                  : "1px solid var(--border-default)",
                 position: "relative",
                 animation: `pi .35s ease ${i * 0.07}s both`,
               }}
@@ -224,7 +244,7 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
                 style={{
                   fontFamily: displayFont,
                   fontSize: 14,
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   marginBottom: 2,
                 }}
               >
@@ -232,7 +252,7 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
               </div>
               <div
                 style={{
-                  color: "rgba(255,255,255,.5)",
+                  color: "var(--text-tertiary)",
                   fontSize: 10,
                   lineHeight: 1.3,
                   marginBottom: 6,
@@ -286,15 +306,15 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
         </div>
         <div style={{ flex: 1 }}>
           <div
-            style={{ fontFamily: displayFont, fontSize: 13, color: "#fff" }}
+            style={{ fontFamily: displayFont, fontSize: 13, color: "var(--text-primary)" }}
           >
             Continue Your Saint Quest
           </div>
-          <div style={{ color: "rgba(255,255,255,.35)", fontSize: 10 }}>
+          <div style={{ color: "var(--text-faint)", fontSize: 10 }}>
             Complete this session to unlock the next adventure!
           </div>
         </div>
-        <span style={{ color: "rgba(255,255,255,.2)", fontSize: 16 }}>→</span>
+        <span style={{ color: "var(--text-ghost)", fontSize: 16 }}>→</span>
       </div>
     </div>
   );

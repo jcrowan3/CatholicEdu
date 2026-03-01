@@ -14,7 +14,7 @@ export default function Prayer({ data, earn, isDone, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 5px",
         }}
       >
@@ -22,7 +22,7 @@ export default function Prayer({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.5)",
+          color: "var(--text-tertiary)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
@@ -41,12 +41,12 @@ export default function Prayer({ data, earn, isDone, onBack }) {
               style={{
                 background: isAll
                   ? "rgba(212,168,67,.1)"
-                  : "rgba(255,255,255,.03)",
+                  : "var(--surface-card)",
                 borderRadius: 12,
                 padding: "10px 14px",
                 border: isAll
                   ? "1px solid rgba(212,168,67,.2)"
-                  : "1px solid rgba(255,255,255,.04)",
+                  : "1px solid var(--border-light)",
                 animation: "pi .3s ease",
               }}
             >
@@ -56,14 +56,14 @@ export default function Prayer({ data, earn, isDone, onBack }) {
                   fontWeight: 800,
                   letterSpacing: 1,
                   marginBottom: 3,
-                  color: isAll ? "#D4A843" : "rgba(255,255,255,.25)",
+                  color: isAll ? "#D4A843" : "var(--text-ghost)",
                 }}
               >
                 {isAll ? "ALL" : "LEADER"}
               </div>
               <div
                 style={{
-                  color: isAll ? "#fff" : "rgba(255,255,255,.65)",
+                  color: isAll ? "var(--text-primary)" : "var(--text-secondary)",
                   fontSize: isAll ? 15 : 14,
                   fontWeight: isAll ? 700 : 400,
                   fontStyle: isAll ? "normal" : "italic",

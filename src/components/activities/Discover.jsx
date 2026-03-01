@@ -24,7 +24,7 @@ export default function Discover({ data, earn, isDone, onBack }) {
         style={{
           fontFamily: displayFont,
           fontSize: 22,
-          color: "#fff",
+          color: "var(--text-primary)",
           margin: "0 0 5px",
         }}
       >
@@ -32,7 +32,7 @@ export default function Discover({ data, earn, isDone, onBack }) {
       </h2>
       <p
         style={{
-          color: "rgba(255,255,255,.5)",
+          color: "var(--text-tertiary)",
           fontSize: 12,
           margin: "0 0 14px",
         }}
@@ -51,12 +51,12 @@ export default function Discover({ data, earn, isDone, onBack }) {
               style={{
                 background: open
                   ? "rgba(74,144,217,.08)"
-                  : "rgba(255,255,255,.04)",
+                  : "var(--surface-card)",
                 borderRadius: 10,
                 padding: "12px 14px",
                 border: open
                   ? "1px solid rgba(74,144,217,.25)"
-                  : "1px solid rgba(255,255,255,.05)",
+                  : "1px solid var(--border-light)",
                 animation: `pi .3s ease ${i * 0.06}s both`,
               }}
             >
@@ -69,14 +69,14 @@ export default function Discover({ data, earn, isDone, onBack }) {
                     flex: 1,
                     fontFamily: displayFont,
                     fontSize: 14,
-                    color: "#fff",
+                    color: "var(--text-primary)",
                   }}
                 >
                   {item.name}
                 </div>
                 <span
                   style={{
-                    color: "rgba(255,255,255,.2)",
+                    color: "var(--text-ghost)",
                     fontSize: 14,
                     transition: "transform .3s",
                     transform: open ? "rotate(180deg)" : "rotate(0)",
@@ -90,8 +90,8 @@ export default function Discover({ data, earn, isDone, onBack }) {
                   style={{
                     marginTop: 8,
                     paddingTop: 8,
-                    borderTop: "1px solid rgba(255,255,255,.05)",
-                    color: "rgba(255,255,255,.55)",
+                    borderTop: "1px solid var(--border-light)",
+                    color: "var(--text-tertiary)",
                     fontSize: 13,
                     lineHeight: 1.5,
                   }}

@@ -1,13 +1,14 @@
 import { getUsers, getSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
 import { GRADES } from "../../data/grades";
+import ClassSelector from "./ClassSelector";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function Dashboard({ grade, onNavigate }) {
-  const users = getUsers(grade);
+export default function Dashboard({ grade, classId, onClassChange, onNavigate }) {
+  const users = getUsers(grade, classId);
   const sessions = getSessions(grade);
   const programName = getProgramName(grade);
-  const allProgress = getAllProgress(grade, users.map((u) => u.id));
+  const allProgress = getAllProgress(grade, classId, users.map((u) => u.id));
   const PILLAR_COLORS = getPillarColors(grade);
   const gradeInfo = GRADES.find((g) => g.grade === grade);
 
@@ -53,16 +54,18 @@ export default function Dashboard({ grade, onNavigate }) {
           style={{
             fontFamily: displayFont,
             fontSize: 22,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 4px",
           }}
         >
           {programName || "Catechist Dashboard"}
         </h1>
-        <p style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>
+        <p style={{ color: "var(--text-tertiary)", fontSize: 12 }}>
           {gradeInfo ? `${gradeInfo.title} — ${gradeInfo.subtitle}` : ""}
         </p>
       </div>
+
+      <ClassSelector grade={grade} classId={classId} onClassChange={onClassChange} />
 
       {/* Quick stats */}
       <div
@@ -81,11 +84,11 @@ export default function Dashboard({ grade, onNavigate }) {
           <div
             key={stat.label}
             style={{
-              background: "rgba(255,255,255,.05)",
+              background: "var(--surface-elevated)",
               borderRadius: 10,
               padding: "12px 10px",
               textAlign: "center",
-              border: "1px solid rgba(255,255,255,.06)",
+              border: "1px solid var(--border-default)",
             }}
           >
             <div style={{ fontSize: 20, marginBottom: 2 }}>{stat.icon}</div>
@@ -93,14 +96,14 @@ export default function Dashboard({ grade, onNavigate }) {
               style={{
                 fontFamily: displayFont,
                 fontSize: 20,
-                color: "#fff",
+                color: "var(--text-primary)",
               }}
             >
               {stat.value}
             </div>
             <div
               style={{
-                color: "rgba(255,255,255,.4)",
+                color: "var(--text-faint)",
                 fontSize: 10,
                 fontWeight: 700,
               }}
@@ -159,7 +162,7 @@ export default function Dashboard({ grade, onNavigate }) {
       {/* 30-week overview */}
       <p
         style={{
-          color: "rgba(255,255,255,.45)",
+          color: "var(--text-muted)",
           fontSize: 11,
           fontWeight: 700,
           letterSpacing: 1,
@@ -187,10 +190,10 @@ export default function Dashboard({ grade, onNavigate }) {
               className="ch"
               onClick={() => onNavigate("admin-session", session.week)}
               style={{
-                background: "rgba(255,255,255,.04)",
+                background: "var(--surface-card)",
                 borderRadius: 10,
                 padding: "10px 10px 8px",
-                border: "1px solid rgba(255,255,255,.06)",
+                border: "1px solid var(--border-default)",
                 animation: `pi .25s ease ${i * 0.02}s both`,
               }}
             >
@@ -213,7 +216,7 @@ export default function Dashboard({ grade, onNavigate }) {
                     justifyContent: "center",
                     fontSize: 10,
                     fontWeight: 800,
-                    color: "#fff",
+                    color: "var(--text-primary)",
                   }}
                 >
                   {session.week}
@@ -221,7 +224,7 @@ export default function Dashboard({ grade, onNavigate }) {
                 <div
                   style={{
                     flex: 1,
-                    color: "#fff",
+                    color: "var(--text-primary)",
                     fontSize: 11,
                     fontWeight: 700,
                     overflow: "hidden",
@@ -254,7 +257,7 @@ export default function Dashboard({ grade, onNavigate }) {
                   </div>
                   <span
                     style={{
-                      color: "rgba(255,255,255,.35)",
+                      color: "var(--text-faint)",
                       fontSize: 9,
                       fontWeight: 700,
                       whiteSpace: "nowrap",

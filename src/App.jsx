@@ -5,6 +5,9 @@ import {
   migrateOldKeys,
   seedDemoStudent,
   getPillarColors,
+  ensureDefaultClass,
+  getActiveClassId,
+  setActiveClassId,
 } from "./data/store";
 import { useProgress } from "./hooks/useProgress";
 import LandingPage from "./components/landing/LandingPage";
@@ -30,6 +33,7 @@ migrateOldKeys();
 export default function App() {
   // Grade selection
   const [grade, setGrade] = useState(null);
+  const [classId, setClassId] = useState(null);
 
   // Mode: "landing" | "setup" | "login" | "student" | "catechist"
   const [mode, setMode] = useState("landing");
@@ -39,7 +43,7 @@ export default function App() {
   const [sessions, setSessions] = useState([]);
   const [editWeek, setEditWeek] = useState(null);
 
-  const { stars, earn, isDone } = useProgress(grade, activeUser?.id);
+  const { stars, earn, isDone } = useProgress(grade, classId, activeUser?.id);
 
   const session = sessions[sessionIdx];
   const pillarColors = grade ? getPillarColors(grade) : {};
@@ -66,12 +70,16 @@ export default function App() {
     if (!pin) {
       setMode("setup");
     } else {
+      // Ensure a class exists and set it active
+      const cid = ensureDefaultClass(g);
+      setClassId(cid);
       setMode("login");
     }
   };
 
   const handleBackToGrades = () => {
     setGrade(null);
+    setClassId(null);
     setMode("landing");
     setActiveUser(null);
     setScreen("home");
@@ -83,6 +91,11 @@ export default function App() {
     setActiveUser(null);
     setMode("login");
     setScreen("home");
+  };
+
+  const handleClassChange = (newClassId) => {
+    setClassId(newClassId);
+    setActiveUser(null);
   };
 
   const background = (
@@ -98,7 +111,7 @@ export default function App() {
           position: "fixed",
           inset: 0,
           pointerEvents: "none",
-          opacity: 0.12,
+          opacity: "var(--star-dot-opacity)",
         }}
       >
         {Array.from({ length: 20 }, (_, i) => (
@@ -111,7 +124,7 @@ export default function App() {
               width: 2,
               height: 2,
               borderRadius: "50%",
-              background: "#fff",
+              background: "var(--star-dot-color)",
               animation: `tw ${2 + (i % 3)}s ease-in-out infinite ${i * 0.2}s`,
             }}
           />
@@ -124,8 +137,7 @@ export default function App() {
     <div
       style={{
         minHeight: "100vh",
-        background:
-          "linear-gradient(170deg, #1a1a3e 0%, #2d2d6b 40%, #1e3a5f 100%)",
+        background: "var(--bg-gradient)",
         fontFamily: "'Nunito', sans-serif",
       }}
     >
@@ -141,7 +153,9 @@ export default function App() {
         <CatechistSetup
           grade={grade}
           onComplete={() => {
-            seedDemoStudent(grade);
+            const cid = ensureDefaultClass(grade);
+            setClassId(cid);
+            seedDemoStudent(grade, cid);
             setSessions(getSessions(grade));
             setMode("login");
           }}
@@ -152,6 +166,7 @@ export default function App() {
       {mode === "login" && (
         <LoginScreen
           grade={grade}
+          classId={classId}
           onSelectStudent={(user) => {
             setActiveUser(user);
             setMode("student");
@@ -190,6 +205,7 @@ export default function App() {
               <SessionPicker
                 sessions={sessions}
                 current={sessionIdx}
+                pillarColors={pillarColors}
                 onPick={(i) => {
                   setSessionIdx(i);
                   go("home");
@@ -288,6 +304,8 @@ export default function App() {
             {screen === "dashboard" && (
               <Dashboard
                 grade={grade}
+                classId={classId}
+                onClassChange={handleClassChange}
                 onNavigate={(target, weekNum) => {
                   if (target === "admin-users") go("admin-users");
                   else if (target === "admin-progress") go("admin-progress");
@@ -302,6 +320,7 @@ export default function App() {
             {screen === "admin-users" && (
               <UserManager
                 grade={grade}
+                classId={classId}
                 onBack={() => go("dashboard")}
                 onRefresh={() => {}}
               />
@@ -310,6 +329,7 @@ export default function App() {
             {screen === "admin-progress" && (
               <ProgressGrid
                 grade={grade}
+                classId={classId}
                 onBack={() => go("dashboard")}
               />
             )}

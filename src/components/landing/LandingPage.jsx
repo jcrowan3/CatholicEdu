@@ -1,4 +1,5 @@
 import { GRADES } from "../../data/grades";
+import ThemeToggle from "../ui/ThemeToggle";
 
 const displayFont = "'Lilita One', cursive";
 
@@ -13,13 +14,16 @@ export default function LandingPage({ onSelectGrade }) {
       }}
     >
       {/* Hero */}
-      <div style={{ textAlign: "center", marginBottom: 32 }}>
+      <div style={{ textAlign: "center", marginBottom: 32, position: "relative" }}>
+        <div style={{ position: "absolute", top: 0, right: 0 }}>
+          <ThemeToggle />
+        </div>
         <div style={{ fontSize: 60, marginBottom: 10 }}>✝️</div>
         <h1
           style={{
             fontFamily: displayFont,
             fontSize: 28,
-            color: "#fff",
+            color: "var(--text-primary)",
             margin: "0 0 8px",
           }}
         >
@@ -27,7 +31,7 @@ export default function LandingPage({ onSelectGrade }) {
         </h1>
         <p
           style={{
-            color: "rgba(255,255,255,.55)",
+            color: "var(--text-tertiary)",
             fontSize: 14,
             maxWidth: 360,
             margin: "0 auto",
@@ -49,7 +53,7 @@ export default function LandingPage({ onSelectGrade }) {
       {/* Grade selector */}
       <p
         style={{
-          color: "rgba(255,255,255,.45)",
+          color: "var(--text-muted)",
           fontSize: 11,
           fontWeight: 700,
           letterSpacing: 1,
@@ -77,12 +81,12 @@ export default function LandingPage({ onSelectGrade }) {
               style={{
                 background: isActive
                   ? "rgba(212,168,67,.1)"
-                  : "rgba(255,255,255,.03)",
+                  : "var(--surface-card)",
                 borderRadius: 12,
                 padding: "16px 14px",
                 border: isActive
                   ? "2px solid rgba(212,168,67,.35)"
-                  : "1px solid rgba(255,255,255,.06)",
+                  : "1px solid var(--border-default)",
                 opacity: isActive ? 1 : 0.45,
                 cursor: isActive ? "pointer" : "default",
                 animation: `pi .35s ease ${i * 0.06}s both`,
@@ -96,7 +100,7 @@ export default function LandingPage({ onSelectGrade }) {
                   borderRadius: "50%",
                   background: isActive
                     ? "linear-gradient(135deg, #D4A843, #F0D060)"
-                    : "rgba(255,255,255,.08)",
+                    : "var(--grade-circle-inactive-bg)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -107,7 +111,7 @@ export default function LandingPage({ onSelectGrade }) {
                   style={{
                     fontFamily: displayFont,
                     fontSize: 16,
-                    color: isActive ? "#1a1a3e" : "rgba(255,255,255,.4)",
+                    color: isActive ? "var(--grade-dark-text)" : "var(--grade-circle-inactive-text)",
                   }}
                 >
                   {g.grade}
@@ -118,7 +122,7 @@ export default function LandingPage({ onSelectGrade }) {
                 style={{
                   fontFamily: displayFont,
                   fontSize: 13,
-                  color: "#fff",
+                  color: "var(--text-primary)",
                   marginBottom: 4,
                 }}
               >
@@ -127,7 +131,7 @@ export default function LandingPage({ onSelectGrade }) {
 
               <div
                 style={{
-                  color: "rgba(255,255,255,.5)",
+                  color: "var(--text-tertiary)",
                   fontSize: 10,
                   lineHeight: 1.3,
                   marginBottom: 6,
@@ -140,12 +144,12 @@ export default function LandingPage({ onSelectGrade }) {
                 <div
                   style={{
                     display: "inline-block",
-                    background: "rgba(255,255,255,.06)",
+                    background: "var(--surface-input)",
                     borderRadius: 8,
                     padding: "2px 8px",
                     fontSize: 9,
                     fontWeight: 700,
-                    color: "rgba(255,255,255,.35)",
+                    color: "var(--text-faint)",
                     letterSpacing: 0.5,
                   }}
                 >
@@ -180,15 +184,15 @@ export default function LandingPage({ onSelectGrade }) {
       {/* About section */}
       <div
         style={{
-          background: "rgba(255,255,255,.03)",
+          background: "var(--surface-card)",
           borderRadius: 12,
           padding: "16px 18px",
-          border: "1px solid rgba(255,255,255,.06)",
+          border: "1px solid var(--border-default)",
         }}
       >
         <p
           style={{
-            color: "rgba(255,255,255,.45)",
+            color: "var(--text-muted)",
             fontSize: 11,
             fontWeight: 700,
             letterSpacing: 1,
@@ -199,7 +203,7 @@ export default function LandingPage({ onSelectGrade }) {
         </p>
         <p
           style={{
-            color: "rgba(255,255,255,.4)",
+            color: "var(--text-faint)",
             fontSize: 12,
             lineHeight: 1.6,
             margin: 0,
