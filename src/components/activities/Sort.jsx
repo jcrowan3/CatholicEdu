@@ -12,21 +12,28 @@ export default function Sort({ data, earn, isDone, onBack }) {
       .map((it) => ({ ...it, placed: null }))
   );
   const [selected, setSelected] = useState(null);
+  const [placing, setPlacing] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const done = isDone("sort");
 
   const hitGroup = (group) => {
     if (selected === null) return;
-    const item = items[selected];
+    const selIdx = selected;
+    const item = items[selIdx];
     if (item.group === group) {
-      const next = [...items];
-      next[selected] = { ...item, placed: group };
-      setItems(next);
+      setPlacing(selIdx);
       setFeedback({ type: "correct", message: "✓ Correct!" });
+      setSelected(null);
+      setTimeout(() => {
+        const next = [...items];
+        next[selIdx] = { ...item, placed: group };
+        setItems(next);
+        setPlacing(null);
+      }, 280);
     } else {
       setFeedback({ type: "wrong", message: "✗ Try again!" });
+      setSelected(null);
     }
-    setSelected(null);
     setTimeout(() => setFeedback(null), 1200);
   };
 
@@ -62,6 +69,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
           gap: 5,
           marginBottom: 12,
           minHeight: 36,
+          alignContent: "flex-start",
         }}
       >
         {items.map((item, i) =>
@@ -70,7 +78,8 @@ export default function Sort({ data, earn, isDone, onBack }) {
               key={item.name}
               className="bh"
               onClick={() => {
-                if (!item.placed) setSelected(selected === i ? null : i);
+                if (!item.placed && placing === null)
+                  setSelected(selected === i ? null : i);
               }}
               style={{
                 padding: "6px 10px",
@@ -80,13 +89,20 @@ export default function Sort({ data, earn, isDone, onBack }) {
                 color: "var(--text-primary)",
                 background:
                   selected === i
-                    ? "rgba(212,168,67,.2)"
+                    ? "rgba(212,168,67,.15)"
                     : "var(--surface-input)",
                 border:
                   selected === i
                     ? "2px solid #D4A843"
-                    : "1px solid var(--border-medium)",
-                animation: `pi .3s ease ${i * 0.05}s both`,
+                    : "2px solid var(--border-medium)",
+                boxShadow:
+                  selected === i
+                    ? "0 0 12px rgba(212,168,67,.35)"
+                    : "none",
+                animation:
+                  placing === i
+                    ? "sortPlace .28s ease forwards"
+                    : `pi .3s ease ${i * 0.05}s both`,
               }}
             >
               {item.icon} {item.name}
@@ -108,7 +124,19 @@ export default function Sort({ data, earn, isDone, onBack }) {
               background: "var(--surface-card)",
               borderRadius: 10,
               padding: "10px 12px",
-              border: "1px solid var(--border-default)",
+              border:
+                selected !== null
+                  ? "1px solid rgba(212,168,67,.35)"
+                  : "1px solid var(--border-default)",
+              boxShadow:
+                selected !== null
+                  ? "0 0 16px rgba(212,168,67,.2)"
+                  : "none",
+              animation:
+                selected !== null
+                  ? "bucketPulse 1.5s ease-in-out infinite"
+                  : undefined,
+              transition: "box-shadow .3s, border-color .3s",
             }}
           >
             <div

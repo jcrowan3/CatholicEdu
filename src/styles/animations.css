@@ -37,20 +37,32 @@
   100% { box-shadow: 0 0 0 rgba(109,184,123,0); }
 }
 
+@keyframes bucketPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(212,168,67,.15); }
+  50% { box-shadow: 0 0 20px rgba(212,168,67,.3); }
+}
+
+@keyframes sortPlace {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.85); }
+}
+
 /* Interactive element transitions */
 .ch {
-  transition: all .2s;
+  transition: transform .2s, box-shadow .2s, filter .2s;
   cursor: pointer;
 }
 .ch:hover {
   transform: translateY(-3px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  filter: brightness(1.05);
 }
 
 .bh {
-  transition: all .2s;
+  transition: filter .2s, box-shadow .2s;
   cursor: pointer;
 }
 .bh:hover {
-  transform: scale(1.03);
-  filter: brightness(1.1);
+  filter: brightness(1.15);
+  box-shadow: 0 0 0 2px rgba(212,168,67,.25);
 }
