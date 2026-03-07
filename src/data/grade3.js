@@ -38,7 +38,8 @@ export const SESSIONS = [
         { q: "What event is called the 'birthday of the Church'?", opts: ["Christmas", "Easter", "Pentecost", "Palm Sunday"], correct: 2 },
         { q: "Who leads the Church on earth today?", opts: ["The President", "The Pope", "The Mayor", "The King"], correct: 1 },
         { q: "The Apostles were the first ___.", opts: ["Priests", "Deacons", "Bishops", "Monks"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Jesus said 'the gates of the netherworld shall not prevail against it.' What does this promise mean for the Church?", opts: ["The Church has strong doors", "Hell has no gates", "Churches must have gates", "The Church will never be destroyed"], correct: 3, reward: "🌟 Scripture Scholar!" }
     },
     prayer: {
       title: "Prayer for the Church",
@@ -95,7 +96,8 @@ export const SESSIONS = [
         { q: "The Church is Apostolic because it was built on the ___.", opts: ["Bible", "Apostles", "Saints", "Angels"], correct: 1 },
         { q: "What makes the Church holy?", opts: ["Good people", "The Holy Spirit", "Nice buildings", "Pretty music"], correct: 1 },
         { q: "We say the four marks in the ___.", opts: ["Our Father", "Hail Mary", "Nicene Creed", "Act of Contrition"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "If someone asks 'Why is the Church called Apostolic?', what is the best answer?", opts: ["Its teaching comes from the Apostles through the bishops", "It was built in ancient times", "It has many members", "It is named after an apostle"], correct: 0, reward: "🏆 Theology Pro!" }
     },
     prayer: {
       title: "From the Nicene Creed",
@@ -147,7 +149,8 @@ export const SESSIONS = [
         { q: "Who celebrates Mass in a parish?", opts: ["Deacons", "Bishops", "Priests", "The laity"], correct: 2 },
         { q: "Non-ordained baptized people are called the ___.", opts: ["Clergy", "Laity", "Friars", "Monks"], correct: 1 },
         { q: "Bishops are successors of the ___.", opts: ["Saints", "Prophets", "Apostles", "Angels"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "The unbroken line of Popes from Peter to today is called what?", opts: ["The Holy Chain", "The Papal Line", "Apostolic Succession", "The Bishop's List"], correct: 2, reward: "📖 Catechism Expert!" }
     },
     prayer: {
       title: "Prayer for Church Leaders",
@@ -205,7 +208,8 @@ export const SESSIONS = [
         { q: "Who leads a parish?", opts: ["The mayor", "The principal", "The pastor/priest", "The president"], correct: 2 },
         { q: "We worship God together in the ___ building.", opts: ["School", "Church", "Library", "Office"], correct: 1 },
         { q: "Every baptized person is part of the ___.", opts: ["Government", "Church", "Team", "Club"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "In Acts 2:42, the first Christians devoted themselves to four things. Which of these is NOT one of them?", opts: ["Breaking of bread", "Building churches", "Prayers", "The Apostles' teaching"], correct: 1, reward: "✨ Faith Champion!" }
     },
     prayer: {
       title: "Prayer for Our Parish",
@@ -262,7 +266,8 @@ export const SESSIONS = [
         { q: "What does 'Catholic' mean?", opts: ["Roman", "Ancient", "Universal", "Perfect"], correct: 2 },
         { q: "The Pope is the successor of ___.", opts: ["Moses", "Peter", "Paul", "John"], correct: 1 },
         { q: "Bishops are successors of the ___.", opts: ["Prophets", "Kings", "Apostles", "Saints"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Which mark of the Church means the same faith is taught everywhere in the world, from Africa to Asia to the Americas?", opts: ["One", "Holy", "Apostolic", "Catholic"], correct: 3, reward: "🌟 Review Master!" }
     },
     prayer: {
       title: "Glory Be",
@@ -311,7 +316,8 @@ export const SESSIONS = [
         { q: "When do we first receive sanctifying grace?", opts: ["At school", "At Baptism", "At age 18", "At Confirmation"], correct: 1 },
         { q: "What are the main channels of grace?", opts: ["Books", "The sacraments", "Sports", "Movies"], correct: 1 },
         { q: "___ grace helps us in everyday moments.", opts: ["Sanctifying", "Special", "Actual", "Hidden"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "A friend says 'I can earn grace by being good enough.' How would you kindly correct them?", opts: ["Grace is God's free gift — we can never earn it", "You're right, keep trying!", "Grace is only for adults", "Grace comes from studying hard"], correct: 0, reward: "✨ Grace Guardian!" }
     },
     prayer: {
       title: "Prayer for Grace",
@@ -367,7 +373,8 @@ export const SESSIONS = [
         { q: "'Form' in a sacrament means the ___.", opts: ["Shape of the church", "Words spoken", "Color of vestments", "Time of day"], correct: 1 },
         { q: "What does water in Baptism represent?", opts: ["Keeps us cool", "Washing clean, new life", "A drink", "A bath"], correct: 1 },
         { q: "Can we see grace directly?", opts: ["Yes, it glows", "Yes, it's blue", "No \u2014 it is invisible", "Only at night"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Why does every sacrament need BOTH matter (stuff) AND form (words)?", opts: ["It's just a tradition", "The priest likes using objects", "Because God uses visible signs to give invisible grace", "Matter and form are the same thing"], correct: 2, reward: "🏆 Sacrament Scholar!" }
     },
     prayer: {
       title: "Prayer of the Senses",
@@ -426,7 +433,8 @@ export const SESSIONS = [
         { q: "What do the sacraments give us?", opts: ["Money", "Homework", "God's grace", "Superpowers"], correct: 2 },
         { q: "Which sacrament welcomes us into God's family?", opts: ["Eucharist", "Confirmation", "Matrimony", "Baptism"], correct: 3 },
         { q: "Which sacrament forgives our sins?", opts: ["Anointing", "Reconciliation", "Holy Orders", "Baptism"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "A sacrament is defined as 'an outward sign instituted by Christ to give grace.' Who alone has the authority to create a sacrament?", opts: ["The Pope", "Jesus Christ", "Any bishop", "The saints"], correct: 1, reward: "📖 Catechism Expert!" }
     },
     prayer: {
       title: "Prayer for the Sacraments",
@@ -478,7 +486,8 @@ export const SESSIONS = [
         { q: "The Eucharist is the ___ and summit of Christian life.", opts: ["Beginning", "Source", "End", "Middle"], correct: 1 },
         { q: "How many Sacraments of Initiation are there?", opts: ["1", "2", "3", "7"], correct: 2 },
         { q: "Which can be received more than once?", opts: ["Baptism", "Confirmation", "Eucharist", "All of them"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Why is the Eucharist called the 'source and summit' of Christian life?", opts: ["It is the tallest part of the church", "It is the first sacrament we receive", "It is only celebrated on special days", "All grace flows from it and everything leads to it"], correct: 3, reward: "🌟 Eucharist Explorer!" }
     },
     prayer: {
       title: "Prayer of Initiation",
@@ -532,7 +541,8 @@ export const SESSIONS = [
         { q: "Who anoints the sick?", opts: ["A deacon", "A priest", "A teacher", "A doctor"], correct: 1 },
         { q: "In Reconciliation, we confess to a ___.", opts: ["Friend", "Teacher", "Priest", "Parent"], correct: 2 },
         { q: "Matrimony is a lifelong commitment of ___.", opts: ["Work", "Love", "Study", "Travel"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "Reconciliation and Anointing of the Sick are both Sacraments of Healing. What do they have in common?", opts: ["Both restore and strengthen our relationship with God", "Both use water", "Both can only happen once", "Both require a bishop"], correct: 0, reward: "✨ Healing Heart!" }
     },
     prayer: {
       title: "Prayer for Healing and Service",
@@ -582,7 +592,8 @@ export const SESSIONS = [
         { q: "What does the white garment represent?", opts: ["Being cold", "Being made new in Christ", "A gift", "Being dry"], correct: 1 },
         { q: "Who promises to help the child grow in faith?", opts: ["Teachers", "Godparents", "Friends", "Neighbors"], correct: 1 },
         { q: "Baptism washes away ___.", opts: ["Dirt", "Germs", "Original sin", "Bad dreams"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Why is water poured THREE times during Baptism — not once or twice?", opts: ["To make sure the baby is clean", "Because three is a lucky number", "In the name of each Person of the Trinity: Father, Son, Holy Spirit", "In honor of the three Apostles"], correct: 2, reward: "🏆 Baptism Scholar!" }
     },
     prayer: {
       title: "Baptism Renewal Prayer",
@@ -635,7 +646,8 @@ export const SESSIONS = [
         { q: "What words are spoken at Confirmation?", opts: ["I baptize you", "Be sealed with the Gift of the Holy Spirit", "Go in peace", "You are forgiven"], correct: 1 },
         { q: "How many gifts of the Holy Spirit are there?", opts: ["3", "5", "7", "12"], correct: 2 },
         { q: "Confirmation strengthens us to ___ our faith.", opts: ["Hide", "Forget", "Share", "Sell"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "The seven gifts of the Holy Spirit help us live as Christians. Which gift helps us be brave in standing up for our faith?", opts: ["Wisdom", "Fortitude", "Piety", "Knowledge"], correct: 1, reward: "🌟 Spirit Seeker!" }
     },
     prayer: {
       title: "Come, Holy Spirit",
@@ -688,7 +700,8 @@ export const SESSIONS = [
         { q: "What is transubstantiation?", opts: ["A prayer", "Bread and wine become Jesus' Body and Blood", "A song", "A holiday"], correct: 1 },
         { q: "Where did Jesus first give us the Eucharist?", opts: ["Bethlehem", "The Temple", "The Last Supper", "Nazareth"], correct: 2 },
         { q: "Where is the Eucharist kept in church?", opts: ["The sacristy", "The tabernacle", "The bell tower", "The office"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "If a friend says 'the Eucharist is just a symbol of Jesus,' what does the Church actually teach?", opts: ["Your friend is correct", "It becomes Jesus only on special holidays", "It depends on the priest", "The bread and wine truly become Jesus' Body and Blood"], correct: 3, reward: "📖 Real Presence Pro!" }
     },
     prayer: {
       title: "Prayer Before the Tabernacle",
@@ -740,7 +753,8 @@ export const SESSIONS = [
         { q: "When does the bread become Jesus' Body?", opts: ["At the beginning", "During the readings", "At the consecration", "After Mass"], correct: 2 },
         { q: "What happens at Communion?", opts: ["We go home", "We receive Jesus", "We read the Bible", "We sing only"], correct: 1 },
         { q: "The Mass ends by sending us to ___.", opts: ["Go home and rest", "Live our faith in the world", "Eat lunch", "Take a nap"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "During which part of the Mass does the bread and wine become the Body and Blood of Christ?", opts: ["Liturgy of the Eucharist", "Introductory Rites", "Liturgy of the Word", "Concluding Rites"], correct: 0, reward: "✨ Mass Master!" }
     },
     prayer: {
       title: "Prayer Before Mass",
@@ -792,7 +806,8 @@ export const SESSIONS = [
         { q: "What do we say when the priest says 'The Body of Christ'?", opts: ["Thank you", "Amen", "Please", "Alleluia"], correct: 1 },
         { q: "What does 'Amen' mean here?", opts: ["Goodbye", "I'm hungry", "I believe", "Let's go"], correct: 2 },
         { q: "What should we do after receiving?", opts: ["Talk to friends", "Pray and give thanks", "Leave immediately", "Take a nap"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "You realize you committed a serious sin this week. What should you do BEFORE receiving Communion?", opts: ["Just say sorry in your head", "Receive Communion anyway", "Go to Confession first", "Skip Mass entirely"], correct: 2, reward: "🏆 Communion Champion!" }
     },
     prayer: {
       title: "Prayer After Communion",
@@ -850,7 +865,8 @@ export const SESSIONS = [
         { q: "Name the Sacraments of Initiation.", opts: ["Reconciliation, Anointing, Orders", "Baptism, Confirmation, Eucharist", "Matrimony and Holy Orders", "All seven"], correct: 1 },
         { q: "Is the Eucharist a symbol?", opts: ["Yes", "Sometimes", "No — it IS Jesus", "Only for adults"], correct: 2 },
         { q: "What do we say when we receive Communion?", opts: ["Thanks", "Amen", "Please", "Alleluia"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "Which sacrament can you receive only ONCE in your lifetime and can never be repeated?", opts: ["Eucharist", "Baptism", "Reconciliation", "Anointing of the Sick"], correct: 1, reward: "🌟 Review Master!" }
     },
     prayer: {
       title: "Glory Be",
@@ -900,7 +916,8 @@ export const SESSIONS = [
         { q: "What season celebrates Jesus' resurrection?", opts: ["Advent", "Lent", "Christmas", "Easter"], correct: 3 },
         { q: "What is the longest liturgical season?", opts: ["Lent", "Advent", "Easter", "Ordinary Time"], correct: 3 },
         { q: "What color is Ordinary Time?", opts: ["Purple", "White", "Green", "Red"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "Advent and Lent both use purple vestments. What do these two seasons have in common?", opts: ["They both celebrate a birthday", "They are both 40 days long", "They both come in summer", "They are both times of preparation and waiting"], correct: 3, reward: "📖 Liturgy Scholar!" }
     },
     prayer: {
       title: "Prayer Through the Seasons",
@@ -956,7 +973,8 @@ export const SESSIONS = [
         { q: "A saint's feast day celebrates their ___.", opts: ["Birthday on earth", "Heavenly birthday", "Vacation", "School day"], correct: 1 },
         { q: "Is Christmas a Holy Day of Obligation?", opts: ["No", "Only for kids", "Yes", "Only sometimes"], correct: 2 },
         { q: "Every Sunday is a mini-___.", opts: ["Holiday", "Easter", "Birthday", "Vacation"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "Why does the Church call every Sunday a 'mini-Easter'?", opts: ["Because Sunday is the day Jesus rose from the dead", "Because we eat special food", "Because we hide eggs", "Because Sunday is the last day of the week"], correct: 0, reward: "✨ Holy Day Hero!" }
     },
     prayer: {
       title: "Prayer to the Saints",
@@ -1014,7 +1032,8 @@ export const SESSIONS = [
         { q: "What burns near the tabernacle?", opts: ["Incense", "A candle/sanctuary lamp", "A fireplace", "Nothing"], correct: 1 },
         { q: "Vestment colors change with the ___.", opts: ["Weather", "Priest's mood", "Liturgical season", "Day of the week"], correct: 2 },
         { q: "The altar is where the ___ takes place.", opts: ["Homily", "Sacrifice of the Mass", "Choir practice", "Bible study"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "The sanctuary lamp (candle) burns near the tabernacle at all times. Why?", opts: ["To light up the church", "Because candles look nice", "To show that Jesus is truly present in the Eucharist", "To keep the church warm"], correct: 2, reward: "🏆 Sacred Objects Star!" }
     },
     prayer: {
       title: "Prayer Before the Crucifix",
@@ -1070,7 +1089,8 @@ export const SESSIONS = [
         { q: "Where is the Eucharist kept?", opts: ["The altar", "The tabernacle", "The pulpit", "The choir loft"], correct: 1 },
         { q: "What is a chalice?", opts: ["A vestment", "A type of prayer", "The cup for the Blood of Christ", "A book"], correct: 2 },
         { q: "A saint's feast day is their ___.", opts: ["Birthday", "Heavenly birthday", "Vacation", "Graduation"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "If a priest wears green vestments, which liturgical season is it?", opts: ["Advent", "Ordinary Time", "Lent", "Easter"], correct: 1, reward: "🌟 Review Master!" }
     },
     prayer: {
       title: "Hail Mary",
@@ -1120,7 +1140,8 @@ export const SESSIONS = [
         { q: "The third commandment tells us to keep holy ___.", opts: ["Monday", "Friday", "Sunday", "Wednesday"], correct: 2 },
         { q: "The first 3 commandments teach us to love ___.", opts: ["Ourselves", "Our neighbor", "God", "Money"], correct: 2 },
         { q: "On Sunday we should attend ___.", opts: ["A game", "A movie", "Mass", "A party"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "The first three commandments are about loving God. If someone put sports or popularity ABOVE God in their life, which commandment would that break?", opts: ["The 2nd — God's name in vain", "The 3rd — keep holy the Lord's Day", "The 5th — do not kill", "The 1st — no strange gods before me"], correct: 3, reward: "📖 Commandment Keeper!" }
     },
     prayer: {
       title: "Act of Love",
@@ -1177,7 +1198,8 @@ export const SESSIONS = [
         { q: "The 8th commandment tells us not to ___.", opts: ["Eat", "Sleep", "Lie", "Play"], correct: 2 },
         { q: "Commandments 4-10 teach us to love our ___.", opts: ["Pets", "Neighbor", "Toys", "Homework"], correct: 1 },
         { q: "The 7th commandment says: do not ___.", opts: ["Run", "Steal", "Sing", "Read"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "The 8th Commandment says 'do not bear false witness.' Besides lying, what else does this commandment forbid?", opts: ["Gossip and spreading rumors about others", "Eating too much", "Playing too many games", "Staying up late"], correct: 0, reward: "✨ Moral Guide!" }
     },
     prayer: {
       title: "Act of Contrition",
@@ -1228,7 +1250,8 @@ export const SESSIONS = [
         { q: "How many great commandments did Jesus give?", opts: ["1", "2", "5", "10"], correct: 1 },
         { q: "Who is our neighbor?", opts: ["People next door", "Only friends", "Everyone", "Only family"], correct: 2 },
         { q: "Jesus said all laws hang on ___.", opts: ["The Bible", "These two commandments", "The Pope", "The Church"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "Jesus said 'love your neighbor as yourself.' A student at school is being left out at recess. What would this commandment call you to do?", opts: ["Ignore them — it's not your problem", "Watch from a distance", "Invite them to play with you", "Tell the teacher but don't help"], correct: 2, reward: "🌟 Love in Action!" }
     },
     prayer: {
       title: "Prayer of Love",
@@ -1286,7 +1309,8 @@ export const SESSIONS = [
         { q: "Blessed are the ___ — they shall see God.", opts: ["Rich", "Pure in heart", "Strong", "Famous"], correct: 1 },
         { q: "Blessed are the peacemakers — they are called ___.", opts: ["Heroes", "Teachers", "Children of God", "Winners"], correct: 2 },
         { q: "The Beatitudes teach that real happiness comes from ___.", opts: ["Money", "Trusting God and loving others", "Fame", "Sports"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "Jesus says 'Blessed are the poor in spirit.' This does NOT mean having no money. What does it really mean?", opts: ["Being sad all the time", "Depending on God rather than on things", "Giving away everything you own", "Not caring about anything"], correct: 1, reward: "🏆 Beatitude Builder!" }
     },
     prayer: {
       title: "Beatitudes Prayer",
@@ -1343,7 +1367,8 @@ export const SESSIONS = [
         { q: "What is the greatest commandment?", opts: ["Don't steal", "Love God with all your heart", "Be quiet", "Go to school"], correct: 1 },
         { q: "What does 'blessed' mean?", opts: ["Tired", "Truly happy", "Angry", "Confused"], correct: 1 },
         { q: "The Beatitudes were taught by ___ on the ___.", opts: ["Moses, Sinai", "Jesus, Sermon on the Mount", "Peter, Temple", "Paul, Road"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "The Ten Commandments, the Greatest Commandment, and the Beatitudes ALL point to the same goal. What is it?", opts: ["Being famous", "Following lots of rules", "Avoiding all punishment", "Living in true love of God and neighbor"], correct: 3, reward: "🌟 Review Master!" }
     },
     prayer: {
       title: "Our Father",
@@ -1403,7 +1428,8 @@ export const SESSIONS = [
         { q: "Name the 4 types of prayer.", opts: ["Read, Write, Sing, Dance", "Adoration, Thanksgiving, Petition, Contrition", "Morning, Noon, Night, Bedtime", "Loud, Soft, Fast, Slow"], correct: 1 },
         { q: "Which type of prayer praises God?", opts: ["Petition", "Contrition", "Adoration", "Thanksgiving"], correct: 2 },
         { q: "Which type of prayer says sorry?", opts: ["Adoration", "Thanksgiving", "Petition", "Contrition"], correct: 3 }
-      ]
+      ],
+    bonus: { q: "You thank God for your family. Then you tell Him you're sorry for being mean to your brother. Which TWO types of prayer did you just use?", opts: ["Thanksgiving and Contrition", "Adoration and Petition", "Petition and Adoration", "Contrition and Petition"], correct: 0, reward: "✨ Prayer Champion!" }
     },
     prayer: {
       title: "Four Types of Prayer",
@@ -1461,7 +1487,8 @@ export const SESSIONS = [
         { q: "What does 'hallowed' mean?", opts: ["Empty", "Scary", "Holy", "Loud"], correct: 2 },
         { q: "'Daily bread' also refers to the ___.", opts: ["School lunch", "Eucharist", "Bible", "Rosary"], correct: 1 },
         { q: "We also promise to ___ others.", opts: ["Study with", "Forgive", "Avoid", "Quiz"], correct: 1 }
-      ]
+      ],
+    bonus: { q: "In the Our Father, we pray 'give us this day our daily bread.' Besides food, what else does 'daily bread' refer to according to Church teaching?", opts: ["Dessert", "Money", "The Eucharist", "Sleep"], correct: 2, reward: "📖 Our Father Expert!" }
     },
     prayer: {
       title: "Praying the Our Father",
@@ -1513,7 +1540,8 @@ export const SESSIONS = [
         { q: "How many sets of mysteries in the Rosary?", opts: ["2", "3", "4", "7"], correct: 2 },
         { q: "The Rosary helps us think about the life of ___.", opts: ["The saints", "Jesus", "The Apostles", "Moses"], correct: 1 },
         { q: "'Mother of God' is a title for ___.", opts: ["Elizabeth", "Martha", "Mary", "Ruth"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "The Rosary is not just about Mary — it helps us meditate on the life of Jesus. The four sets of mysteries are Joyful, Sorrowful, Glorious, and what?", opts: ["Wonderful", "Luminous", "Amazing", "Peaceful"], correct: 1, reward: "🌟 Rosary Devotee!" }
     },
     prayer: {
       title: "One Decade of the Rosary",
@@ -1572,7 +1600,8 @@ export const SESSIONS = [
         { q: "To whom did Our Lady of Guadalupe appear?", opts: ["St. Patrick", "St. Francis", "St. Juan Diego", "St. Kateri"], correct: 2 },
         { q: "Which saint used a shamrock to teach the Trinity?", opts: ["St. Francis", "St. Thérèse", "St. Juan Diego", "St. Patrick"], correct: 3 },
         { q: "Who was the first Native American saint?", opts: ["St. Juan Diego", "St. Patrick", "St. Kateri Tekakwitha", "St. Francis"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "St. Thérèse of Lisieux described prayer as 'a surge of the heart' and called her way 'The Little Way.' What did she mean by this?", opts: ["Only say short prayers", "Pray only when you feel like it", "Only children can pray well", "Do small things with great love for God"], correct: 3, reward: "🏆 Saints Scholar!" }
     },
     prayer: {
       title: "Prayer of St. Francis (adapted)",
@@ -1633,7 +1662,8 @@ export const SESSIONS = [
         { q: "What does 'hallowed' mean?", opts: ["Empty", "Scary", "Holy", "Loud"], correct: 2 },
         { q: "Jesus said the greatest commandment is to ___.", opts: ["Be rich", "Love God", "Stay home", "Be famous"], correct: 1 },
         { q: "Who gave us the sacraments?", opts: ["Moses", "Peter", "Jesus", "Mary"], correct: 2 }
-      ]
+      ],
+    bonus: { q: "This year we learned about the Church, Sacraments, Morality, and Prayer — the four 'pillars' of Catholic faith. Where can you find ALL of these teachings gathered together?", opts: ["The Catechism of the Catholic Church", "The parish bulletin", "The school textbook", "The newspaper"], correct: 0, reward: "✨ Faith Champion!" }
     },
     prayer: {
       title: "End-of-Year Prayer",

@@ -10,10 +10,14 @@ import {
   setActiveClassId,
 } from "./data/store";
 import { useProgress } from "./hooks/useProgress";
+import { useBookmarks } from "./hooks/useBookmarks";
 import LandingPage from "./components/landing/LandingPage";
 import TopBar from "./components/session/TopBar";
 import SessionHome from "./components/session/SessionHome";
 import SessionPicker from "./components/session/SessionPicker";
+import BookmarksScreen from "./components/session/BookmarksScreen";
+import VocabularyScreen from "./components/session/VocabularyScreen";
+import TakeHome from "./components/session/TakeHome";
 import Discover from "./components/activities/Discover";
 import Sort from "./components/activities/Sort";
 import Timeline from "./components/activities/Timeline";
@@ -44,6 +48,11 @@ export default function App() {
   const [editWeek, setEditWeek] = useState(null);
 
   const { stars, earn, isDone } = useProgress(grade, classId, activeUser?.id);
+  const { toggleBookmark, isBookmarked, getAllBookmarks } = useBookmarks(
+    grade,
+    classId,
+    activeUser?.id
+  );
 
   const session = sessions[sessionIdx];
   const pillarColors = grade ? getPillarColors(grade) : {};
@@ -58,7 +67,14 @@ export default function App() {
     [isDone, session]
   );
 
-  const go = (s) => {
+  const go = (s, extra) => {
+    // Handle related session navigation
+    if (s === "related" && extra != null) {
+      setSessionIdx(extra);
+      window.scrollTo(0, 0);
+      setScreen("home");
+      return;
+    }
     window.scrollTo(0, 0);
     setScreen(s);
   };
@@ -193,6 +209,8 @@ export default function App() {
             onBack={() => go("home")}
             onPicker={() => go("picker")}
             onSwitchUser={switchUser}
+            onBookmarks={() => go("bookmarks")}
+            onVocabulary={() => go("vocabulary")}
           />
           <div
             style={{
@@ -219,6 +237,7 @@ export default function App() {
                 pillarColors={pillarColors}
                 onNavigate={go}
                 isDone={checkDone}
+                allSessions={sessions}
               />
             )}
 
@@ -228,6 +247,10 @@ export default function App() {
                 earn={earnForSession}
                 isDone={checkDone}
                 onBack={() => go("home")}
+                week={session.week}
+                sessionPillar={session.pillar}
+                toggleBookmark={toggleBookmark}
+                isBookmarked={isBookmarked}
               />
             )}
 
@@ -276,6 +299,33 @@ export default function App() {
                 data={session.prayer}
                 earn={earnForSession}
                 isDone={checkDone}
+                onBack={() => go("home")}
+              />
+            )}
+
+            {screen === "bookmarks" && (
+              <BookmarksScreen
+                bookmarks={getAllBookmarks()}
+                pillarColors={pillarColors}
+                onNavigateToSession={(weekIdx) => {
+                  setSessionIdx(weekIdx);
+                  go("home");
+                }}
+                onBack={() => go("home")}
+              />
+            )}
+
+            {screen === "vocabulary" && (
+              <VocabularyScreen
+                sessions={sessions}
+                pillarColors={pillarColors}
+                onBack={() => go("home")}
+              />
+            )}
+
+            {screen === "takehome" && (
+              <TakeHome
+                session={session}
                 onBack={() => go("home")}
               />
             )}

@@ -1,8 +1,16 @@
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
+import { findRelatedSessions } from "../../utils/findRelatedSessions";
+import RelatedSessions from "./RelatedSessions";
 
 const displayFont = "'Lilita One', cursive";
 
-export default function SessionHome({ session, pillarColors = {}, onNavigate, isDone }) {
+export default function SessionHome({
+  session,
+  pillarColors = {},
+  onNavigate,
+  isDone,
+  allSessions,
+}) {
   const PILLAR_COLORS = pillarColors;
   const acts = [];
   acts.push({
@@ -53,6 +61,12 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
 
   const total = acts.reduce((a, b) => a + b.sv, 0);
   const earned = acts.filter((a) => isDone(a.id)).reduce((a, b) => a + b.sv, 0);
+  const allComplete = acts.every((a) => isDone(a.id));
+
+  // Find related sessions
+  const related = allSessions
+    ? findRelatedSessions(session, allSessions)
+    : [];
 
   return (
     <div>
@@ -79,24 +93,47 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
         >
           ✝️
         </div>
-        <button
-          onClick={() => generateSessionPdf(session)}
-          title="Print session as PDF"
+        <div
           style={{
             position: "absolute",
             top: 12,
             right: 12,
-            background: "var(--surface-input)",
-            border: "1px solid var(--border-medium)",
-            borderRadius: 8,
-            padding: "5px 10px",
-            cursor: "pointer",
-            fontSize: 14,
+            display: "flex",
+            gap: 6,
             zIndex: 1,
           }}
         >
-          🖨️
-        </button>
+          {/* Family Take-Home button */}
+          <button
+            onClick={() => onNavigate("takehome")}
+            title="Family Faith Connection"
+            style={{
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: 8,
+              padding: "5px 10px",
+              cursor: "pointer",
+              fontSize: 14,
+            }}
+          >
+            📨
+          </button>
+          {/* Print PDF button */}
+          <button
+            onClick={() => generateSessionPdf(session)}
+            title="Print session as PDF"
+            style={{
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: 8,
+              padding: "5px 10px",
+              cursor: "pointer",
+              fontSize: 14,
+            }}
+          >
+            🖨️
+          </button>
+        </div>
         <div
           style={{
             display: "inline-block",
@@ -286,6 +323,90 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
         })}
       </div>
 
+      {/* Session Recap Card */}
+      {allComplete && (
+        <div
+          style={{
+            marginTop: 14,
+            background: "rgba(109,184,123,.08)",
+            borderRadius: 12,
+            padding: "18px 16px",
+            border: "1px solid rgba(109,184,123,.2)",
+            animation: "pi .4s ease",
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: 32,
+              marginBottom: 6,
+              animation: "bi .5s ease",
+            }}
+          >
+            🏆
+          </div>
+          <h3
+            style={{
+              fontFamily: displayFont,
+              fontSize: 16,
+              color: "#6DB87B",
+              textAlign: "center",
+              margin: "0 0 10px",
+            }}
+          >
+            Session Complete!
+          </h3>
+          <p
+            style={{
+              color: "var(--text-muted)",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: 0.5,
+              margin: "0 0 6px",
+            }}
+          >
+            THIS WEEK YOU EXPLORED:
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+              marginBottom: 10,
+            }}
+          >
+            {session.discover.items.map((item) => (
+              <div
+                key={item.name}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  fontSize: 12,
+                  color: "var(--text-secondary)",
+                }}
+              >
+                <span>{item.icon}</span>
+                <span style={{ fontWeight: 600 }}>{item.name}</span>
+              </div>
+            ))}
+          </div>
+          <p
+            style={{
+              fontStyle: "italic",
+              color: "var(--text-tertiary)",
+              fontSize: 11,
+              lineHeight: 1.4,
+              margin: 0,
+              paddingTop: 8,
+              borderTop: "1px solid rgba(109,184,123,.15)",
+            }}
+          >
+            &ldquo;{session.verse}&rdquo;
+          </p>
+        </div>
+      )}
+
       {/* Saint Quest placeholder */}
       <div
         className="ch"
@@ -316,6 +437,15 @@ export default function SessionHome({ session, pillarColors = {}, onNavigate, is
         </div>
         <span style={{ color: "var(--text-ghost)", fontSize: 16 }}>→</span>
       </div>
+
+      {/* Related Sessions */}
+      <RelatedSessions
+        sessions={related}
+        pillarColors={pillarColors}
+        onSelect={(weekIdx) => {
+          onNavigate("related", weekIdx);
+        }}
+      />
     </div>
   );
 }

@@ -12,6 +12,8 @@ export default function TopBar({
   activeUser,
   onDashboard,
   onSwitchUser,
+  onBookmarks,
+  onVocabulary,
 }) {
   const isCatechist = mode === "catechist";
 
@@ -138,6 +140,44 @@ export default function TopBar({
               CATECHIST
             </span>
           </div>
+        )}
+
+        {/* Bookmarks button (student mode) */}
+        {onBookmarks && !isCatechist && (
+          <button
+            className="bh"
+            onClick={onBookmarks}
+            title="My Bookmarks"
+            style={{
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: 8,
+              padding: "5px 8px",
+              fontSize: 14,
+              cursor: "pointer",
+            }}
+          >
+            🔖
+          </button>
+        )}
+
+        {/* Vocabulary button (student mode) */}
+        {onVocabulary && !isCatechist && (
+          <button
+            className="bh"
+            onClick={onVocabulary}
+            title="Vocabulary"
+            style={{
+              background: "var(--surface-input)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: 8,
+              padding: "5px 8px",
+              fontSize: 14,
+              cursor: "pointer",
+            }}
+          >
+            📖
+          </button>
         )}
 
         {/* Star counter (student mode) */}

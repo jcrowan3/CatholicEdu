@@ -46,6 +46,8 @@ export const SESSIONS = [
         { q: "What is a vocation?", opts: ["A job", "A feeling", "A call from God", "A religious order"], correct: 2 },
         { q: "Why do Catholics believe the body matters?", opts: ["It houses the soul", "We believe in the Resurrection of the body", "It is made of clay", "The soul needs it for now"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Apologetics is the practice of ___.", opts: ["Saying sorry", "Defending and explaining the faith", "Apologizing for Church history", "Avoiding questions"], correct: 1, reward: "Faith Champion!" }
     },
     prayer: {
       title: "Psalm 139: Known and Loved",
@@ -96,6 +98,8 @@ export const SESSIONS = [
         { q: "Is choosing evil an act of freedom?", opts: ["Yes — all choices are free", "No — it is a misuse of freedom", "Only if no one is hurt", "Only for adults"], correct: 1 },
         { q: "What grows when we choose good consistently?", opts: ["Pride", "Virtue", "Wealth", "Popularity"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The term 'I believe' (Credo) in the Creed is a personal act of ___.", opts: ["opinion", "faith", "doubt", "tradition"], correct: 1, reward: "Creed Scholar!" }
     },
     prayer: {
       title: "Prayer for Freedom",
@@ -153,6 +157,8 @@ export const SESSIONS = [
         { q: "What is an erroneous conscience?", opts: ["A guilty conscience", "A conscience that has made a wrong judgment due to poor formation", "A conscience that is too strict", "A conscience that never speaks"], correct: 1 },
         { q: "What is the examination of conscience for?", opts: ["Feeling bad about yourself", "Honestly reviewing actions before God, especially before Reconciliation", "Judging others", "Making excuses"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Sacred Tradition and Sacred Scripture together form the ___.", opts: ["Catechism", "single deposit of faith", "Bible", "Rosary"], correct: 1, reward: "Believer Extraordinaire!" }
     },
     prayer: {
       title: "Prayer to the Holy Spirit",
@@ -210,6 +216,8 @@ export const SESSIONS = [
         { q: "Name three capital sins.", opts: ["Faith, hope, charity", "Prudence, justice, fortitude", "Pride, greed, envy", "Mercy, peace, love"], correct: 2 },
         { q: "Is sin just rule-breaking?", opts: ["Yes — it is about obeying rules", "No — it is a rupture in relationship with God", "Only for children", "Only when caught"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Magisterium is the ___ authority of the Church.", opts: ["financial", "political", "teaching", "military"], correct: 2, reward: "Doctrine Star!" }
     },
     prayer: {
       title: "Act of Contrition",
@@ -266,6 +274,8 @@ export const SESSIONS = [
         { q: "What does true freedom allow us to do?", opts: ["Whatever we want", "Choose what is genuinely good", "Avoid responsibility", "Ignore rules"], correct: 1 },
         { q: "Name two capital sins.", opts: ["Faith and hope", "Pride and greed", "Prudence and justice", "Mercy and peace"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Apologetics is the practice of ___.", opts: ["Saying sorry", "Defending and explaining the faith", "Apologizing for Church history", "Avoiding questions"], correct: 1, reward: "Super Scholar!" }
     },
     prayer: {
       title: "Glory Be",
@@ -314,6 +324,8 @@ export const SESSIONS = [
         { q: "What is an 'intrinsically evil' act?", opts: ["A difficult act", "An act always wrong regardless of intention or circumstances", "An act done in secret", "An act that hurts feelings"], correct: 1 },
         { q: "For an act to be morally good, the three sources must all be ___.", opts: ["Known", "Good", "Legal", "Popular"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Conscience is the ___ voice within that helps us judge right and wrong.", opts: ["loud", "inner/moral", "outside", "imaginary"], correct: 1, reward: "Virtue Hero!" }
     },
     prayer: {
       title: "Prayer for Moral Clarity",
@@ -369,6 +381,8 @@ export const SESSIONS = [
         { q: "What is natural law the foundation of?", opts: ["Government", "Universal human rights and dignity", "The legal system", "Democracy"], correct: 1 },
         { q: "Why can Catholics discuss ethics with non-believers?", opts: ["Because the Bible says so", "Because natural law is accessible to all through reason", "Because everyone secretly believes", "They can't"], correct: 1 }
       ]
+    ,
+    bonus: { q: "We have a duty to ___ our conscience through Church teaching and prayer.", opts: ["ignore", "suppress", "form", "replace"], correct: 2, reward: "Moral Champion!" }
     },
     prayer: {
       title: "Prayer for Justice",
@@ -424,6 +438,8 @@ export const SESSIONS = [
         { q: "Where do the theological virtues come from?", opts: ["Human effort alone", "Good parenting", "God — infused at Baptism", "Reading the Bible"], correct: 2 },
         { q: "How does virtue grow?", opts: ["Automatically with age", "Through practice, prayer, and the sacraments", "By avoiding all decisions", "Only through suffering"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The principle of double effect helps us evaluate actions that have both ___ effects.", opts: ["large and small", "good and bad", "public and private", "spiritual and physical"], correct: 1, reward: "Goodness Guide!" }
     },
     prayer: {
       title: "Prayer for Virtue",
@@ -475,6 +491,8 @@ export const SESSIONS = [
         { q: "What is the opposite of prudence in action?", opts: ["Patience", "Rashness or paralysis", "Courage", "Humility"], correct: 1 },
         { q: "How does one grow in prudence?", opts: ["By avoiding decisions", "Prayer, wise counsel, examining past choices", "By reading more", "It cannot be learned"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Moral relativism is the false idea that ___.", opts: ["All morals come from God", "Right and wrong are different for each person", "The Church teaches morality", "Truth exists"], correct: 1, reward: "Virtue Star!" }
     },
     prayer: {
       title: "Prayer for Wisdom",
@@ -529,6 +547,8 @@ export const SESSIONS = [
         { q: "What are prudence's three acts?", opts: ["Think, feel, act", "Counsel, judgment, command", "Pray, decide, obey", "Read, study, practice"], correct: 1 },
         { q: "Can a good intention make an intrinsically evil act good?", opts: ["Yes", "No", "Sometimes", "Only in emergencies"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The term 'I believe' (Credo) in the Creed is a personal act of ___.", opts: ["opinion", "faith", "doubt", "tradition"], correct: 1, reward: "Review Champion!" }
     },
     prayer: {
       title: "Our Father",
@@ -587,6 +607,8 @@ export const SESSIONS = [
         { q: "What are the three elements of the common good?", opts: ["Liberty, equality, fraternity", "Respect for person, social well-being, peace and security", "Faith, hope, charity", "Freedom, justice, mercy"], correct: 1 },
         { q: "What is social sin?", opts: ["Personal sins done in public", "Unjust social structures that perpetuate harm", "Sins committed by governments only", "Group prayer"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Catholic Social Teaching is based on the ___ of every human person.", opts: ["wealth", "opinion", "dignity", "nationality"], correct: 2, reward: "Moral Explorer!" }
     },
     prayer: {
       title: "Prayer for Justice",
@@ -638,6 +660,8 @@ export const SESSIONS = [
         { q: "Why is abortion gravely wrong?", opts: ["It is illegal", "It directly ends an innocent human life", "It is expensive", "The Church made a rule"], correct: 1 },
         { q: "Is legitimate defense allowed?", opts: ["Never", "Yes \u2014 with intention to protect, not to kill", "Only for soldiers", "Only at home"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The consistent ethic of life means protecting human life from ___ to natural death.", opts: ["birth", "baptism", "conception", "childhood"], correct: 2, reward: "Virtue Hero!" }
     },
     prayer: {
       title: "Prayer for Life",
@@ -688,6 +712,8 @@ export const SESSIONS = [
         { q: "Is every false statement a lie?", opts: ["Yes, always", "No \u2014 only if intended to deceive one who has a right to the truth", "Only in court", "Only to adults"], correct: 1 },
         { q: "Name one way social media can violate the 8th Commandment.", opts: ["Being offline", "Spreading gossip, rumors, or misinformation", "Posting photos of food", "Using emojis"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Chastity is the virtue that integrates ___ within the person.", opts: ["knowledge", "sexuality", "finances", "emotions only"], correct: 1, reward: "Moral Champion!" }
     },
     prayer: {
       title: "Prayer for Integrity",
@@ -745,6 +771,8 @@ export const SESSIONS = [
         { q: "What does pornography do to persons?", opts: ["Nothing harmful", "Reduces them to objects; harms dignity and relationships", "Educates them", "Helps relationships"], correct: 1 },
         { q: "What is chastity NOT?", opts: ["A virtue", "The repression or absence of sexuality", "A gift", "A form of love"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Stewardship means we are ___ of God's creation, not owners.", opts: ["destroyers", "caretakers", "consumers", "spectators"], correct: 1, reward: "Goodness Guide!" }
     },
     prayer: {
       title: "Prayer for Purity of Heart",
@@ -796,6 +824,8 @@ export const SESSIONS = [
         { q: "What is the \u2018preferential option for the poor\u2019?", opts: ["Only poor people matter", "Special moral urgency for the needs of those most vulnerable", "Poverty is a virtue", "Ignore the wealthy"], correct: 1 },
         { q: "What does stewardship mean?", opts: ["Owning everything", "We are caretakers, not absolute owners, of what God has given us", "Saving money", "Being stingy"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The cardinal virtue of ___ helps us discern the right course of action.", opts: ["fortitude", "temperance", "prudence", "justice"], correct: 2, reward: "Virtue Star!" }
     },
     prayer: {
       title: "Prayer of St. Francis",
@@ -853,6 +883,8 @@ export const SESSIONS = [
         { q: "Is chastity only for celibate people?", opts: ["Yes", "No \u2014 it is for everyone", "Only for teens", "Only for married couples"], correct: 1 },
         { q: "What is the universal destination of goods?", opts: ["Everything is free", "Created goods are ultimately meant for all", "Only the Church owns things", "Property is evil"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Sacred Tradition and Sacred Scripture together form the ___.", opts: ["Catechism", "single deposit of faith", "Bible", "Rosary"], correct: 1, reward: "Knowledge Star!" }
     },
     prayer: {
       title: "Hail Mary",
@@ -904,6 +936,8 @@ export const SESSIONS = [
         { q: "What is the Great Commission?", opts: ["The Ten Commandments", "Jesus\u2019s command to all baptized to make disciples of all nations", "The mission of priests and religious", "The Sermon on the Mount"], correct: 1 },
         { q: "Did Jesus promise that discipleship would be comfortable?", opts: ["Yes \u2014 he promises an easy life", "No \u2014 he promises purpose, not ease", "Only for those who serve the poor", "Yes \u2014 God rewards faithful disciples with wealth"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Church teaches that faith and reason are ___.", opts: ["Opposed to each other", "Unrelated", "Complementary \u2014 both lead to truth", "The same thing"], correct: 2, reward: "Faith Explorer!" }
     },
     prayer: {
       title: "Prayer of Commitment",
@@ -960,6 +994,8 @@ export const SESSIONS = [
         { q: "Why does the Church recommend regular Confession?", opts: ["To punish us", "For healing and growth, even for venial sins", "Only when we commit mortal sin", "Once a year is enough"], correct: 1 },
         { q: "In which sacrament does the priest act in persona Christi?", opts: ["Only the Eucharist", "Only Reconciliation", "All seven sacraments", "None \u2014 Christ acts alone"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Confirmation completes the grace of ___.", opts: ["Holy Orders", "Matrimony", "Baptism", "Reconciliation"], correct: 2, reward: "Sacrament Star!" }
     },
     prayer: {
       title: "Prayer Before Communion",
@@ -1010,6 +1046,8 @@ export const SESSIONS = [
         { q: "Is Confirmation a \u2018graduation\u2019 from faith?", opts: ["Yes \u2014 you\u2019re done learning", "No \u2014 it is a commissioning into mission", "Yes \u2014 you can stop going to church", "It depends on your parish"], correct: 1 },
         { q: "What does Acts 1:8 tell us we will be?", opts: ["Priests", "Witnesses to Jesus", "Perfect", "Famous"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Gifts of the Holy Spirit help us ___.", opts: ["Be popular", "Live the Christian life faithfully", "Avoid all suffering", "Get good grades"], correct: 1, reward: "Grace Expert!" }
     },
     prayer: {
       title: "Come, Holy Spirit",
@@ -1061,6 +1099,8 @@ export const SESSIONS = [
         { q: "What is lectio divina?", opts: ["Reading the Bible quickly", "Praying with Scripture: reading, meditating, praying, contemplating", "A Latin Mass", "A type of hymn"], correct: 1 },
         { q: "Why is prayer important for discipleship?", opts: ["It earns grace points", "It is our relationship with Jesus \u2014 discipleship cannot survive without it", "It is required by law", "It makes us feel good"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Discernment is the process of ___.", opts: ["Studying for a test", "Seeking God's will through prayer and reflection", "Making quick decisions", "Avoiding all choices"], correct: 1, reward: "Prayer Warrior!" }
     },
     prayer: {
       title: "Lectio Divina: John 15:4-5",
@@ -1117,6 +1157,8 @@ export const SESSIONS = [
         { q: "What is ex opere operato?", opts: ["A Latin hymn", "Sacraments work by the valid act itself, not our feelings", "Only the Pope celebrates sacraments", "Sacraments are just symbols"], correct: 1 },
         { q: "Name the three forms of prayer.", opts: ["Morning, noon, evening", "Vocal, meditative, contemplative", "Loud, quiet, silent", "Reading, singing, kneeling"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Magisterium is the ___ authority of the Church.", opts: ["financial", "political", "teaching", "military"], correct: 2, reward: "Quiz Master!" }
     },
     prayer: {
       title: "Glory Be",
@@ -1167,6 +1209,8 @@ export const SESSIONS = [
         { q: "Is honest intellectual doubt always the enemy of faith?", opts: ["Yes — doubt is always sinful", "Only if you share it publicly", "No — it can deepen faith if brought to God", "Only for young people"], correct: 2 },
         { q: "Which saint systematically examined every objection to Christian faith?", opts: ["St. Augustine", "St. Francis", "St. Thomas Aquinas", "St. Ignatius"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The four last things are death, judgment, heaven, and ___.", opts: ["purgatory", "limbo", "hell", "earth"], correct: 2, reward: "Faith Champion!" }
     },
     prayer: {
       title: "Prayer for Knowledge and Wisdom",
@@ -1218,6 +1262,8 @@ export const SESSIONS = [
         { q: "What does the argument from design conclude?", opts: ["Nothing useful", "The order and beauty of creation point to an intelligent designer", "The universe is random", "Science is wrong"], correct: 1 },
         { q: "What is a 'contingent' being?", opts: ["God", "A being that might not exist — depends on something else for its existence", "An angel", "A necessary being"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Purgatory is a state of ___.", opts: ["Punishment forever", "Final purification before heaven", "Waiting to be reborn", "Separation from God forever"], correct: 1, reward: "Creed Scholar!" }
     },
     prayer: {
       title: "Canticle of Daniel",
@@ -1268,6 +1314,8 @@ export const SESSIONS = [
         { q: "What is fundamentalism's error?", opts: ["Reading carefully", "Reading Scripture only literally and missing its deeper senses", "Reading too slowly", "Reading in community"], correct: 1 },
         { q: "Can a Catholic interpret Scripture privately without the Church?", opts: ["Yes — anyone can", "No — we interpret within the living Tradition", "Only theologians can", "Only with a dictionary"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Church's mission is to ___.", opts: ["Build schools only", "Evangelize \u2014 share the Gospel with all people", "Collect money", "Stay hidden"], correct: 1, reward: "Believer Extraordinaire!" }
     },
     prayer: {
       title: "Prayer Before Reading Scripture",
@@ -1321,6 +1369,8 @@ export const SESSIONS = [
         { q: "What is biblical inerrancy?", opts: ["The Bible is perfect in all ways", "Scripture is free from error in what is necessary for salvation", "The Bible is a science book", "Only the Pope can read it"], correct: 1 },
         { q: "Can reason alone know God exists?", opts: ["No", "Yes", "Only with special training", "Only through miracles"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Church teaches that faith and reason are ___.", opts: ["Opposed to each other", "Unrelated", "Complementary \u2014 both lead to truth", "The same thing"], correct: 2, reward: "All-Star Learner!" }
     },
     prayer: {
       title: "Nicene Creed",
@@ -1378,6 +1428,8 @@ export const SESSIONS = [
         { q: "Does evangelization impose faith on others?", opts: ["Yes — we must convert everyone", "No — it proposes and respects freedom", "Only in Catholic schools", "Only when they ask"], correct: 1 },
         { q: "What is the primary method of evangelization?", opts: ["Arguing", "Witness — living the faith", "Social media", "Handing out pamphlets"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The New Evangelization calls Catholics to ___.", opts: ["Leave the Church", "Share the faith with new energy in today's world", "Only evangelize foreign countries", "Keep faith private"], correct: 1, reward: "Doctrine Star!" }
     },
     prayer: {
       title: "Missionary Prayer",
@@ -1435,6 +1487,8 @@ export const SESSIONS = [
         { q: "What does Jesus say in Matthew 25 about serving the poor?", opts: ["It's optional", "Whatever you do to the least, you do to Him", "Only priests should serve", "It's too dangerous"], correct: 1 },
         { q: "What is the difference between charity and justice?", opts: ["They're the same", "Charity meets needs; justice addresses root causes", "Justice is for courts only", "Charity is only for the Church"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Solidarity calls us to see all people as our ___.", opts: ["competitors", "brothers and sisters", "audience", "employees"], correct: 1, reward: "Moral Explorer!" }
     },
     prayer: {
       title: "Prayer of St. Teresa of Calcutta",
@@ -1492,6 +1546,8 @@ export const SESSIONS = [
         { q: "Who was the first Native American saint?", opts: ["St. Francis", "St. Kateri Tekakwitha", "St. Rose of Lima", "St. Juan Diego"], correct: 1 },
         { q: "Why do we choose a Confirmation saint?", opts: ["It's just tradition", "As a model and intercessor for our spiritual life", "The Church requires it", "For good luck"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Ignatian discernment involves paying attention to ___.", opts: ["Only feelings", "Consolation and desolation in prayer", "Other people's opinions", "Random signs"], correct: 1, reward: "Prayer Pro!" }
     },
     prayer: {
       title: "Litany of the Saints",
@@ -1543,6 +1599,8 @@ export const SESSIONS = [
         { q: "What is heaven?", opts: ["A place in the clouds", "Full relationship with God — the beatific vision", "A reward for being perfect", "A feeling of happiness"], correct: 1 },
         { q: "Is hell a real possibility?", opts: ["No — everyone goes to heaven", "Yes — the Church affirms it, though we pray for all to be saved", "Only for very bad people", "It's just a metaphor"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The marks of the Church — One, Holy, Catholic, Apostolic — are ___.", opts: ["Optional beliefs", "Essential characteristics given by Christ", "Only symbolic", "Added later by the Pope"], correct: 1, reward: "Faith Explorer!" }
     },
     prayer: {
       title: "Eternal Rest",
@@ -1600,6 +1658,8 @@ export const SESSIONS = [
         { q: "What are the four Last Things?", opts: ["Birth, life, death, resurrection", "Prayer, fasting, almsgiving, penance", "Death, judgment, heaven, hell", "Creation, Fall, Redemption, Restoration"], correct: 2 },
         { q: "Who is sent to fulfill the Great Commission?", opts: ["Only priests and religious", "Only bishops", "Every baptized person", "Only those who have been confirmed"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The four last things are death, judgment, heaven, and ___.", opts: ["purgatory", "limbo", "hell", "earth"], correct: 2, reward: "Super Scholar!" }
     },
     prayer: {
       title: "Graduation Blessing",

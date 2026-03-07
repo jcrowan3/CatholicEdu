@@ -61,6 +61,8 @@ export const SESSIONS = [
         { q: "Who guards Sacred Scripture and Tradition?", opts: ["The President", "Scientists", "The Magisterium", "Individual Christians"], correct: 2 },
         { q: "Asking faith questions is:", opts: ["A sign of doubt", "Forbidden", "The beginning of wisdom", "Only for adults"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Salvation history is the story of God's plan to ___.", opts: ["punish sinners", "save humanity", "create angels", "build temples"], correct: 1, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -115,6 +117,8 @@ export const SESSIONS = [
         { q: "The Holy Spirit is described as the Lord and Giver of:", opts: ["Wisdom", "Life", "Power", "Bread"], correct: 1 },
         { q: "The Trinity is described as the ___ mystery of Christian faith.", opts: ["Easiest", "Central", "Hidden", "Newest"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The first book of the Bible is ___.", opts: ["Exodus", "Psalms", "Genesis", "Matthew"], correct: 2, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -170,6 +174,8 @@ export const SESSIONS = [
         { q: "Our call to care for creation is called:", opts: ["Ownership", "Stewardship", "Domination", "Isolation"], correct: 1 },
         { q: "What is the soul?", opts: ["The brain", "A feeling", "The spiritual principle making us human", "An organ"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God created everything out of ___.", opts: ["Existing matter", "Nothing (ex nihilo)", "Water", "Light"], correct: 1, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -225,6 +231,8 @@ export const SESSIONS = [
         { q: "Who is called the 'New Eve'?", opts: ["St. Mary Magdalene", "Eve's daughter", "Mary, the Mother of Jesus", "St. Elizabeth"], correct: 2 },
         { q: "Mary was preserved from Original Sin by:", opts: ["Her own merit", "A special prayer", "God's grace from her conception", "Her parents' holiness"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Original sin entered the world through ___.", opts: ["Moses", "Noah", "Adam and Eve", "Abraham"], correct: 2, reward: "Doctrine Star!" }
     },
 
     prayer: {
@@ -279,6 +287,8 @@ export const SESSIONS = [
         { q: "What does 'Imago Dei' mean?", opts: ["Image of the Church", "Image of God", "Image of creation", "Image of the saints"], correct: 1 },
         { q: "Faith and reason are described as:", opts: ["Enemies", "Two wings toward truth", "Identical", "Unrelated"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Salvation history is the story of God's plan to ___.", opts: ["punish sinners", "save humanity", "create angels", "build temples"], correct: 1, reward: "Super Scholar!" }
     },
 
     prayer: {
@@ -334,6 +344,8 @@ export const SESSIONS = [
         { q: "Jesus is:", opts: ["Fully God only", "Fully human only", "Half God, half human", "Fully God and fully human"], correct: 3 },
         { q: "The Council of Chalcedon defined:", opts: ["The number of sacraments", "Jesus' two natures in one Person", "The Canon of Scripture", "The date of Easter"], correct: 1 }
       ]
+    ,
+    bonus: { q: "God's promise to never flood the earth again was symbolized by ___.", opts: ["A star", "A rainbow", "A dove", "A burning bush"], correct: 1, reward: "Faith Explorer!" }
     },
 
     prayer: {
@@ -388,6 +400,8 @@ export const SESSIONS = [
         { q: "Miracles are signs that invite:", opts: ["Fear", "Entertainment", "Faith", "Confusion"], correct: 2 },
         { q: "Who was the head of the Twelve Apostles?", opts: ["John", "James", "Andrew", "Peter"], correct: 3 }
       ]
+    ,
+    bonus: { q: "God called ___ to leave his homeland and become the father of a great nation.", opts: ["Moses", "Noah", "Abraham", "David"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -443,6 +457,8 @@ export const SESSIONS = [
         { q: "Jesus was crucified at a place called:", opts: ["Bethlehem", "Golgotha", "Gethsemane", "Nazareth"], correct: 1 },
         { q: "Jesus' death on the Cross is:", opts: ["A tragedy with no meaning", "The perfect sacrifice reconciling us to God", "A myth", "Only symbolic"], correct: 1 }
       ]
+    ,
+    bonus: { q: "A covenant is a sacred ___ between God and His people.", opts: ["building", "agreement/bond", "book", "battle"], correct: 1, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -497,6 +513,8 @@ export const SESSIONS = [
         { q: "How many days after the Resurrection did the Ascension occur?", opts: ["Three", "Seven", "Thirty", "Forty"], correct: 3 },
         { q: "St. Paul says without the Resurrection, our faith is:", opts: ["Stronger", "Empty", "Complete", "Enough"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Who led the Israelites out of slavery in Egypt?", opts: ["Abraham", "David", "Moses", "Joshua"], correct: 2, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -551,6 +569,8 @@ export const SESSIONS = [
         { q: "How many days after His death did Jesus rise?", opts: ["One", "Three", "Seven", "Forty"], correct: 1 },
         { q: "The Ascension happened how many days after the Resurrection?", opts: ["Three", "Seven", "Forty", "Fifty"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The first book of the Bible is ___.", opts: ["Exodus", "Psalms", "Genesis", "Matthew"], correct: 2, reward: "Review Champion!" }
     },
 
     prayer: {
@@ -605,6 +625,8 @@ export const SESSIONS = [
         { q: "How many marks does the Church have?", opts: ["Two", "Three", "Four", "Seven"], correct: 2 },
         { q: "Which mark means the Church is for all people everywhere?", opts: ["One", "Holy", "Catholic", "Apostolic"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God parted the ___ Sea for the Israelites to escape.", opts: ["Dead", "Red", "Mediterranean", "Galilee"], correct: 1, reward: "Doctrine Star!" }
     },
 
     prayer: {
@@ -665,6 +687,8 @@ export const SESSIONS = [
         { q: "The Communion of Saints includes:", opts: ["Only canonized saints", "Saints in heaven only", "Saints in heaven, souls in purgatory, and the faithful on earth", "Only Catholics alive today"], correct: 2 },
         { q: "Asking saints to pray for us is called:", opts: ["Worship", "Idolatry", "Intercession", "Superstition"], correct: 2 }
       ]
+    ,
+    bonus: { q: "On Mount Sinai, God gave Moses the ___.", opts: ["Psalms", "Ark of the Covenant", "Ten Commandments", "Temple plans"], correct: 2, reward: "Faith Explorer!" }
     },
 
     prayer: {
@@ -725,6 +749,8 @@ export const SESSIONS = [
         { q: "We can help souls in purgatory by:", opts: ["Visiting them", "Sending them food", "Praying and making sacrifices for them", "Doing nothing — they are in God's hands"], correct: 2 },
         { q: "Hell is:", opts: ["A myth the Church made up", "Eternal separation from God chosen freely", "A temporary punishment", "Only for Satan"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Promised Land is also called ___.", opts: ["Egypt", "Babylon", "Canaan", "Rome"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -779,6 +805,8 @@ export const SESSIONS = [
         { q: "What are the four Gospels?", opts: ["Genesis, Exodus, Leviticus, Numbers", "Matthew, Mark, Luke, John", "Romans, Corinthians, Galatians, Ephesians", "Isaiah, Jeremiah, Ezekiel, Daniel"], correct: 1 },
         { q: "Lectio Divina is:", opts: ["A way to memorize Scripture", "A prayerful reading of Scripture in four steps", "Reading the Bible as fast as possible", "Only for priests and monks"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Who was the great king of Israel who defeated Goliath?", opts: ["Saul", "Solomon", "David", "Samuel"], correct: 2, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -833,6 +861,8 @@ export const SESSIONS = [
         { q: "What does 'ex cathedra' mean?", opts: ["From a book", "From the chair (official teaching)", "From tradition", "From Scripture"], correct: 1 },
         { q: "The Magisterium is exercised by:", opts: ["All Catholics", "Only the Pope", "The Pope and bishops in union with him", "Cardinals and theologians"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Solomon built the first ___ in Jerusalem.", opts: ["Palace", "Wall", "Temple", "Aqueduct"], correct: 2, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -887,6 +917,8 @@ export const SESSIONS = [
         { q: "Sacred Tradition is:", opts: ["Human customs", "The living transmission of the Gospel", "Outdated rules", "Only the writings of Popes"], correct: 1 },
         { q: "Who heads the Magisterium?", opts: ["The Cardinals", "The Theologians", "The Pope with the bishops", "The Deacons"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God created everything out of ___.", opts: ["Existing matter", "Nothing (ex nihilo)", "Water", "Light"], correct: 1, reward: "Knowledge Star!" }
     },
 
     prayer: {
@@ -941,6 +973,8 @@ export const SESSIONS = [
         { q: "An erroneous conscience is one that:", opts: ["Always leads to sin", "Is wrong despite sincere effort", "Never happens to good people", "Is a sign of wickedness"], correct: 1 },
         { q: "Before acting on a doubtful conscience in a grave matter, we should:", opts: ["Act anyway", "Ask friends", "Seek clarity through prayer and counsel", "Flip a coin"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Ten Commandments were given to help Israel ___.", opts: ["Build cities", "Live in right relationship with God and neighbor", "Conquer enemies", "Become wealthy"], correct: 1, reward: "Virtue Hero!" }
     },
 
     prayer: {
@@ -1001,6 +1035,8 @@ export const SESSIONS = [
         { q: "How many capital sins are there?", opts: ["Three", "Five", "Seven", "Ten"], correct: 2 },
         { q: "Social sin refers to:", opts: ["Sins done with friends", "Unjust systems and structures that trap people", "Very public sins", "Sins against society's norms"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The first commandment that God gave was 'I am the Lord your God; you shall have no other ___ before me.'", opts: ["kings", "gods", "plans", "temples"], correct: 1, reward: "Moral Champion!" }
     },
 
     prayer: {
@@ -1061,6 +1097,8 @@ export const SESSIONS = [
         { q: "The 'preferential option for the poor' means:", opts: ["Ignoring the wealthy", "Only caring about the poor", "Giving priority to those in greatest need", "Eliminating all wealth"], correct: 2 },
         { q: "Social justice applies justice to:", opts: ["Individual relationships only", "Church rules", "The structures and laws of society", "Only economic issues"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The prophets often spoke against ___ and called for justice.", opts: ["prayer", "worship", "oppression of the poor", "fasting"], correct: 2, reward: "Goodness Guide!" }
     },
 
     prayer: {
@@ -1121,6 +1159,8 @@ export const SESSIONS = [
         { q: "'Charioteer of the virtues' refers to:", opts: ["Justice", "Fortitude", "Prudence", "Temperance"], correct: 2 },
         { q: "St. Paul says the greatest theological virtue is:", opts: ["Faith", "Hope", "Charity", "Prudence"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The prophet Amos especially emphasized ___.", opts: ["Temple worship", "Social justice for the poor", "Military strength", "Royal power"], correct: 1, reward: "Virtue Star!" }
     },
 
     prayer: {
@@ -1174,6 +1214,8 @@ export const SESSIONS = [
         { q: "Solidarity means:", opts: ["Only helping yourself", "Recognizing our responsibility for all", "Giving to charity once a year", "Helping only the poor"], correct: 1 },
         { q: "Conscience must be:", opts: ["Ignored", "Followed blindly", "Formed through prayer and Church teaching", "Only trusted when convenient"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Original sin entered the world through ___.", opts: ["Moses", "Noah", "Adam and Eve", "Abraham"], correct: 2, reward: "Quiz Master!" }
     },
 
     prayer: {
@@ -1228,6 +1270,8 @@ export const SESSIONS = [
         { q: "Contemplative prayer is described as:", opts: ["Saying many words", "Complex mental exercises", "A simple loving gaze at God", "Praying the Rosary"], correct: 2 },
         { q: "Dryness in prayer is:", opts: ["A sign to stop praying", "Always our fault", "A possible invitation to deeper trust", "Proof that God is absent"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Psalms are ___.", opts: ["Laws of Moses", "Songs and prayers of Israel", "Letters of Paul", "Parables of Jesus"], correct: 1, reward: "Prayer Warrior!" }
     },
 
     prayer: {
@@ -1283,6 +1327,8 @@ export const SESSIONS = [
         { q: "The Church prays Psalms at every Mass in the:", opts: ["Gloria", "Responsorial Psalm", "Creed", "Penitential Rite"], correct: 1 },
         { q: "The Liturgy of the Hours is built mainly on:", opts: ["The Rosary", "The Our Father", "The Psalms", "The Gospel"], correct: 2 }
       ]
+    ,
+    bonus: { q: "How many Psalms are in the Bible?", opts: ["50", "100", "150", "200"], correct: 2, reward: "Prayer Pro!" }
     },
 
     prayer: {
@@ -1337,6 +1383,8 @@ export const SESSIONS = [
         { q: "Asking saints to pray for us is an expression of:", opts: ["Worshipping saints", "The Communion of Saints", "Disobeying Scripture", "Superstition"], correct: 1 },
         { q: "Jesus commands us to pray for:", opts: ["Only friends and family", "Only the sick", "Only ourselves", "Even our enemies"], correct: 3 }
       ]
+    ,
+    bonus: { q: "A psalm of praise thanks God for His ___.", opts: ["punishment", "silence", "goodness and mighty deeds", "distance"], correct: 2, reward: "Spiritual Star!" }
     },
 
     prayer: {
@@ -1396,6 +1444,8 @@ export const SESSIONS = [
         { q: "Dryness in prayer is best understood as:", opts: ["Proof God doesn't care", "An invitation to deeper trust", "A reason to stop praying", "Only for beginners"], correct: 1 },
         { q: "The Liturgy of the Hours is built mainly on:", opts: ["The Our Father", "The Rosary", "The Psalms", "The Creed"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God's promise to never flood the earth again was symbolized by ___.", opts: ["A star", "A rainbow", "A dove", "A burning bush"], correct: 1, reward: "All-Star Learner!" }
     },
 
     prayer: {
@@ -1451,6 +1501,8 @@ export const SESSIONS = [
         { q: "When we receive Communion, we are united to:", opts: ["Jesus only", "The priest only", "Jesus and one another as the Church", "Only those in our parish"], correct: 2 },
         { q: "The word 'Mass' comes from Latin meaning:", opts: ["We eat", "We are sent", "We remember", "We praise"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Passover meal recalls God ___.", opts: ["Creating the world", "Freeing Israel from Egypt", "Giving the Ten Commandments", "Building the Temple"], correct: 1, reward: "Sacrament Star!" }
     },
 
     prayer: {
@@ -1506,6 +1558,8 @@ export const SESSIONS = [
         { q: "Catholics are required to confess serious sins at least:", opts: ["Once a month", "Every week", "Once a year", "Only before death"], correct: 2 },
         { q: "Reconciliation restores:", opts: ["Our reputation", "Sanctifying grace", "Physical health", "Our friendships"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Eucharist is the New Passover because ___.", opts: ["It uses bread", "Jesus is the Lamb who frees us from sin", "It happens at night", "It involves wine"], correct: 1, reward: "Grace Expert!" }
     },
 
     prayer: {
@@ -1566,6 +1620,8 @@ export const SESSIONS = [
         { q: "After Confirmation, Catholics are obligated to:", opts: ["Do nothing differently", "Only attend Mass", "Practice, defend, and spread the faith as witnesses", "Become priests or nuns"], correct: 2 },
         { q: "Confirmation is best understood as:", opts: ["Graduation from the Church", "The end of religious education", "The beginning of active faith and mission", "Only for adults"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Baptism prefigured in the Old Testament includes ___.", opts: ["The burning bush", "The crossing of the Red Sea", "The building of the Temple", "The anointing of David"], correct: 1, reward: "Liturgy Whiz!" }
     },
 
     prayer: {
@@ -1626,6 +1682,8 @@ export const SESSIONS = [
         { q: "The lay vocation calls people to sanctify:", opts: ["Only the Church", "Only their own soul", "The world from within, through ordinary life", "Only their families"], correct: 2 },
         { q: "Discerning your vocation requires:", opts: ["Just waiting to see what happens", "Prayer, counsel, and paying attention to your gifts", "Only asking your parents", "No effort — God will tell you clearly"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Hebrew word 'hesed' means God's ___.", opts: ["anger", "power", "faithful/covenant love", "silence"], correct: 2, reward: "Moral Explorer!" }
     },
 
     prayer: {
@@ -1686,6 +1744,8 @@ export const SESSIONS = [
         { q: "Confirmation is best understood as:", opts: ["Graduation from faith", "The beginning of active mission", "Replacing Baptism", "Only for adults"], correct: 1 },
         { q: "All baptized faithful are called to:", opts: ["Only attend Mass", "Become priests or nuns", "Holiness in their state of life", "Follow only the commandments"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God called ___ to leave his homeland and become the father of a great nation.", opts: ["Moses", "Noah", "Abraham", "David"], correct: 2, reward: "Super Scholar!" }
     },
 
     prayer: {

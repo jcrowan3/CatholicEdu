@@ -61,6 +61,8 @@ export const SESSIONS = [
         { q: "The Holy Spirit is also called the ___.", opts: ["Creator", "Redeemer", "Advocate", "Prophet"], correct: 2 },
         { q: "The Trinity is described in the Catechism as the ___ mystery of the faith.", opts: ["Smallest", "Central", "Optional", "Newest"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Nicene Creed was formulated at the Councils of ___ and Constantinople.", opts: ["Trent", "Vatican", "Nicaea", "Ephesus"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -116,6 +118,8 @@ export const SESSIONS = [
         { q: "Jesus is the ___ of all divine revelation.", opts: ["Beginning", "Symbol", "Fullness", "Shadow"], correct: 2 },
         { q: "Scripture and Tradition together are called the ___.", opts: ["Deposit of Faith", "Nicene Creed", "Canon Law", "Church Fathers"], correct: 0 }
       ]
+    ,
+    bonus: { q: "The word 'consubstantial' in the Creed means ___.", opts: ["Similar to", "Of one being/substance with", "Created by", "Separate from"], correct: 1, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -170,6 +174,8 @@ export const SESSIONS = [
         { q: "What do we call Mary in recognition of her role?", opts: ["Patron of Rome", "Theotokos (God-bearer)", "First Apostle", "Angel of God"], correct: 1 },
         { q: "The Resurrection proves that Jesus is truly ___.", opts: ["A prophet", "An angel", "God", "A king only"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Creed professes belief in the ___, holy, catholic, and apostolic Church.", opts: ["new", "old", "one", "large"], correct: 2, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -230,6 +236,8 @@ export const SESSIONS = [
         { q: "Who animates and unifies the Church?", opts: ["The Pope alone", "The Bishops", "The Holy Spirit", "The Roman Emperor"], correct: 2 },
         { q: "Every baptized Catholic ___ in the mission of the Church.", opts: ["Is excused from", "Shares", "Observes", "Is not part of"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Apostolic succession means that ___.", opts: ["We read the Apostles' letters", "Bishops trace their authority back to the Apostles", "We memorize the Apostles' names", "Only apostles can be saints"], correct: 1, reward: "Doctrine Star!" }
     },
 
     prayer: {
@@ -291,6 +299,8 @@ export const SESSIONS = [
         { q: "Every baptized Catholic shares in the Church's ___.", opts: ["Authority only", "Mission", "Priesthood only", "Leadership"], correct: 1 },
         { q: "The Magisterium is the Church's ___ authority.", opts: ["Financial", "Political", "Teaching", "Military"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Nicene Creed was formulated at the Councils of ___ and Constantinople.", opts: ["Trent", "Vatican", "Nicaea", "Ephesus"], correct: 2, reward: "Super Scholar!" }
     },
 
     prayer: {
@@ -348,6 +358,8 @@ export const SESSIONS = [
         { q: "What is a 'firm purpose of amendment'?", opts: ["A type of penance", "A commitment not to sin again", "A prayer of thanksgiving", "A special blessing"], correct: 1 },
         { q: "Perfect contrition arises from ___.", opts: ["Fear of hell", "Peer pressure", "Love of God", "The priest's urging"], correct: 2 }
       ]
+    ,
+    bonus: { q: "A sacrament is an outward sign instituted by ___ to give grace.", opts: ["The Pope", "The bishops", "Christ", "The saints"], correct: 2, reward: "Sacrament Star!" }
     },
 
     prayer: {
@@ -402,6 +414,8 @@ export const SESSIONS = [
         { q: "How long must we fast before receiving Communion?", opts: ["24 hours", "Three hours", "One hour", "No fasting needed"], correct: 2 },
         { q: "The Mass is the one ___ of Christ made present.", opts: ["Meal only", "Sacrifice", "Teaching only", "Blessing"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The matter of Baptism is ___ and the form is the Trinitarian words.", opts: ["oil", "water", "bread", "incense"], correct: 1, reward: "Grace Expert!" }
     },
 
     prayer: {
@@ -462,6 +476,8 @@ export const SESSIONS = [
         { q: "Counsel helps us ___.", opts: ["Pray longer", "Discern the right choice in hard situations", "Understand creation", "Worship God properly"], correct: 1 },
         { q: "Confirmation 'seals' us with the Gift of the ___.", opts: ["Eucharist", "Pope", "Holy Spirit", "Bishop's blessing"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Baptism imprints an indelible spiritual ___ on the soul.", opts: ["wound", "mark/character", "memory", "vision"], correct: 1, reward: "Liturgy Whiz!" }
     },
 
     prayer: {
@@ -516,6 +532,8 @@ export const SESSIONS = [
         { q: "What is the family called in the Catechism?", opts: ["A small parish", "The domestic church", "A religious order", "A prayer group"], correct: 1 },
         { q: "Priestly celibacy in the Latin Rite is a sign of ___.", opts: ["Avoiding family", "Total dedication to God", "A rule without meaning", "A mistake in history"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The essential rite of Confirmation is anointing with chrism and ___.", opts: ["pouring water", "laying on of hands", "reading Scripture", "breaking bread"], correct: 1, reward: "Sacrament Scholar!" }
     },
 
     prayer: {
@@ -572,6 +590,8 @@ export const SESSIONS = [
         { q: "Bishops are the successors of the ___.", opts: ["Laity", "Pharisees", "Apostles", "Priests"], correct: 2 },
         { q: "In Matrimony, who ministers the sacrament to each other?", opts: ["The priest", "The bishop", "The deacon", "The spouses"], correct: 3 }
       ]
+    ,
+    bonus: { q: "The word 'consubstantial' in the Creed means ___.", opts: ["Similar to", "Of one being/substance with", "Created by", "Separate from"], correct: 1, reward: "Review Champion!" }
     },
 
     prayer: {
@@ -634,6 +654,8 @@ export const SESSIONS = [
         { q: "We are always obligated to follow our ___.", opts: ["Feelings", "Friends", "Conscience", "Desires"], correct: 2 },
         { q: "An uninformed conscience can be ___.", opts: ["Perfectly reliable", "Sincerely wrong", "Never wrong", "Ignored"], correct: 1 }
       ]
+    ,
+    bonus: { q: "A well-formed conscience requires ___.", opts: ["Just good feelings", "Prayer, study of Church teaching, and the guidance of the Holy Spirit", "Only personal opinions", "Peer pressure"], correct: 1, reward: "Virtue Hero!" }
     },
 
     prayer: {
@@ -688,6 +710,8 @@ export const SESSIONS = [
         { q: "What must we do after committing mortal sin?", opts: ["Ignore it", "Go to Confession", "Do more good works only", "Ask a friend"], correct: 1 },
         { q: "Sin is always a ___ act.", opts: ["Forced", "Accidental always", "Free", "Inherited"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The natural moral law is ___.", opts: ["Written in the Bible only", "Written on every human heart by God", "Invented by governments", "Different for each culture"], correct: 1, reward: "Moral Champion!" }
     },
 
     prayer: {
@@ -748,6 +772,8 @@ export const SESSIONS = [
         { q: "The theological virtues come from ___.", opts: ["Education", "Habit alone", "God directly", "Our parents"], correct: 2 },
         { q: "Temperance helps us ___ our desires.", opts: ["Eliminate", "Ignore", "Moderate", "Multiply"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The three sources for determining the morality of an act are the object, the intention, and the ___.", opts: ["outcome", "location", "circumstances", "emotion"], correct: 2, reward: "Goodness Guide!" }
     },
 
     prayer: {
@@ -802,6 +828,8 @@ export const SESSIONS = [
         { q: "Solidarity especially emphasizes care for ___.", opts: ["The powerful", "Only Catholics", "The poor and vulnerable", "Our own families only"], correct: 2 },
         { q: "Social justice addresses ___.", opts: ["Only individual sins", "Unjust social structures", "Political parties only", "Economic systems only"], correct: 1 }
       ]
+    ,
+    bonus: { q: "A mortal sin requires grave matter, full knowledge, and ___.", opts: ["witnesses", "deliberate consent", "public knowledge", "repetition"], correct: 1, reward: "Virtue Star!" }
     },
 
     prayer: {
@@ -863,6 +891,8 @@ export const SESSIONS = [
         { q: "Human dignity is rooted in ___.", opts: ["Being Catholic", "Being educated", "Being made in God's image", "Being born into a good family"], correct: 2 },
         { q: "Solidarity means commitment to the good of ___.", opts: ["Only our family", "Our nation only", "All, especially the poor", "Those who agree with us"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Creed professes belief in the ___, holy, catholic, and apostolic Church.", opts: ["new", "old", "one", "large"], correct: 2, reward: "Knowledge Star!" }
     },
 
     prayer: {
@@ -925,6 +955,8 @@ export const SESSIONS = [
         { q: "The Old Testament ___ constantly called Israel to care for the poor.", opts: ["Kings", "Prophets", "Priests", "Warriors"], correct: 1 },
         { q: "Catholic social teaching calls us to change unjust ___.", opts: ["Individuals only", "Feelings", "Structures and systems", "Our own habits only"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Venial sin ___ our relationship with God but does not destroy sanctifying grace.", opts: ["strengthens", "has no effect on", "weakens", "completely destroys"], correct: 2, reward: "Moral Explorer!" }
     },
 
     prayer: {
@@ -980,6 +1012,8 @@ export const SESSIONS = [
         { q: "Pope Francis' environmental encyclical is called ___.", opts: ["Rerum Novarum", "Laudato Si", "Caritas in Veritate", "Gaudium et Spes"], correct: 1 },
         { q: "Ecological conversion begins with ___.", opts: ["Government action only", "Scientific research only", "A change in our own hearts and habits", "Moving to a farm"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The virtue of ___ helps us give to God and neighbor what is owed.", opts: ["temperance", "prudence", "justice", "fortitude"], correct: 2, reward: "Virtue Hero!" }
     },
 
     prayer: {
@@ -1034,6 +1068,8 @@ export const SESSIONS = [
         { q: "Peacemaking requires the courage to ___.", opts: ["Fight harder", "Run away", "Reconcile and forgive", "Avoid conflict forever"], correct: 2 },
         { q: "What does Catholic peace advocacy include?", opts: ["Ignoring politics", "Prayer, dialogue, and disarmament efforts", "Supporting all wars", "Being uninvolved"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The 'preferential option for the poor' means ___.", opts: ["Only poor people matter", "We must give special attention to those most in need", "The Church ignores the rich", "Only donate money"], correct: 1, reward: "Moral Champion!" }
     },
 
     prayer: {
@@ -1094,6 +1130,8 @@ export const SESSIONS = [
         { q: "Truthfulness requires ___ to speak the truth when costly.", opts: ["Nothing", "Permission", "Courage", "Money"], correct: 2 },
         { q: "Online communication requires the same honesty as ___.", opts: ["Public speeches only", "Legal documents only", "Face-to-face interaction", "Official statements only"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Subsidiarity means problems should be solved at the ___ level possible.", opts: ["highest", "most local", "national", "international"], correct: 1, reward: "Goodness Guide!" }
     },
 
     prayer: {
@@ -1150,6 +1188,8 @@ export const SESSIONS = [
         { q: "A lie harms the liar, the deceived, and ___.", opts: ["God only", "Social trust", "The economy", "Nothing else"], correct: 1 },
         { q: "The prophet Micah called us to act justly, love tenderly, and walk ___ with God.", opts: ["boldly", "proudly", "humbly", "loudly"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Apostolic succession means that ___.", opts: ["We read the Apostles' letters", "Bishops trace their authority back to the Apostles", "We memorize the Apostles' names", "Only apostles can be saints"], correct: 1, reward: "Quiz Master!" }
     },
 
     prayer: {
@@ -1207,6 +1247,8 @@ export const SESSIONS = [
         { q: "Lectio Divina is a conversation with ___.", opts: ["Our feelings", "The living God", "Church authorities", "Our community"], correct: 1 },
         { q: "During Meditatio, we ___ the Scripture passage.", opts: ["Memorize", "Speed-read", "Reflect on and chew on", "Ignore"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Liturgy means the 'public work' or official ___ of the Church.", opts: ["teaching", "charity", "worship", "government"], correct: 2, reward: "Prayer Warrior!" }
     },
 
     prayer: {
@@ -1261,6 +1303,8 @@ export const SESSIONS = [
         { q: "The Magnificat is the canticle of ___.", opts: ["Peter", "John", "Paul", "Mary"], correct: 3 },
         { q: "When we pray the Liturgy of the Hours, we pray with ___.", opts: ["Only priests", "Only monks", "The whole Body of Christ", "Only those in our parish"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Liturgy of the Hours sanctifies the ___.", opts: ["altar only", "priest only", "whole day", "church building"], correct: 2, reward: "Prayer Pro!" }
     },
 
     prayer: {
@@ -1331,6 +1375,8 @@ export const SESSIONS = [
         { q: "Bl. Carlo Acutis called the Eucharist his ___.", opts: ["Favorite prayer", "Highway to heaven", "Source of wisdom", "Greatest challenge"], correct: 1 },
         { q: "Contemplative prayer is a wordless ___ with God.", opts: ["Argument", "Communion", "Request", "Debate"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Contemplative prayer is ___.", opts: ["Reading the Bible aloud", "Resting silently in God's presence", "Saying many words", "Group discussion"], correct: 1, reward: "Spiritual Star!" }
     },
 
     prayer: {
@@ -1385,6 +1431,8 @@ export const SESSIONS = [
         { q: "What is a vocation?", opts: ["A job you choose", "A God-given call to love and serve", "A hobby you enjoy", "A talent you were born with"], correct: 1 },
         { q: "Spiritual direction is recommended by ___.", opts: ["Only religious orders", "The Church for those seeking holiness", "Modern psychology only", "Secular counselors"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The three expressions of prayer are vocal, meditative, and ___.", opts: ["physical", "contemplative", "written", "sung"], correct: 1, reward: "Prayer Champion!" }
     },
 
     prayer: {
@@ -1446,6 +1494,8 @@ export const SESSIONS = [
         { q: "St. Teresa of Ávila described prayer as an ___.", opts: ["Open field", "Interior Castle", "Ancient ritual", "Empty room"], correct: 1 },
         { q: "Discernment involves paying attention to ___ in our hearts.", opts: ["Only emotions", "Consolation and desolation", "Our own plans", "Other people's opinions"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Church is called the 'Mystical Body of ___.'", opts: ["Peter", "Mary", "Christ", "The Saints"], correct: 2, reward: "All-Star Learner!" }
     },
 
     prayer: {
@@ -1508,6 +1558,8 @@ export const SESSIONS = [
         { q: "We witness to the Resurrection through our ___.", opts: ["Arguments", "Comfort", "Joy, hope, and love", "Achievements"], correct: 2 },
         { q: "Discipleship is primarily lived out in ___.", opts: ["Only church settings", "Ordinary daily life", "Monastic life only", "Sacred spaces only"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Church is called the 'Mystical Body of ___.'", opts: ["Peter", "Mary", "Christ", "The Saints"], correct: 2, reward: "Faith Explorer!" }
     },
 
     prayer: {
@@ -1562,6 +1614,8 @@ export const SESSIONS = [
         { q: "The most powerful evangelization is ___.", opts: ["Long speeches", "Social media posts", "The witness of a transformed life", "Academic arguments"], correct: 2 },
         { q: "Every Catholic shares in the missionary mission through ___.", opts: ["The Pope's invitation", "Personal choice only", "Baptism and Confirmation", "Ordination"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Church teaches with Christ's authority through the ___.", opts: ["media", "Magisterium", "monarchy", "marketplace"], correct: 1, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -1630,6 +1684,8 @@ export const SESSIONS = [
         { q: "The 'pure in heart' shall ___.", opts: ["Rule the earth", "See God", "Be called God's children", "Inherit the kingdom"], correct: 1 },
         { q: "The Beatitudes are taught in Jesus' ___ on the Mount.", opts: ["Temptation", "Healing", "Sermon", "Transfiguration"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Human dignity comes from ___.", opts: ["Wealth", "Education", "Being made in God's image", "Social status"], correct: 2, reward: "Virtue Star!" }
     },
 
     prayer: {
@@ -1685,6 +1741,8 @@ export const SESSIONS = [
         { q: "Canonization requires a confirmed ___.", opts: ["Vision", "Prophecy", "Miracle", "Apparition"], correct: 2 },
         { q: "All Catholics are called to ___.", opts: ["Ordination", "Religious life only", "Sainthood", "Martyrdom"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Infallibility means the Pope cannot err when teaching ___.", opts: ["about science", "about politics", "on faith and morals ex cathedra", "about everything"], correct: 2, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -1748,6 +1806,8 @@ export const SESSIONS = [
         { q: "The four steps of Lectio Divina are: Read, Reflect, Respond, and ___.", opts: ["Repeat", "Rest", "Recite", "React"], correct: 1 },
         { q: "Jesus called every Christian to be His ___ in the world.", opts: ["Employee", "Observer", "Disciple and witness", "Admirer"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Church teaches with Christ's authority through the ___.", opts: ["media", "Magisterium", "monarchy", "marketplace"], correct: 1, reward: "Super Scholar!" }
     },
 
     prayer: {

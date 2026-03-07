@@ -60,6 +60,7 @@ export const SESSIONS = [
         { q: "Jesus is the second Person of the ___.", opts: ["Church", "Angels", "Holy Trinity", "Apostles"], correct: 2 },
         { q: "Jesus came to reveal the love of ___.", opts: ["Moses", "Peter", "the Angels", "the Father"], correct: 3 },
       ],
+    bonus: { q: "Jesus is both true ___ and true ___.", opts: ["God and man", "king and prophet", "teacher and healer", "priest and leader"], correct: 0, reward: "Faith Champion!" },
     },
 
     prayer: {
@@ -115,6 +116,7 @@ export const SESSIONS = [
         { q: "Who was the foster father of Jesus?", opts: ["John", "Peter", "James", "Joseph"], correct: 3 },
         { q: "The Magi brought three gifts: gold, frankincense, and ___.", opts: ["silver", "oil", "myrrh", "salt"], correct: 2 },
       ],
+    bonus: { q: "What is the Incarnation?", opts: ["Jesus ascending to heaven", "God the Son becoming man", "The Holy Spirit at Pentecost", "Jesus' Resurrection"], correct: 1, reward: "Creed Scholar!" },
     },
 
     prayer: {
@@ -169,6 +171,7 @@ export const SESSIONS = [
         { q: "How old was Jesus when found in the Temple?", opts: ["Eight", "Ten", "Twelve", "Fifteen"], correct: 2 },
         { q: "Jesus' quiet life in Nazareth shows us that ___ life is holy.", opts: ["only royal", "only priestly", "ordinary", "perfect"], correct: 2 },
       ],
+    bonus: { q: "What does 'Incarnation' literally mean?", opts: ["Made holy", "Born again", "Becoming flesh", "Rising up"], correct: 2, reward: "Believer Extraordinaire!" },
     },
 
     prayer: {
@@ -223,6 +226,7 @@ export const SESSIONS = [
         { q: "How many times did the devil tempt Jesus?", opts: ["Once", "Twice", "Three times", "Seven times"], correct: 2 },
         { q: "Jesus defeated each temptation with the ___.", opts: ["sword", "Word of God", "prayer beads", "holy water"], correct: 1 },
       ],
+    bonus: { q: "Which angel appeared to Mary at the Annunciation?", opts: ["Michael", "Raphael", "Gabriel", "Uriel"], correct: 2, reward: "Doctrine Star!" },
     },
 
     prayer: {
@@ -282,6 +286,7 @@ export const SESSIONS = [
         { q: "Who baptized Jesus?", opts: ["Peter", "Joseph", "John the Baptist", "Andrew"], correct: 2 },
         { q: "How long did Jesus fast in the desert?", opts: ["7 days", "20 days", "40 days", "50 days"], correct: 2 },
       ],
+    bonus: { q: "Jesus is both true ___ and true ___.", opts: ["God and man", "king and prophet", "teacher and healer", "priest and leader"], correct: 0, reward: "Super Scholar!" },
     },
 
     prayer: {
@@ -342,6 +347,7 @@ export const SESSIONS = [
         { q: "What was Matthew's job before following Jesus?", opts: ["Shepherd", "Tax collector", "Carpenter", "Soldier"], correct: 1 },
         { q: "Through ___, we are also called to be disciples of Jesus.", opts: ["Holy Orders", "Baptism", "Confirmation", "Matrimony"], correct: 1 },
       ],
+    bonus: { q: "Who was Jesus' foster father on earth?", opts: ["Peter", "John", "Joseph", "Zechariah"], correct: 2, reward: "Faith Explorer!" },
     },
 
     prayer: {
@@ -402,6 +408,7 @@ export const SESSIONS = [
         { q: "When Jesus raised Lazarus, what did He do first?", opts: ["Prayed aloud", "Wept", "Fasted", "Gave thanks"], correct: 1 },
         { q: "Jesus' miracles showed that He is truly ___.", opts: ["a great prophet only", "an angel", "God", "a philosopher"], correct: 2 },
       ],
+    bonus: { q: "In what town did Jesus grow up?", opts: ["Bethlehem", "Jerusalem", "Nazareth", "Capernaum"], correct: 2, reward: "Faith Champion!" },
     },
 
     prayer: {
@@ -456,6 +463,7 @@ export const SESSIONS = [
         { q: "In the Parable of the Sower, what does the seed represent?", opts: ["Money", "Bread", "God's Word", "Water"], correct: 2 },
         { q: "The Good Samaritan teaches us that our neighbor is ___.", opts: ["only our family", "only our countrymen", "only our friends", "anyone in need"], correct: 3 },
       ],
+    bonus: { q: "Who baptized Jesus in the Jordan River?", opts: ["Peter", "John the Baptist", "Joseph", "Moses"], correct: 1, reward: "Creed Scholar!" },
     },
 
     prayer: {
@@ -516,6 +524,7 @@ export const SESSIONS = [
         { q: "What prayer did Jesus teach in the Sermon on the Mount?", opts: ["The Hail Mary", "The Our Father", "The Rosary", "The Glory Be"], correct: 1 },
         { q: "Jesus told us to love and pray for our ___.", opts: ["friends only", "family only", "enemies", "teachers only"], correct: 2 },
       ],
+    bonus: { q: "A miracle shows God's ___ over nature, sickness, and death.", opts: ["anger", "confusion", "power", "indifference"], correct: 2, reward: "Virtue Hero!" },
     },
 
     prayer: {
@@ -570,6 +579,7 @@ export const SESSIONS = [
         { q: "In Gethsemane, Jesus prayed: 'Not my will, but ___ be done.'", opts: ["Peter's", "yours", "our", "Mary's"], correct: 1 },
         { q: "Jesus told parables to encourage us to pray ___.", opts: ["only briefly", "persistently", "silently only", "rarely"], correct: 1 },
       ],
+    bonus: { q: "Jesus often went to ___ places to pray alone.", opts: ["busy", "quiet", "dangerous", "foreign"], correct: 1, reward: "Prayer Warrior!" },
     },
 
     prayer: {
@@ -625,6 +635,7 @@ export const SESSIONS = [
         { q: "What did Jesus give us at the Last Supper?", opts: ["The Rosary", "The Beatitudes", "The Eucharist", "The Commandments"], correct: 2 },
         { q: "Who condemned Jesus despite finding Him innocent?", opts: ["Herod", "Pilate", "Caiaphas", "Caesar"], correct: 1 },
       ],
+    bonus: { q: "How many days was Jesus tempted in the desert?", opts: ["7", "12", "30", "40"], correct: 3, reward: "Believer Extraordinaire!" },
     },
 
     prayer: {
@@ -679,6 +690,7 @@ export const SESSIONS = [
         { q: "Jesus died to ___.", opts: ["prove His power", "punish His enemies", "reconcile us to God", "escape the Romans"], correct: 2 },
         { q: "From the cross, Jesus gave Mary to be our ___.", opts: ["Teacher", "Mother", "Queen", "Guardian"], correct: 1 },
       ],
+    bonus: { q: "Jesus defeated temptation by quoting ___.", opts: ["The Psalms only", "Sacred Scripture", "His own teachings", "The prophets only"], correct: 1, reward: "Doctrine Star!" },
     },
 
     prayer: {
@@ -734,6 +746,7 @@ export const SESSIONS = [
         { q: "The Resurrection shows that Jesus has conquered ___.", opts: ["the Temple", "Rome", "sin and death", "the storm"], correct: 2 },
         { q: "How many days does the Church celebrate Easter?", opts: ["7", "14", "40", "50"], correct: 3 },
       ],
+    bonus: { q: "How many Apostles did Jesus choose?", opts: ["7", "10", "12", "40"], correct: 2, reward: "Faith Explorer!" },
     },
 
     prayer: {
@@ -793,6 +806,7 @@ export const SESSIONS = [
         { q: "The Great Commission told the Apostles to go to ___.", opts: ["Jerusalem only", "Israel only", "all nations", "Rome first"], correct: 2 },
         { q: "Pentecost is called the ___ of the Church.", opts: ["founding", "birthday", "anniversary", "beginning"], correct: 1 },
       ],
+    bonus: { q: "What happened at the Transfiguration?", opts: ["Jesus was baptized", "Jesus glowed with heavenly glory", "Jesus fed 5,000", "Jesus calmed a storm"], correct: 1, reward: "Faith Champion!" },
     },
 
     prayer: {
@@ -847,6 +861,7 @@ export const SESSIONS = [
         { q: "At which miracle did Mary ask Jesus to help?", opts: ["Feeding 5,000", "Raising Lazarus", "Wedding at Cana", "Healing the blind man"], correct: 2 },
         { q: "The Assumption means Mary was taken into heaven ___.", opts: ["only spiritually", "in her soul only", "body and soul", "after many years"], correct: 2 },
       ],
+    bonus: { q: "On which mountain did the Transfiguration occur?", opts: ["Mount Sinai", "Mount Tabor", "Mount Calvary", "Mount Zion"], correct: 1, reward: "Creed Scholar!" },
     },
 
     prayer: {
@@ -901,6 +916,7 @@ export const SESSIONS = [
         { q: "How many days after Easter is Pentecost?", opts: ["10", "40", "50", "100"], correct: 2 },
         { q: "Mary is the Mother of God because Jesus is truly ___.", opts: ["a prophet", "a king only", "God", "an angel"], correct: 2 },
       ],
+    bonus: { q: "What is the Incarnation?", opts: ["Jesus ascending to heaven", "God the Son becoming man", "The Holy Spirit at Pentecost", "Jesus' Resurrection"], correct: 1, reward: "Review Champion!" },
     },
 
     prayer: {
@@ -956,6 +972,7 @@ export const SESSIONS = [
         { q: "In Confession, what do we receive that takes away sin?", opts: ["Anointing", "Communion", "Absolution", "Confirmation"], correct: 2 },
         { q: "Confession restores the grace that was lost by ___ sin.", opts: ["venial", "original", "mortal", "actual"], correct: 2 },
       ],
+    bonus: { q: "What sacrament did Jesus give us at the Last Supper?", opts: ["Baptism", "Confirmation", "The Eucharist", "Reconciliation"], correct: 2, reward: "Sacrament Star!" },
     },
 
     prayer: {
@@ -1016,6 +1033,7 @@ export const SESSIONS = [
         { q: "James 5:14 instructs the sick to call the ___.", opts: ["doctors", "elders of the Church", "scribes", "Pharisees"], correct: 1 },
         { q: "Jesus heals not only bodies but also our ___.", opts: ["finances", "skills", "hearts and souls", "memories"], correct: 2 },
       ],
+    bonus: { q: "The Eucharist is the ___ and summit of the Christian life.", opts: ["beginning", "end", "source", "symbol"], correct: 2, reward: "Grace Expert!" },
     },
 
     prayer: {
@@ -1070,6 +1088,7 @@ export const SESSIONS = [
         { q: "Jesus also calls Himself the ___ of the sheep.", opts: ["field", "river", "gate", "fence"], correct: 2 },
         { q: "The image of Jesus as Good Shepherd shows He is ___.", opts: ["powerful and strict", "loving and protective", "distant and holy", "famous and rich"], correct: 1 },
       ],
+    bonus: { q: "In the parable of the Good Samaritan, who stopped to help?", opts: ["The priest", "The Levite", "The Samaritan", "A Roman soldier"], correct: 2, reward: "Moral Champion!" },
     },
 
     prayer: {
@@ -1129,6 +1148,7 @@ export const SESSIONS = [
         { q: "In Confession, what must we feel to be forgiven?", opts: ["Nothing — it's automatic", "True sorrow for sin", "Perfect holiness", "A feeling of peace first"], correct: 1 },
         { q: "Jesus the Good Shepherd shows that God's love is ___.", opts: ["conditional", "distant", "unconditional", "earned"], correct: 2 },
       ],
+    bonus: { q: "What does 'Incarnation' literally mean?", opts: ["Made holy", "Born again", "Becoming flesh", "Rising up"], correct: 2, reward: "Knowledge Star!" },
     },
 
     prayer: {
@@ -1189,6 +1209,7 @@ export const SESSIONS = [
         { q: "Name the four cardinal virtues.", opts: ["Faith, Hope, Love, Peace", "Prudence, Justice, Fortitude, Temperance", "Kindness, Honesty, Bravery, Patience", "Wisdom, Knowledge, Prayer, Service"], correct: 1 },
         { q: "Sin is turning ___ from God and love.", opts: ["toward", "away", "close", "back"], correct: 1 },
       ],
+    bonus: { q: "The Beatitudes teach us that true happiness comes from ___.", opts: ["Money and fame", "Trusting God and living humbly", "Being popular", "Having everything we want"], correct: 1, reward: "Goodness Guide!" },
     },
 
     prayer: {
@@ -1242,6 +1263,7 @@ export const SESSIONS = [
         { q: "What should we do on Sunday according to the third commandment?", opts: ["Only rest", "Only work", "Go to Mass and rest", "Avoid all others"], correct: 2 },
         { q: "Commandments 1-3 teach us about loving ___.", opts: ["our neighbors", "ourselves", "God", "the Church"], correct: 2 },
       ],
+    bonus: { q: "Jesus taught us to forgive others ___ times.", opts: ["Once", "Three", "Seven", "Seventy times seven (always)"], correct: 3, reward: "Virtue Star!" },
     },
 
     prayer: {
@@ -1302,6 +1324,7 @@ export const SESSIONS = [
         { q: "Commandments 4–10 focus on loving our ___.", opts: ["God", "neighbor", "Church", "family only"], correct: 1 },
         { q: "Every human life is sacred from ___ to natural death.", opts: ["birth", "conception", "age 1", "baptism"], correct: 1 },
       ],
+    bonus: { q: "Jesus said 'love your ___' as a new commandment at the Last Supper.", opts: ["enemies", "one another", "parents", "teachers"], correct: 1, reward: "Moral Explorer!" },
     },
 
     prayer: {
@@ -1361,6 +1384,7 @@ export const SESSIONS = [
         { q: "How many Corporal Works of Mercy are there?", opts: ["5", "6", "7", "10"], correct: 2 },
         { q: "The Works of Mercy teach us that caring for others is ___.", opts: ["optional", "essential to Christian life", "only for religious", "only for adults"], correct: 1 },
       ],
+    bonus: { q: "The Corporal Works of Mercy involve caring for people's ___ needs.", opts: ["spiritual", "physical/bodily", "educational", "financial"], correct: 1, reward: "Virtue Hero!" },
     },
 
     prayer: {
@@ -1414,6 +1438,7 @@ export const SESSIONS = [
         { q: "What is sin?", opts: ["A mistake", "A bad feeling", "Choosing to turn away from God", "Breaking a Church rule only"], correct: 2 },
         { q: "Discipleship means following ___ every day.", opts: ["the Church laws", "Jesus", "the Apostles", "the Commandments only"], correct: 1 },
       ],
+    bonus: { q: "Which angel appeared to Mary at the Annunciation?", opts: ["Michael", "Raphael", "Gabriel", "Uriel"], correct: 2, reward: "Quiz Master!" },
     },
 
     prayer: {
@@ -1474,6 +1499,7 @@ export const SESSIONS = [
         { q: "Adoration acknowledges God's ___.", opts: ["commandments", "greatness and holiness", "gifts to us", "mercy only"], correct: 1 },
         { q: "Jesus said 'Ask and you shall ___.'", opts: ["be tested", "receive", "give", "wait"], correct: 1 },
       ],
+    bonus: { q: "In Gethsemane, Jesus prayed 'Not my will, but ___ be done.'", opts: ["mine", "theirs", "yours", "ours"], correct: 2, reward: "Prayer Pro!" },
     },
 
     prayer: {
@@ -1529,6 +1555,7 @@ export const SESSIONS = [
         { q: "The final step, Contemplatio, involves ___.", opts: ["writing notes", "asking questions", "resting silently in God's presence", "reading a second passage"], correct: 2 },
         { q: "God's Word is described in Psalm 119 as a ___ to our path.", opts: ["fire", "lamp", "shield", "bridge"], correct: 1 },
       ],
+    bonus: { q: "The Our Father is called the summary of the whole ___.", opts: ["Bible", "Creed", "Gospel", "Mass"], correct: 2, reward: "Spiritual Star!" },
     },
 
     prayer: {
@@ -1589,6 +1616,7 @@ export const SESSIONS = [
         { q: "St. Peter denied Jesus ___ times before the crucifixion.", opts: ["Once", "Twice", "Three times", "Seven times"], correct: 2 },
         { q: "When we ask saints to pray for us, they ___.", opts: ["Cannot hear us", "Intercede before God on our behalf", "Replace our own prayers", "Only help sinners"], correct: 1 },
       ],
+    bonus: { q: "Lectio Divina means ___.", opts: ["Holy reading", "Sacred singing", "Divine mercy", "Loud prayer"], correct: 0, reward: "Prayer Champion!" },
     },
 
     prayer: {
@@ -1643,6 +1671,7 @@ export const SESSIONS = [
         { q: "Our first mission field is ___.", opts: ["foreign countries", "our home and neighborhood", "the whole world equally", "only the poor"], correct: 1 },
         { q: "We can also share faith by ___ for those who don't know Jesus.", opts: ["competing", "praying", "arguing", "shouting"], correct: 1 },
       ],
+    bonus: { q: "The Spiritual Works of Mercy involve caring for people's ___ needs.", opts: ["bodily", "financial", "spiritual/soul", "educational"], correct: 2, reward: "Moral Champion!" },
     },
 
     prayer: {
@@ -1704,6 +1733,7 @@ export const SESSIONS = [
         { q: "Which sacrament forgives our sins?", opts: ["Baptism", "Anointing of the Sick", "Reconciliation", "Eucharist"], correct: 2 },
         { q: "We are all called to be missionary ___ of Jesus.", opts: ["servants", "disciples", "helpers", "students"], correct: 1 },
       ],
+    bonus: { q: "Who was Jesus' foster father on earth?", opts: ["Peter", "John", "Joseph", "Zechariah"], correct: 2, reward: "All-Star Learner!" },
     },
 
     prayer: {

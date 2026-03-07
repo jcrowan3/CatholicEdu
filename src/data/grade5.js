@@ -55,6 +55,8 @@ export const SESSIONS = [
         { q: "Where is Jesus called the 'Word of God'?", opts: ["Matthew's Gospel", "Mark's Gospel", "Luke's Gospel", "John's Gospel"], correct: 3 },
         { q: "Jesus is anointed as Priest, Prophet, and ___.", opts: ["Apostle", "King", "Deacon", "Shepherd"], correct: 1 }
       ]
+    ,
+    bonus: { q: "What does 'Christ' mean?", opts: ["Savior", "Teacher", "Anointed One", "King"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -110,6 +112,8 @@ export const SESSIONS = [
         { q: "How old was Jesus when found in the Temple?", opts: ["8", "10", "12", "15"], correct: 2 },
         { q: "The Holy Family is Jesus, Mary, and ___.", opts: ["Peter", "Joseph", "John", "David"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Incarnation means that God the Son ___.", opts: ["Created the world", "Became man", "Sent the prophets", "Wrote the Bible"], correct: 1, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -163,6 +167,8 @@ export const SESSIONS = [
         { q: "How many times did the devil tempt Jesus?", opts: ["1", "2", "3", "7"], correct: 2 },
         { q: "Jesus defeated temptation by quoting ___.", opts: ["Moses", "Scripture", "Prayer books", "An angel"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Jesus has ___ nature(s) in one Person.", opts: ["one divine", "one human", "two (divine and human)", "three"], correct: 2, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -218,6 +224,8 @@ export const SESSIONS = [
         { q: "Who did Jesus especially invite into the Kingdom?", opts: ["The rich and powerful", "Only Jewish people", "The poor and sinners", "Scholars only"], correct: 2 },
         { q: "The Kingdom is 'now and not yet' — it is here, but also awaits ___.", opts: ["Easter", "Christmas", "Fulfillment at the end of time", "The Pope's blessing"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Paschal Mystery refers to Christ's ___.", opts: ["birth and childhood", "miracles and teachings", "passion, death, resurrection, and ascension", "temptation in the desert"], correct: 2, reward: "Doctrine Star!" }
     },
 
     prayer: {
@@ -271,6 +279,8 @@ export const SESSIONS = [
         { q: "What is the Incarnation?", opts: ["Jesus rising from the dead", "God becoming man in Jesus", "The Holy Spirit at Pentecost", "Jesus ascending to heaven"], correct: 1 },
         { q: "The Kingdom of God is open especially to whom?", opts: ["Only the priests", "The rich", "The poor and sinners", "The powerful"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What does 'Christ' mean?", opts: ["Savior", "Teacher", "Anointed One", "King"], correct: 2, reward: "Super Scholar!" }
     },
 
     prayer: {
@@ -325,6 +335,8 @@ export const SESSIONS = [
         { q: "Jesus said to love your ___.", opts: ["only friends", "enemies", "teachers", "family"], correct: 1 },
         { q: "The Sermon on the Mount is found in which Gospel?", opts: ["Mark", "Luke", "John", "Matthew"], correct: 3 }
       ]
+    ,
+    bonus: { q: "The Transfiguration revealed Jesus' ___.", opts: ["human weakness", "divine glory", "temptation", "childhood"], correct: 1, reward: "Faith Explorer!" }
     },
 
     prayer: {
@@ -380,6 +392,8 @@ export const SESSIONS = [
         { q: "Who did Jesus raise from the dead in John chapter 11?", opts: ["Jairus", "Bartimaeus", "Lazarus", "Simon"], correct: 2 },
         { q: "What do Jesus' miracles tell us about the Kingdom of God?", opts: ["It is only in heaven", "God's power overcomes evil and suffering", "Only priests experience it", "It requires hard work"], correct: 1 }
       ]
+    ,
+    bonus: { q: "At Pentecost, the Holy Spirit came upon the ___.", opts: ["Pharisees", "Roman soldiers", "Apostles and Mary", "Temple priests"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -440,6 +454,8 @@ export const SESSIONS = [
         { q: "To whom did Jesus entrust the care of Mary at the Cross?", opts: ["Peter", "James", "John", "Thomas"], correct: 2 },
         { q: "Jesus said He would make the fishermen 'fishers of ___.'", opts: ["fish", "men", "souls", "gold"], correct: 1 }
       ]
+    ,
+    bonus: { q: "How many books are in the New Testament?", opts: ["17", "21", "27", "46"], correct: 2, reward: "Creed Scholar!" }
     },
 
     prayer: {
@@ -494,6 +510,8 @@ export const SESSIONS = [
         { q: "What did the crowd shout on Palm Sunday?", opts: ["Alleluia", "Hosanna", "Gloria", "Amen"], correct: 1 },
         { q: "What animal did Jesus ride into Jerusalem?", opts: ["Horse", "Camel", "Donkey", "Mule"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Which Gospel begins 'In the beginning was the Word'?", opts: ["Matthew", "Mark", "Luke", "John"], correct: 3, reward: "Believer Extraordinaire!" }
     },
 
     prayer: {
@@ -549,6 +567,8 @@ export const SESSIONS = [
         { q: "On which day did Jesus rise from the dead?", opts: ["The first day", "The second day", "The third day", "The seventh day"], correct: 2 },
         { q: "The Paschal Mystery includes Jesus' passion, death, resurrection, and ___.", opts: ["miracles", "Baptism", "Ascension", "Temptation"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Mark's Gospel is known for being ___.", opts: ["The longest", "The shortest and most action-packed", "Written last", "About Jesus' childhood"], correct: 1, reward: "Doctrine Star!" }
     },
 
     prayer: {
@@ -602,6 +622,8 @@ export const SESSIONS = [
         { q: "Pentecost is called the birthday of the ___.", opts: ["Bible", "Eucharist", "Rosary", "Church"], correct: 3 },
         { q: "How many people were baptized on Pentecost?", opts: ["300", "1,000", "3,000", "12,000"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Luke's Gospel emphasizes God's mercy toward ___.", opts: ["Only the rich", "The poor and outcast", "Only men", "Only Israel"], correct: 1, reward: "Faith Explorer!" }
     },
 
     prayer: {
@@ -661,6 +683,8 @@ export const SESSIONS = [
         { q: "How many days after Easter did Jesus ascend?", opts: ["3", "12", "40", "50"], correct: 2 },
         { q: "The Paschal Mystery includes all EXCEPT which?", opts: ["Passion", "Resurrection", "Nativity", "Ascension"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Incarnation means that God the Son ___.", opts: ["Created the world", "Became man", "Sent the prophets", "Wrote the Bible"], correct: 1, reward: "Review Champion!" }
     },
 
     prayer: {
@@ -721,6 +745,8 @@ export const SESSIONS = [
         { q: "Which Gospel is the shortest and most action-packed?", opts: ["Matthew", "Mark", "Luke", "John"], correct: 1 },
         { q: "How many Gospels are there?", opts: ["2", "3", "4", "5"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Ascension of Jesus happened ___ days after Easter.", opts: ["3", "7", "40", "50"], correct: 2, reward: "Faith Champion!" }
     },
 
     prayer: {
@@ -781,6 +807,8 @@ export const SESSIONS = [
         { q: "A poorly formed conscience can lead us to ___.", opts: ["holiness", "correct decisions", "error and sin", "perfect virtue"], correct: 2 },
         { q: "God's moral law is written in our ___.", opts: ["school books", "hearts / conscience", "church buildings", "family rules"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Conscience is our ability to ___.", opts: ["Remember facts", "Judge right from wrong", "Feel hungry", "Predict the future"], correct: 1, reward: "Virtue Hero!" }
     },
 
     prayer: {
@@ -835,6 +863,8 @@ export const SESSIONS = [
         { q: "Temperance helps us control our ___.", opts: ["talents", "friends", "desires and passions", "prayer life"], correct: 2 },
         { q: "The word 'cardinal' comes from the Latin word for ___.", opts: ["heart", "crown", "hinge", "fire"], correct: 2 }
       ]
+    ,
+    bonus: { q: "We must ___ our conscience through prayer and learning the faith.", opts: ["ignore", "form", "hide", "suppress"], correct: 1, reward: "Moral Champion!" }
     },
 
     prayer: {
@@ -889,6 +919,8 @@ export const SESSIONS = [
         { q: "Hope keeps our eyes on God's ___.", opts: ["commandments", "promises", "priests", "books"], correct: 1 },
         { q: "St. Paul says love is ___ than faith and hope.", opts: ["smaller", "equal", "greater", "similar"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The four Cardinal Virtues are prudence, justice, fortitude, and ___.", opts: ["charity", "hope", "temperance", "faith"], correct: 2, reward: "Goodness Guide!" }
     },
 
     prayer: {
@@ -943,6 +975,8 @@ export const SESSIONS = [
         { q: "Where did Jesus give the Church the power to forgive sins?", opts: ["Matthew 5", "John 20:23", "Luke 15", "Acts 2"], correct: 1 },
         { q: "Venial sin ___ our relationship with God.", opts: ["destroys", "strengthens", "weakens", "removes"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The three Theological Virtues are faith, hope, and ___.", opts: ["temperance", "prudence", "charity/love", "fortitude"], correct: 2, reward: "Virtue Star!" }
     },
 
     prayer: {
@@ -1002,6 +1036,8 @@ export const SESSIONS = [
         { q: "Which of these is a Corporal Work of Mercy?", opts: ["Comfort the afflicted", "Counsel the doubtful", "Visit the sick", "Forgive offenses"], correct: 2 },
         { q: "The Works of Mercy show love through ___.", opts: ["Thinking kind thoughts", "Action and service", "Church attendance only", "Giving money only"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Mortal sin requires three conditions: grave matter, full knowledge, and ___.", opts: ["bad luck", "deliberate consent", "being caught", "public witness"], correct: 1, reward: "Moral Explorer!" }
     },
 
     prayer: {
@@ -1056,6 +1092,8 @@ export const SESSIONS = [
         { q: "We should care for the environment because we are God's ___.", opts: ["Owners of creation", "Stewards of creation", "Masters of nature", "Kings of the earth"], correct: 1 },
         { q: "Social justice is part of following which commandment?", opts: ["First Commandment", "Third Commandment", "Love your neighbor", "Honor your parents"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Venial sin ___ our relationship with God.", opts: ["destroys", "does not affect", "weakens", "strengthens"], correct: 2, reward: "Virtue Hero!" }
     },
 
     prayer: {
@@ -1115,6 +1153,8 @@ export const SESSIONS = [
         { q: "Which is NOT a Theological Virtue?", opts: ["Faith", "Hope", "Fortitude", "Love"], correct: 2 },
         { q: "How do we form a good conscience?", opts: ["By following our feelings", "Prayer, Scripture, and Church teaching", "By asking our friends", "By watching TV"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Jesus has ___ nature(s) in one Person.", opts: ["one divine", "one human", "two (divine and human)", "three"], correct: 2, reward: "Knowledge Star!" }
     },
 
     prayer: {
@@ -1170,6 +1210,8 @@ export const SESSIONS = [
         { q: "After confession, the priest gives us ___.", opts: ["A lecture", "Communion", "A penance and absolution", "A new name"], correct: 2 },
         { q: "How completely does God forgive in this sacrament?", opts: ["Partially", "Only if we are perfect", "Completely — nothing held back", "After a waiting period"], correct: 2 }
       ]
+    ,
+    bonus: { q: "In Reconciliation, how many steps make a good confession?", opts: ["3", "4", "5", "7"], correct: 2, reward: "Sacrament Star!" }
     },
 
     prayer: {
@@ -1224,6 +1266,8 @@ export const SESSIONS = [
         { q: "When we receive Communion, we are united with ___.", opts: ["The Pope only", "Jesus and all members of His Body", "Only our parish", "Only the saints"], correct: 1 },
         { q: "Eucharistic Adoration means spending time with Jesus in the ___.", opts: ["confessional", "parish hall", "tabernacle/monstrance", "pulpit"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What is the 'seal of confession'?", opts: ["A stamp on a letter", "The priest can never reveal confessed sins", "The sign we make", "The closing prayer"], correct: 1, reward: "Grace Expert!" }
     },
 
     prayer: {
@@ -1283,6 +1327,8 @@ export const SESSIONS = [
         { q: "The essential rite includes anointing with ___.", opts: ["Water", "Holy water", "Sacred Chrism", "Incense"], correct: 2 },
         { q: "What are Confirmed Catholics called to be?", opts: ["Perfect saints", "Ordained priests", "Witnesses and evangelizers", "Church leaders only"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Transubstantiation means the bread and wine ___.", opts: ["look different", "truly become Christ's Body and Blood", "symbolize Jesus", "are blessed food"], correct: 1, reward: "Liturgy Whiz!" }
     },
 
     prayer: {
@@ -1342,6 +1388,8 @@ export const SESSIONS = [
         { q: "The family formed in Matrimony is called the ___ church.", opts: ["small", "local", "domestic", "mini"], correct: 2 },
         { q: "Who are the first catechists of children in faith?", opts: ["Priests", "Bishops", "Parents", "Catechists"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Eucharist is both a sacrifice and a ___.", opts: ["symbol", "memory only", "meal/banquet", "punishment"], correct: 2, reward: "Sacrament Scholar!" }
     },
 
     prayer: {
@@ -1395,6 +1443,8 @@ export const SESSIONS = [
         { q: "Holy Orders can be received by ___.", opts: ["Any baptized person", "Only women", "Only baptized men", "Any Christian"], correct: 2 },
         { q: "Which sacrament's vows image Christ's love for the Church?", opts: ["Holy Orders", "Confirmation", "Matrimony", "Baptism"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Paschal Mystery refers to Christ's ___.", opts: ["birth and childhood", "miracles and teachings", "passion, death, resurrection, and ascension", "temptation in the desert"], correct: 2, reward: "Quiz Master!" }
     },
 
     prayer: {
@@ -1450,6 +1500,8 @@ export const SESSIONS = [
         { q: "Mental prayer means praying with the ___.", opts: ["only our lips", "heart and mind", "prayer book only", "singing voice"], correct: 1 },
         { q: "Who can practice Lectio Divina?", opts: ["Only priests", "Only adults", "Only monks", "Any baptized person"], correct: 3 }
       ]
+    ,
+    bonus: { q: "Lectio Divina has ___ traditional steps.", opts: ["2", "3", "4", "5"], correct: 2, reward: "Prayer Warrior!" }
     },
 
     prayer: {
@@ -1510,6 +1562,8 @@ export const SESSIONS = [
         { q: "Mary's words at Cana, 'Do whatever he tells you,' show she is ___.", opts: ["Bossy", "A guide to Jesus", "A priest", "A prophet only"], correct: 1 },
         { q: "Which of these is a Joyful Mystery?", opts: ["Crucifixion", "Pentecost", "Annunciation", "Transfiguration"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The four steps of Lectio Divina are read, meditate, pray, and ___.", opts: ["sleep", "contemplate", "write", "sing"], correct: 1, reward: "Prayer Pro!" }
     },
 
     prayer: {
@@ -1563,6 +1617,8 @@ export const SESSIONS = [
         { q: "The Liturgy of the Hours is built around the ___.", opts: ["Gospels", "Psalms", "Catechism", "Epistles"], correct: 1 },
         { q: "Mary's prayer at Vespers is the ___.", opts: ["Our Father", "Hail Mary", "Magnificat", "Glory Be"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Rosary has ___ decades.", opts: ["3", "5", "10", "15"], correct: 1, reward: "Spiritual Star!" }
     },
 
     prayer: {
@@ -1623,6 +1679,8 @@ export const SESSIONS = [
         { q: "St. Joan of Arc showed that God calls ___.", opts: ["Only adults", "Only soldiers", "The young and small too", "Only the educated"], correct: 2 },
         { q: "Who is the patron of students?", opts: ["St. Luke", "St. Francis", "St. Joseph", "St. Thomas Aquinas"], correct: 3 }
       ]
+    ,
+    bonus: { q: "The four sets of Rosary mysteries are Joyful, Sorrowful, Glorious, and ___.", opts: ["Peaceful", "Hopeful", "Luminous", "Merciful"], correct: 2, reward: "Prayer Champion!" }
     },
 
     prayer: {
@@ -1684,6 +1742,8 @@ export const SESSIONS = [
         { q: "What is Lectio Divina?", opts: ["A Psalm", "Sacred Reading with Scripture", "A type of Mass", "A Marian prayer"], correct: 1 },
         { q: "How many Mysteries are in the Rosary?", opts: ["3 sets of 5", "4 sets of 5", "5 sets of 5", "2 sets of 10"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Transfiguration revealed Jesus' ___.", opts: ["human weakness", "divine glory", "temptation", "childhood"], correct: 1, reward: "All-Star Learner!" }
     },
 
     prayer: {

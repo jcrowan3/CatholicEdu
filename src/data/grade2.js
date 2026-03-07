@@ -50,6 +50,8 @@ export const SESSIONS = [
         { q: "Why did God make you?", opts: ["By accident", "Out of love", "To do chores", "Because He was bored"], correct: 1 },
         { q: "God rested on which day?", opts: ["The first", "The third", "The fifth", "The seventh"], correct: 3 }
       ]
+    ,
+    bonus: { q: "Who made the sun, moon, and stars?", opts: ["Angels", "God", "People", "Nobody"], correct: 1, reward: "Faith Champion!" }
     },
     prayer: {
       title: "Prayer of Thanks for Creation",
@@ -100,6 +102,8 @@ export const SESSIONS = [
         { q: "How can we talk to God our Father?", opts: ["Only in church", "Only with a priest", "Through prayer anywhere", "By writing a letter"], correct: 2 },
         { q: "Are we ever alone when we trust in God?", opts: ["Yes, always", "Only at night", "No, never", "Sometimes"], correct: 2 }
       ]
+    ,
+    bonus: { q: "God made people in His own ___ and likeness.", opts: ["house", "image", "color", "size"], correct: 1, reward: "Creed Scholar!" }
     },
     prayer: {
       title: "Prayer to God Our Father",
@@ -150,6 +154,8 @@ export const SESSIONS = [
         { q: "What is the Good News about Jesus?", opts: ["He was rich", "He died and rose to save us", "He was a great teacher only", "He defeated Rome"], correct: 1 },
         { q: "Stories Jesus told to teach are called ___.", opts: ["Poems", "Parables", "Psalms", "Prayers"], correct: 1 }
       ]
+    ,
+    bonus: { q: "How many Persons are in the Holy Trinity?", opts: ["1", "2", "3", "4"], correct: 2, reward: "Believer Extraordinaire!" }
     },
     prayer: {
       title: "Prayer to Jesus",
@@ -201,6 +207,8 @@ export const SESSIONS = [
         { q: "Which animal is a symbol of the Holy Spirit?", opts: ["Eagle", "Lamb", "Dove", "Fish"], correct: 2 },
         { q: "The Holy Spirit gives us ___ to do what is right.", opts: ["Money", "Strength", "Friends", "Rules"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Name the three Persons of the Trinity.", opts: ["Father, Son, Holy Spirit", "Father, Mother, Son", "God, Mary, Jesus", "Father, Son, Angels"], correct: 0, reward: "Doctrine Star!" }
     },
     prayer: {
       title: "Come, Holy Spirit",
@@ -256,6 +264,8 @@ export const SESSIONS = [
         { q: "The Holy Spirit first came to the Apostles at ___.", opts: ["Christmas", "Easter", "Pentecost", "Lent"], correct: 2 },
         { q: "People are made in God's ___.", opts: ["House", "Image", "Garden", "Story"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Who made the sun, moon, and stars?", opts: ["Angels", "God", "People", "Nobody"], correct: 1, reward: "Super Scholar!" }
     },
     prayer: {
       title: "Glory Be — The Trinity Prayer",
@@ -307,6 +317,8 @@ export const SESSIONS = [
         { q: "Jesus is called the 'new ___.'", opts: ["Moses", "David", "Adam", "Noah"], correct: 2 },
         { q: "Original sin makes it harder for us to choose ___.", opts: ["Good over evil", "Friends", "What to eat", "A career"], correct: 0 }
       ]
+    ,
+    bonus: { q: "What is the Bible?", opts: ["A storybook", "God's Word", "A dictionary", "A history textbook"], correct: 1, reward: "Faith Explorer!" }
     },
     prayer: {
       title: "Prayer for God's Help",
@@ -357,6 +369,8 @@ export const SESSIONS = [
         { q: "Sacraments use signs we can ___.", opts: ["Dream", "See and touch", "Invent", "Imagine"], correct: 1 },
         { q: "Which is NOT a sacrament?", opts: ["Baptism", "Eucharist", "Prayer", "Matrimony"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What is poured on a person during Baptism?", opts: ["Oil", "Milk", "Water", "Juice"], correct: 2, reward: "Sacrament Star!" }
     },
     prayer: {
       title: "Thank You for the Sacraments",
@@ -413,6 +427,8 @@ export const SESSIONS = [
         { q: "Godparents promise to help us grow in ___.", opts: ["School", "Sports", "Faith", "Cooking"], correct: 2 },
         { q: "Baptism makes us ___ of God.", opts: ["Students", "Servants", "Children", "Neighbors"], correct: 2 }
       ]
+    ,
+    bonus: { q: "How many sacraments are there?", opts: ["3", "5", "7", "10"], correct: 2, reward: "Grace Expert!" }
     },
     prayer: {
       title: "Baptism Renewal Prayer",
@@ -464,6 +480,8 @@ export const SESSIONS = [
         { q: "Is the priest allowed to tell our confession to others?", opts: ["Yes, to parents", "Yes, to the bishop", "No, never", "Yes, sometimes"], correct: 2 },
         { q: "After Reconciliation our friendship with God is ___.", opts: ["Broken", "The same", "Restored", "Lost"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Baptism makes us part of God's ___.", opts: ["school", "team", "family", "army"], correct: 2, reward: "Liturgy Whiz!" }
     },
     prayer: {
       title: "Act of Contrition",
@@ -514,6 +532,8 @@ export const SESSIONS = [
         { q: "In Reconciliation, the priest gives us ___.", opts: ["Penance only", "Advice", "Absolution — God's forgiveness", "A blessing"], correct: 2 },
         { q: "God's promise of a Savior was fulfilled by ___.", opts: ["Moses", "David", "Elijah", "Jesus"], correct: 3 }
       ]
+    ,
+    bonus: { q: "God made people in His own ___ and likeness.", opts: ["house", "image", "color", "size"], correct: 1, reward: "Review Champion!" }
     },
     prayer: {
       title: "Glory Be",
@@ -565,6 +585,8 @@ export const SESSIONS = [
         { q: "What should we do right after receiving Communion?", opts: ["Leave church", "Eat a snack", "Pray quietly", "Talk to friends"], correct: 2 },
         { q: "What does 'Amen' mean when we receive Communion?", opts: ["Hello", "Goodbye", "I believe", "Thank you"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What does the white garment at Baptism show?", opts: ["Being cold", "Being made new in Christ", "Being dressed up", "Being old"], correct: 1, reward: "Sacrament Scholar!" }
     },
     prayer: {
       title: "Prayer After Receiving Communion",
@@ -620,6 +642,8 @@ export const SESSIONS = [
         { q: "The Mass ends by ___ us to serve others.", opts: ["Warning", "Sending", "Stopping", "Asking"], correct: 1 },
         { q: "Jesus told us to celebrate the Mass 'in ___ of me.'", opts: ["Honor", "Memory", "Praise", "Celebration"], correct: 1 }
       ]
+    ,
+    bonus: { q: "In the sacrament of Reconciliation, God ___ our sins.", opts: ["remembers", "ignores", "forgives", "writes down"], correct: 2, reward: "Grace Champion!" }
     },
     prayer: {
       title: "Prayer Before Mass",
@@ -670,6 +694,8 @@ export const SESSIONS = [
         { q: "What color is Ordinary Time?", opts: ["Green", "Purple", "White", "Red"], correct: 0 },
         { q: "Lent prepares us for ___.", opts: ["Christmas", "Advent", "Easter", "Pentecost"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Before Confession, we should examine our ___.", opts: ["homework", "closet", "conscience", "wallet"], correct: 2, reward: "Sacrament Star!" }
     },
     prayer: {
       title: "Prayer Through the Seasons",
@@ -726,6 +752,8 @@ export const SESSIONS = [
         { q: "A ___ is a good habit.", opts: ["Sin", "Virtue", "Mistake", "Rule"], correct: 1 },
         { q: "All of God's laws are rooted in ___.", opts: ["Fear", "Power", "Rules", "Love"], correct: 3 }
       ]
+    ,
+    bonus: { q: "God gave us the Ten Commandments to help us ___.", opts: ["be afraid", "live well", "be rich", "be famous"], correct: 1, reward: "Virtue Hero!" }
     },
     prayer: {
       title: "Prayer to Choose Well",
@@ -775,6 +803,8 @@ export const SESSIONS = [
         { q: "What must we do on Sunday?", opts: ["Sleep all day", "Go to Mass", "Work extra hard", "Stay home"], correct: 1 },
         { q: "Commandments 1-3 are about our relationship with ___.", opts: ["Family", "Neighbors", "God", "Country"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The greatest commandment is to love ___.", opts: ["only ourselves", "only our friends", "God", "money"], correct: 2, reward: "Moral Champion!" }
     },
     prayer: {
       title: "Act of Love for God",
@@ -830,6 +860,8 @@ export const SESSIONS = [
         { q: "Which sacrament do we receive first?", opts: ["Eucharist", "Confirmation", "Baptism", "Reconciliation"], correct: 2 },
         { q: "God gives us a ___ to know right from wrong.", opts: ["Book", "Conscience", "Teacher", "List"], correct: 1 }
       ]
+    ,
+    bonus: { q: "How many Persons are in the Holy Trinity?", opts: ["1", "2", "3", "4"], correct: 2, reward: "Knowledge Star!" }
     },
     prayer: {
       title: "Glory Be",
@@ -880,6 +912,8 @@ export const SESSIONS = [
         { q: "Commandments 4-10 teach us to love our ___.", opts: ["Property", "Country", "Neighbor", "Rules"], correct: 2 },
         { q: "Jesus said all the commandments hang on ___ and love of neighbor.", opts: ["Prayer", "Rules", "Love of God", "The Church"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Who is our neighbor?", opts: ["Only the person next door", "Only family", "Only friends", "Everyone"], correct: 3, reward: "Goodness Guide!" }
     },
     prayer: {
       title: "Prayer to Love Our Neighbor",
@@ -930,6 +964,8 @@ export const SESSIONS = [
         { q: "In the Prodigal Son story, the father represents ___.", opts: ["The Church", "God", "A priest", "A teacher"], correct: 1 },
         { q: "True forgiveness means ___.", opts: ["Pretending nothing happened", "Saying sorry and meaning it", "Just forgetting", "Being angry inside"], correct: 1 }
       ]
+    ,
+    bonus: { q: "When we do something wrong on purpose, it is called ___.", opts: ["a mistake", "sin", "an accident", "bad luck"], correct: 1, reward: "Virtue Star!" }
     },
     prayer: {
       title: "Prayer for a Forgiving Heart",
@@ -986,6 +1022,8 @@ export const SESSIONS = [
         { q: "Praying for others is a ___ Work of Mercy.", opts: ["Corporal", "Personal", "Spiritual", "Physical"], correct: 2 },
         { q: "Every person we serve bears the ___ of God.", opts: ["Name", "Image", "Glory", "Power"], correct: 1 }
       ]
+    ,
+    bonus: { q: "What should we do when we hurt someone?", opts: ["Hide", "Say sorry and try to fix it", "Pretend nothing happened", "Blame someone else"], correct: 1, reward: "Moral Explorer!" }
     },
     prayer: {
       title: "Prayer to Serve Others",
@@ -1035,6 +1073,8 @@ export const SESSIONS = [
         { q: "Visiting the sick is a ___ Work of Mercy.", opts: ["Spiritual", "Corporal", "Private", "Difficult"], correct: 1 },
         { q: "Jesus said all commandments hang on love of God and love of ___.", opts: ["Angels", "Rules", "Neighbor", "Country"], correct: 2 }
       ]
+    ,
+    bonus: { q: "Name the three Persons of the Trinity.", opts: ["Father, Son, Holy Spirit", "Father, Mother, Son", "God, Mary, Jesus", "Father, Son, Angels"], correct: 0, reward: "Quiz Master!" }
     },
     prayer: {
       title: "Our Father",
@@ -1091,6 +1131,8 @@ export const SESSIONS = [
         { q: "Which type of prayer says sorry?", opts: ["Adoration", "Contrition", "Petition", "Thanksgiving"], correct: 1 },
         { q: "Prayer changes ___.", opts: ["God", "The weather", "Us", "Time"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What is prayer?", opts: ["Talking and listening to God", "Just asking for things", "Only singing", "Reciting words fast"], correct: 0, reward: "Prayer Warrior!" }
     },
     prayer: {
       title: "Simple Prayer Practice",
@@ -1141,6 +1183,8 @@ export const SESSIONS = [
         { q: "'Daily bread' can also refer to the ___.", opts: ["Bible", "Eucharist", "Rosary", "Homily"], correct: 1 },
         { q: "We promise to ___ those who hurt us.", opts: ["Avoid", "Forgive", "Ignore", "Report"], correct: 1 }
       ]
+    ,
+    bonus: { q: "Can we pray only in church?", opts: ["Yes", "No \u2014 anywhere, anytime", "Only on Sundays", "Only before meals"], correct: 1, reward: "Prayer Pro!" }
     },
     prayer: {
       title: "Praying the Our Father Together",
@@ -1192,6 +1236,8 @@ export const SESSIONS = [
         { q: "In the Hail Mary, we ask Mary to pray for us ___ and at our death.", opts: ["Sometimes", "On Sundays", "Now", "When we ask"], correct: 2 },
         { q: "Most of the Hail Mary's words come from the ___.", opts: ["Catechism", "Bible", "Pope", "Tradition only"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Our Father was taught by ___.", opts: ["Moses", "Mary", "Jesus", "Peter"], correct: 2, reward: "Spiritual Star!" }
     },
     prayer: {
       title: "The Hail Mary",
@@ -1243,6 +1289,8 @@ export const SESSIONS = [
         { q: "The Resurrection belongs to which set of mysteries?", opts: ["Joyful", "Glorious", "Sorrowful", "Luminous"], correct: 1 },
         { q: "While praying the Rosary, we meditate on events in Jesus' and Mary's ___.", opts: ["Parables", "Commandments", "Lives", "Dreams"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What does 'Amen' mean?", opts: ["Goodbye", "Let it be so / I believe", "Help me", "Maybe"], correct: 1, reward: "Prayer Champion!" }
     },
     prayer: {
       title: "One Decade of the Rosary",
@@ -1293,6 +1341,8 @@ export const SESSIONS = [
         { q: "How many sets of mysteries are in the Rosary?", opts: ["2", "3", "4", "5"], correct: 2 },
         { q: "Prayer changes ___.", opts: ["God", "The world directly", "Us", "Rules"], correct: 2 }
       ]
+    ,
+    bonus: { q: "What is the Bible?", opts: ["A storybook", "God's Word", "A dictionary", "A history textbook"], correct: 1, reward: "All-Star Learner!" }
     },
     prayer: {
       title: "Prayer to Our Blessed Mother",
@@ -1349,6 +1399,8 @@ export const SESSIONS = [
         { q: "St. Francis wrote: 'Lord, make me an instrument of ___.'", opts: ["Love", "Justice", "Peace", "Light"], correct: 2 },
         { q: "A saint who has a special connection to us is called a ___ saint.", opts: ["Personal", "Patron", "Private", "Perfect"], correct: 1 }
       ]
+    ,
+    bonus: { q: "The Hail Mary starts with the words of the Angel ___.", opts: ["Michael", "Raphael", "Gabriel", "Uriel"], correct: 2, reward: "Devotion Star!" }
     },
     prayer: {
       title: "Prayer of St. Francis",
@@ -1400,6 +1452,8 @@ export const SESSIONS = [
         { q: "The Assumption means Mary was taken body and soul into ___.", opts: ["The Church", "Jerusalem", "Heaven", "A garden"], correct: 2 },
         { q: "When we honor Mary, we honor ___.", opts: ["The angels", "Her Son Jesus", "The Church only", "All the saints"], correct: 1 }
       ]
+    ,
+    bonus: { q: "What is the first prayer many Catholics learn?", opts: ["The Rosary", "The Sign of the Cross", "The Creed", "The Angelus"], correct: 1, reward: "Prayer Warrior!" }
     },
     prayer: {
       title: "Memorare — Prayer to Mary",
@@ -1456,6 +1510,8 @@ export const SESSIONS = [
         { q: "The ambo is where ___ is proclaimed.", opts: ["Communion is given", "Scripture is read", "Baptism happens", "Confession is heard"], correct: 1 },
         { q: "Images of saints in church help us ___.", opts: ["Worship the saints", "Pray and remember our friends in heaven", "Decorate the church", "Feel entertained"], correct: 1 }
       ]
+    ,
+    bonus: { q: "After confessing our sins, the priest gives us ___.", opts: ["candy", "absolution", "a grade", "homework"], correct: 1, reward: "Grace Expert!" }
     },
     prayer: {
       title: "Prayer Upon Entering Church",
@@ -1506,6 +1562,8 @@ export const SESSIONS = [
         { q: "Every baptized person is called to ___ their faith.", opts: ["Keep private", "Share joyfully", "Only think about", "Study in books"], correct: 1 },
         { q: "Our prayers for the world are ___.", opts: ["Just words", "Useless", "Real and powerful", "Only for big problems"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Old Testament tells about life ___ Jesus was born.", opts: ["after", "during", "before", "instead of"], correct: 2, reward: "Faith Champion!" }
     },
     prayer: {
       title: "Prayer to Be the Church",
@@ -1563,6 +1621,8 @@ export const SESSIONS = [
         { q: "The Our Father was taught to us by ___.", opts: ["Moses", "Mary", "Jesus", "Peter"], correct: 2 },
         { q: "We are called to love God and our ___.", opts: ["Country", "Rules", "Neighbor", "Feelings"], correct: 2 }
       ]
+    ,
+    bonus: { q: "The Old Testament tells about life ___ Jesus was born.", opts: ["after", "during", "before", "instead of"], correct: 2, reward: "Super Scholar!" }
     },
     prayer: {
       title: "End-of-Year Celebration Prayer",
