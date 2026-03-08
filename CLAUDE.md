@@ -1,81 +1,107 @@
-# Catholic Catechist Toolkit — Grade 3
+# Catholic Catechist Toolkit
 
 ## Project Overview
-Interactive web app for parish CCD/faith formation programs. Delivers weekly sessions to 3rd graders (ages 8-9) learning about "The Church and the Sacraments."
+Interactive web app for parish CCD/faith formation programs. Monorepo with a React SPA frontend and FastAPI + PostgreSQL backend. Supports offline (localStorage-only) and online (API-backed) modes.
+
+Grades 2-8, 30 weeks per grade, 6 activity types per session.
 
 ## Tech Stack
-- React + Vite
-- Tailwind CSS v4 (via @tailwindcss/vite plugin)
-- No backend — pure client-side, data lives in JS files
-- Google Fonts: Nunito (body) + Lilita One (display)
+- **Frontend**: React 19 + Vite 7 + Tailwind CSS v4
+- **Backend**: Python 3.14, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2
+- **Database**: PostgreSQL 17 (asyncpg)
+- **Auth**: JWT (python-jose) + bcrypt
+- **Testing**: pytest-asyncio (backend), frontend is manual
+- **Deploy**: Docker Compose
 
 ## Project Structure
 ```
 catechist-toolkit/
-├── src/
-│   ├── components/
-│   │   ├── activities/     # 6 activity type components
-│   │   │   ├── Discover.jsx    # Tap-to-reveal cards
-│   │   │   ├── Sort.jsx        # Drag/tap into categories
-│   │   │   ├── Timeline.jsx    # Swap items into order
-│   │   │   ├── FillBlank.jsx   # Complete sentences
-│   │   │   ├── Quiz.jsx        # 5-question multiple choice
-│   │   │   └── Prayer.jsx      # Call-and-response guided prayer
-│   │   ├── session/
-│   │   │   ├── SessionHome.jsx   # Activity grid + progress bar
-│   │   │   ├── SessionPicker.jsx # Week selector
-│   │   │   └── TopBar.jsx       # Navigation + star counter
-│   │   └── shared/
-│   │       ├── DoneButton.jsx
-│   │       ├── DoneBadge.jsx
-│   │       └── Feedback.jsx
-│   ├── data/
-│   │   └── grade3.js       # All 30 sessions data
-│   ├── hooks/
-│   │   └── useProgress.js  # Stars, completion tracking
-│   ├── styles/
-│   │   └── animations.css  # Keyframe animations
-│   ├── App.jsx             # Main router / screen manager
-│   ├── main.jsx            # Entry point
-│   └── index.css           # Tailwind imports + base styles
-├── CLAUDE.md
-├── package.json
-└── index.html
+├── frontend/                  # React SPA
+│   ├── src/
+│   │   ├── api/client.js          # API client w/ auth + auto-refresh
+│   │   ├── context/AuthContext.jsx # Online/offline auth provider
+│   │   ├── components/
+│   │   │   ├── activities/        # Discover, Sort, Timeline, FillBlank, Quiz, Prayer
+│   │   │   ├── auth/              # LoginScreen, CatechistSetup, OnlineAuth, JoinClass
+│   │   │   ├── dashboard/         # Dashboard, ProgressGrid, UserManager, ClassSelector
+│   │   │   ├── admin/             # SessionEditor
+│   │   │   ├── session/           # SessionHome, TopBar, Picker, Bookmarks, Vocabulary
+│   │   │   └── landing/           # LandingPage
+│   │   ├── hooks/
+│   │   │   ├── useProgress.js     # Dual-mode (API + localStorage)
+│   │   │   └── useBookmarks.js    # Dual-mode (API + localStorage)
+│   │   ├── data/
+│   │   │   ├── grade[2-8].js      # Curriculum data (30 sessions per grade)
+│   │   │   ├── store.js           # localStorage data layer
+│   │   │   └── gradeLoader.js     # Dynamic grade import
+│   │   └── utils/
+│   │       ├── migrateToApi.js    # localStorage → API migration
+│   │       └── generateSessionPdf.js
+│   ├── package.json
+│   └── vite.config.js             # Proxy /api → localhost:8000
+│
+├── backend/
+│   ├── src/catechist_api/
+│   │   ├── models/                # 10 SQLAlchemy models
+│   │   ├── schemas/               # Pydantic DTOs
+│   │   ├── services/              # Business logic layer
+│   │   ├── routers/               # 35 API endpoints
+│   │   ├── auth/                  # JWT + bcrypt + dependencies
+│   │   ├── config.py              # Settings (env vars)
+│   │   ├── database.py            # Async engine + session
+│   │   └── main.py                # FastAPI app + CORS + routers
+│   ├── alembic/                   # DB migrations
+│   ├── tests/                     # 37 tests
+│   └── pyproject.toml
+│
+└── docker-compose.yml
 ```
 
 ## Commands
-- `npm run dev` — Start dev server
-- `npm run build` — Production build
-- `npm run preview` — Preview production build
+```bash
+# Frontend
+cd frontend && npm run dev       # Dev server (localhost:5173)
+cd frontend && npm run build     # Production build
+
+# Backend
+cd backend && uv sync --extra dev
+cd backend && uv run uvicorn catechist_api.main:app --reload
+cd backend && uv run pytest tests/ -x -q
+cd backend && uv run alembic upgrade head
+
+# Docker
+docker compose up -d db          # Just Postgres
+docker compose up                # Full stack
+```
 
 ## Content Rules (CRITICAL)
-- All Scripture uses the **Catholic Public Domain Version (CPDV)** — public domain
-- CCC (Catechism of the Catholic Church) paragraph numbers are cited but content is original
-- All content is **original** — no copyrighted curricula
+- All Scripture: **Catholic Public Domain Version (CPDV)** — public domain
+- CCC paragraph numbers cited but content is **original**
 - Must be **doctrinally accurate** to official Catholic teaching
-- The Real Presence of Christ in the Eucharist is **NOT symbolic** — this is core Catholic doctrine (transubstantiation)
+- Real Presence = transubstantiation, **NOT symbolic**
 
 ## Design System
 - **Background**: Dark gradient `#1a1a3e → #2d2d6b → #1e3a5f`
 - **Pillar colors**: Creed `#4A90D9`, Sacraments `#D4A843`, Morality `#6DB87B`, Prayer `#9B6DB8`
-- **Cards**: Frosted glass effect (rgba backgrounds, subtle borders)
+- **Cards**: Frosted glass (rgba backgrounds, subtle borders)
 - **Stars**: Discover=2, Sort/Timeline/FillBlank=3, Quiz=5, Prayer=1
+- **Fonts**: Nunito (body) + Lilita One (display) via Google Fonts
 - **Animations**: slide-up (su), pop-in (pi), bounce-in (bi), float (fl), glow (gl), twinkle (tw)
-- **Interactive classes**: `.ch` (card hover), `.bh` (button hover)
+- **Interactive**: `.ch` (card hover), `.bh` (button hover)
 
-## Session Data Structure
-Each session in `data/grade3.js` has:
-- `week`, `title`, `pillar`, `ccc`, `verse`
-- `discover`: tap-to-reveal cards
-- `secondary`: which secondary activity ("sort", "timeline", or "fillblank")
-- The secondary activity data object
-- `quiz`: 5 multiple-choice questions (0-indexed `correct`)
-- `prayer`: leader/all call-and-response lines
+## Architecture Patterns
+- **Dual-mode hooks**: `useProgress` and `useBookmarks` check `hasToken()` — API when online, localStorage when offline. Same interface for components.
+- **Fire-and-forget writes**: Progress/bookmark API calls are non-blocking so UI stays instant.
+- **Multi-tenant isolation**: All API queries scoped to `parish_id` from JWT.
+- **Idempotent progress**: PostgreSQL `ON CONFLICT DO UPDATE` with `GREATEST()` for best-score upserts.
+- **Session data**: Curriculum is bundled in frontend JS files. Backend stores overrides only.
+- **pytest-asyncio**: Uses `asyncio_default_test_loop_scope = "session"` in pyproject.toml for shared event loops across session-scoped fixtures.
+
+## Known Patterns
+- Pydantic v2 field named "register" triggers shadowing warning — suppress with `warnings.filterwarnings`
+- Merging lists of dicts with `id` keys during inheritance: use union-by-id
+- `model_dump_json()` + `json.loads()` for clean YAML serialization
+- Python 3.14 works fine with Pydantic 2.12, PyYAML 6, Typer 0.23
 
 ## Target Devices
-Chromebooks and tablets (parish classrooms). Mobile-friendly.
-
-## Future Integration
-- Saint Quest adventure game (placeholder card on SessionHome)
-- Backend for progress persistence
-- Catechist/admin dashboard
+Chromebooks and tablets (parish classrooms). Mobile-friendly. Works offline.
