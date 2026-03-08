@@ -115,6 +115,30 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
         )
       : 0;
 
+  // ─── Add Grade (online) ───
+  const [addingGrade, setAddingGrade] = useState(false);
+  const [newGradeNum, setNewGradeNum] = useState("");
+  const [newGradeName, setNewGradeName] = useState("");
+
+  const handleAddGrade = async () => {
+    const num = parseInt(newGradeNum);
+    if (!num || num < 1 || num > 12) return;
+    try {
+      const created = await api.createGrade(num, newGradeName.trim() || null);
+      setGrades((prev) => [...prev, created]);
+      setSelectedGrade(num);
+      onGradeChange?.(num);
+      setAddingGrade(false);
+      setNewGradeNum("");
+      setNewGradeName("");
+    } catch (err) {
+      alert(err.message || "Failed to create grade");
+    }
+  };
+
+  // Need setup? (online catechist with no grades)
+  const needsSetup = isOnline && grades.length === 0 && !effectiveGrade;
+
   return (
     <div style={{ animation: "su .4s ease" }}>
       {/* Header */}
@@ -134,7 +158,141 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
         </p>
       </div>
 
-      {/* Grade picker for online catechists */}
+      {/* ─── First-time setup for online catechists ─── */}
+      {needsSetup && (
+        <div
+          style={{
+            background: "var(--surface-card)",
+            borderRadius: 14,
+            padding: "28px 20px",
+            border: "1px solid var(--border-default)",
+            textAlign: "center",
+            marginBottom: 20,
+            animation: "pi .4s ease",
+          }}
+        >
+          <div style={{ fontSize: 48, marginBottom: 12 }}>🎓</div>
+          <h2
+            style={{
+              fontFamily: displayFont,
+              fontSize: 20,
+              color: "var(--text-primary)",
+              margin: "0 0 8px",
+            }}
+          >
+            Welcome! Let's set up your first grade.
+          </h2>
+          <p style={{ color: "var(--text-tertiary)", fontSize: 13, marginBottom: 20 }}>
+            Choose a grade level, then create a class. Students will use a join
+            code to connect.
+          </p>
+
+          <div style={{ maxWidth: 300, margin: "0 auto", textAlign: "left" }}>
+            <label
+              style={{
+                color: "var(--text-tertiary)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: 1,
+                display: "block",
+                marginBottom: 4,
+              }}
+            >
+              GRADE LEVEL
+            </label>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gap: 6,
+                marginBottom: 14,
+              }}
+            >
+              {GRADES.filter((g) => g.status === "active").map((g) => (
+                <button
+                  key={g.grade}
+                  onClick={() => setNewGradeNum(String(g.grade))}
+                  style={{
+                    padding: "8px 0",
+                    borderRadius: 8,
+                    fontSize: 14,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    background:
+                      newGradeNum === String(g.grade)
+                        ? "rgba(212,168,67,.2)"
+                        : "var(--surface-input)",
+                    border:
+                      newGradeNum === String(g.grade)
+                        ? "2px solid var(--accent-gold)"
+                        : "1px solid var(--border-default)",
+                    color:
+                      newGradeNum === String(g.grade)
+                        ? "var(--accent-gold)"
+                        : "var(--text-faint)",
+                  }}
+                >
+                  {g.grade}
+                </button>
+              ))}
+            </div>
+
+            <label
+              style={{
+                color: "var(--text-tertiary)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: 1,
+                display: "block",
+                marginBottom: 4,
+              }}
+            >
+              PROGRAM NAME (OPTIONAL)
+            </label>
+            <input
+              type="text"
+              value={newGradeName}
+              onChange={(e) => setNewGradeName(e.target.value)}
+              placeholder="e.g. Sacraments Prep"
+              style={{
+                width: "100%",
+                padding: "10px 12px",
+                borderRadius: 8,
+                border: "1px solid var(--border-strong)",
+                background: "var(--surface-input)",
+                color: "var(--text-primary)",
+                fontSize: 14,
+                fontFamily: "inherit",
+                outline: "none",
+                boxSizing: "border-box",
+                marginBottom: 14,
+              }}
+            />
+
+            <button
+              onClick={handleAddGrade}
+              disabled={!newGradeNum}
+              style={{
+                width: "100%",
+                padding: "14px 0",
+                borderRadius: 10,
+                background: newGradeNum
+                  ? "linear-gradient(135deg, #4A90D9, #3A70B9)"
+                  : "var(--surface-input)",
+                color: newGradeNum ? "#fff" : "var(--text-ghost)",
+                fontFamily: displayFont,
+                fontSize: 16,
+                border: "none",
+                cursor: newGradeNum ? "pointer" : "default",
+              }}
+            >
+              Create Grade
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Grade picker for online catechists (with add button) */}
       {isOnline && grades.length > 0 && (
         <div style={{ marginBottom: 16 }}>
           <p
@@ -148,7 +306,7 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
           >
             GRADE
           </p>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
             {grades.map((g) => (
               <button
                 key={g.grade}
@@ -176,6 +334,73 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
                 Grade {g.grade}
               </button>
             ))}
+            {!addingGrade ? (
+              <button
+                onClick={() => setAddingGrade(true)}
+                style={{
+                  padding: "5px 10px",
+                  borderRadius: 8,
+                  background: "var(--surface-input)",
+                  border: "1px solid var(--border-medium)",
+                  color: "var(--accent-green)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                + Add Grade
+              </button>
+            ) : (
+              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                <select
+                  value={newGradeNum}
+                  onChange={(e) => setNewGradeNum(e.target.value)}
+                  style={{
+                    padding: "4px 8px",
+                    borderRadius: 6,
+                    border: "1px solid var(--border-strong)",
+                    background: "var(--surface-input)",
+                    color: "var(--text-primary)",
+                    fontSize: 12,
+                  }}
+                >
+                  <option value="">Grade…</option>
+                  {GRADES.filter((g) => g.status === "active" && !grades.find((eg) => eg.grade === g.grade)).map((g) => (
+                    <option key={g.grade} value={g.grade}>Grade {g.grade}</option>
+                  ))}
+                </select>
+                <button
+                  onClick={handleAddGrade}
+                  disabled={!newGradeNum}
+                  style={{
+                    padding: "4px 10px",
+                    borderRadius: 6,
+                    background: "#4A90D9",
+                    color: "#fff",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Add
+                </button>
+                <button
+                  onClick={() => { setAddingGrade(false); setNewGradeNum(""); }}
+                  style={{
+                    padding: "4px 8px",
+                    borderRadius: 6,
+                    background: "var(--surface-input)",
+                    color: "var(--text-ghost)",
+                    fontSize: 11,
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
