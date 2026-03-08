@@ -11,6 +11,15 @@ node_modules
 dist
 dist-ssr
 *.local
+.vite/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+uv.lock
 
 # Editor directories and files
 .vscode/*
