@@ -5,6 +5,7 @@ import io
 import uuid
 from collections import defaultdict
 
+from fastapi import HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -32,7 +33,9 @@ async def get_parish_overview(
 ) -> dict:
     """Get parish-wide statistics."""
     parish_result = await db.execute(select(Parish).where(Parish.id == parish_id))
-    parish = parish_result.scalar_one()
+    parish = parish_result.scalar_one_or_none()
+    if parish is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parish not found")
 
     catechist_count = await _count(db, select(func.count()).select_from(Catechist).where(
         Catechist.parish_id == parish_id, Catechist.is_active.is_(True),
@@ -81,7 +84,9 @@ async def get_class_progress_grid(
     """Get the progress grid for a class — all students' week-by-week progress."""
     # Get class info
     cls_result = await db.execute(select(Class).where(Class.id == class_id))
-    cls = cls_result.scalar_one()
+    cls = cls_result.scalar_one_or_none()
+    if cls is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Class not found")
 
     # Get enrolled students
     students_result = await db.execute(
@@ -148,7 +153,9 @@ async def get_student_summary(
     """Get an individual student's report card."""
     # Get student
     student_result = await db.execute(select(Student).where(Student.id == student_id))
-    student = student_result.scalar_one()
+    student = student_result.scalar_one_or_none()
+    if student is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
 
     # Progress entries
     progress_result = await db.execute(

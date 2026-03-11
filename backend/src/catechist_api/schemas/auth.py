@@ -62,7 +62,7 @@ class StudentLoginRequest(BaseModel):
 
     join_code: str = Field(..., min_length=6, max_length=8)
     student_id: uuid.UUID
-    access_pin: str | None = Field(None, max_length=4)
+    access_pin: str | None = Field(None, min_length=4, max_length=4)
 
 
 class StudentLoginResponse(BaseModel):
