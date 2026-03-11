@@ -1,8 +1,8 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
 import { findRelatedSessions } from "../../utils/findRelatedSessions";
 import RelatedSessions from "./RelatedSessions";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function SessionHome({
   session,

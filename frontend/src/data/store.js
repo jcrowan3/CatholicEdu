@@ -1,5 +1,21 @@
 import { getDefaultSessions, getPillarColors } from "./gradeLoader";
 
+/* ─── Shared storage key builders ─── */
+
+export function progressStorageKey(grade, classId, userId) {
+  if (!grade) return null;
+  if (classId && userId) return `catechist_progress_g${grade}_c${classId}_${userId}`;
+  if (userId) return `catechist_progress_g${grade}_${userId}`;
+  return `catechist_progress_g${grade}_v1`;
+}
+
+export function bookmarkStorageKey(grade, classId, userId) {
+  if (!grade) return null;
+  if (classId && userId) return `catechist_bookmarks_g${grade}_c${classId}_${userId}`;
+  if (userId) return `catechist_bookmarks_g${grade}_${userId}`;
+  return `catechist_bookmarks_g${grade}_v1`;
+}
+
 /* ─── Grade-scoped localStorage keys (sessions, PIN, program stay grade-level) ─── */
 
 const sessionsKey = (grade) => `catechist_sessions_g${grade}_v1`;

@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
+import ActivityHeader from "../shared/ActivityHeader";
 import {
   DndContext,
   closestCenter,
@@ -19,7 +21,6 @@ import { CSS } from "@dnd-kit/utilities";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 
-const displayFont = "'Lilita One', cursive";
 
 /* ─── Grip handle icon (6 dots) ─── */
 function GripIcon() {
@@ -235,25 +236,7 @@ export default function Timeline({ data, earn, isDone, onBack }) {
 
   return (
     <div style={{ animation: "su .4s ease" }}>
-      <h2
-        style={{
-          fontFamily: displayFont,
-          fontSize: 22,
-          color: "var(--text-primary)",
-          margin: "0 0 5px",
-        }}
-      >
-        {data.title}
-      </h2>
-      <p
-        style={{
-          color: "var(--text-tertiary)",
-          fontSize: 12,
-          margin: "0 0 14px",
-        }}
-      >
-        {data.instruction}
-      </p>
+      <ActivityHeader title={data.title} instruction={data.instruction} />
 
       <DndContext
         sensors={sensors}

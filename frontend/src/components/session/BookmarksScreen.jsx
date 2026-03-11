@@ -1,17 +1,22 @@
-const displayFont = "'Lilita One', cursive";
+import { useMemo } from "react";
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 
 export default function BookmarksScreen({
   bookmarks,
+  sessions,
   pillarColors,
   onNavigateToSession,
   onBack,
 }) {
-  const grouped = {};
-  for (const bm of bookmarks) {
-    const pillar = bm.pillar || "Other";
-    if (!grouped[pillar]) grouped[pillar] = [];
-    grouped[pillar].push(bm);
-  }
+  const grouped = useMemo(() => {
+    const groups = {};
+    for (const bm of bookmarks) {
+      const pillar = bm.pillar || "Other";
+      if (!groups[pillar]) groups[pillar] = [];
+      groups[pillar].push(bm);
+    }
+    return groups;
+  }, [bookmarks]);
 
   return (
     <div style={{ animation: "su .4s ease" }}>
@@ -109,9 +114,13 @@ export default function BookmarksScreen({
                   <div
                     key={bm.key}
                     className="ch"
-                    onClick={() =>
-                      onNavigateToSession && onNavigateToSession(bm.week - 1)
-                    }
+                    onClick={() => {
+                      if (!onNavigateToSession) return;
+                      const idx = sessions
+                        ? sessions.findIndex((s) => s.week === bm.week)
+                        : bm.week - 1;
+                      onNavigateToSession(idx >= 0 ? idx : bm.week - 1);
+                    }}
                     style={{
                       background: "var(--surface-card)",
                       borderRadius: 10,

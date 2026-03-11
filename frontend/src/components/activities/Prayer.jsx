@@ -1,8 +1,8 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function Prayer({ data, earn, isDone, onBack }) {
   const [step, setStep] = useState(0);

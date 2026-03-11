@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { extractCCCRefs } from "../../utils/extractVocabulary";
+import { DISPLAY_FONT as displayFont, COLORS } from "../../utils/constants";
+import ActivityHeader from "../shared/ActivityHeader";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function Discover({
   data,
@@ -40,25 +41,7 @@ export default function Discover({
 
   return (
     <div style={{ animation: "su .4s ease" }}>
-      <h2
-        style={{
-          fontFamily: displayFont,
-          fontSize: 22,
-          color: "var(--text-primary)",
-          margin: "0 0 5px",
-        }}
-      >
-        {data.title}
-      </h2>
-      <p
-        style={{
-          color: "var(--text-tertiary)",
-          fontSize: 12,
-          margin: "0 0 14px",
-        }}
-      >
-        {data.instruction}
-      </p>
+      <ActivityHeader title={data.title} instruction={data.instruction} />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
         {data.items.map((item, i) => {

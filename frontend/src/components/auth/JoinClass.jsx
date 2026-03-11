@@ -1,3 +1,4 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 /**
  * JoinClass — student join-code flow for the online (API-backed) mode.
  *
@@ -12,7 +13,6 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function JoinClass({ onComplete, onBack }) {
   const auth = useAuth();

@@ -1,9 +1,9 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import { getUsers, getSessions, getAllProgress, getPillarColors } from "../../data/store";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function ProgressGrid({ grade, classId, onBack }) {
   const auth = useAuth();

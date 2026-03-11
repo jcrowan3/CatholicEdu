@@ -1,9 +1,10 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
+import ActivityHeader from "../shared/ActivityHeader";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 import Feedback from "../shared/Feedback";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function Sort({ data, earn, isDone, onBack }) {
   const [items, setItems] = useState(() =>
@@ -41,25 +42,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
 
   return (
     <div style={{ animation: "su .4s ease" }}>
-      <h2
-        style={{
-          fontFamily: displayFont,
-          fontSize: 22,
-          color: "var(--text-primary)",
-          margin: "0 0 5px",
-        }}
-      >
-        {data.title}
-      </h2>
-      <p
-        style={{
-          color: "var(--text-tertiary)",
-          fontSize: 12,
-          margin: "0 0 14px",
-        }}
-      >
-        {data.instruction}
-      </p>
+      <ActivityHeader title={data.title} instruction={data.instruction} />
 
       {/* Unplaced items */}
       <div

@@ -1,3 +1,4 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import { getUsers, getSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
 import { useAuth } from "../../context/AuthContext";
@@ -5,7 +6,6 @@ import { api, hasToken } from "../../api/client";
 import { GRADES } from "../../data/grades";
 import ClassSelector from "./ClassSelector";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function Dashboard({ grade, classId, onClassChange, onGradeChange, onNavigate }) {
   const auth = useAuth();

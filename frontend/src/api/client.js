@@ -93,239 +93,116 @@ async function refreshAccessToken() {
   }
 }
 
+// ─── Internal helpers to reduce boilerplate ───
+
+/** Authenticated JSON request — throws on error, returns parsed JSON. */
+async function json(path, options) {
+  const res = await apiFetch(path, options);
+  if (!res.ok) throw await parseError(res);
+  return res.json();
+}
+
+/** Authenticated void request — throws on error, returns nothing. */
+async function send(path, options) {
+  const res = await apiFetch(path, options);
+  if (!res.ok) throw await parseError(res);
+}
+
+/** Unauthenticated POST for auth endpoints. */
+async function authPost(path, body) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw await parseError(res);
+  return res.json();
+}
+
 // ─── Public API methods ───
 
 export const api = {
   // Auth
   async register(parishName, email, password, displayName) {
-    const res = await fetch(`${API_BASE}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        parish_name: parishName,
-        email,
-        password,
-        display_name: displayName,
-      }),
+    const data = await authPost("/auth/register", {
+      parish_name: parishName, email, password, display_name: displayName,
     });
-    if (!res.ok) throw await parseError(res);
-    const data = await res.json();
     setTokens(data.access_token, data.refresh_token);
     return data;
   },
 
   async login(email, password) {
-    const res = await fetch(`${API_BASE}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    if (!res.ok) throw await parseError(res);
-    const data = await res.json();
+    const data = await authPost("/auth/login", { email, password });
     setTokens(data.access_token, data.refresh_token);
     return data;
   },
 
   async getClassRoster(joinCode) {
-    const res = await fetch(
-      `${API_BASE}/auth/student/roster?join_code=${encodeURIComponent(joinCode)}`,
-      { method: "POST", headers: { "Content-Type": "application/json" } }
-    );
-    if (!res.ok) throw await parseError(res);
-    return res.json();
+    return authPost(`/auth/student/roster?join_code=${encodeURIComponent(joinCode)}`, undefined);
   },
 
   async studentLogin(joinCode, studentId, accessPin = null) {
-    const res = await fetch(`${API_BASE}/auth/student/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        join_code: joinCode,
-        student_id: studentId,
-        access_pin: accessPin,
-      }),
+    const data = await authPost("/auth/student/login", {
+      join_code: joinCode, student_id: studentId, access_pin: accessPin,
     });
-    if (!res.ok) throw await parseError(res);
-    const data = await res.json();
     setTokens(data.access_token, null); // Students don't get refresh tokens
     return data;
   },
 
   // Parish
-  async getParish() {
-    const res = await apiFetch("/parish");
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async updateParish(name) {
-    const res = await apiFetch("/parish", {
-      method: "PATCH",
-      body: JSON.stringify({ name }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
+  getParish: () => json("/parish"),
+  updateParish: (name) => json("/parish", { method: "PATCH", body: JSON.stringify({ name }) }),
 
   // Grades
-  async getGrades() {
-    const res = await apiFetch("/grades");
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async createGrade(grade, programName = null) {
-    const res = await apiFetch("/grades", {
-      method: "POST",
-      body: JSON.stringify({ grade, program_name: programName }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
+  getGrades: () => json("/grades"),
+  createGrade: (grade, programName = null) =>
+    json("/grades", { method: "POST", body: JSON.stringify({ grade, program_name: programName }) }),
 
   // Classes
-  async getClasses(grade) {
-    const res = await apiFetch(`/grades/${grade}/classes`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async createClass(grade, name) {
-    const res = await apiFetch(`/grades/${grade}/classes`, {
-      method: "POST",
-      body: JSON.stringify({ name }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async deleteClass(grade, classId) {
-    const res = await apiFetch(`/grades/${grade}/classes/${classId}`, {
-      method: "DELETE",
-    });
-    if (!res.ok) throw await parseError(res);
-  },
+  getClasses: (grade) => json(`/grades/${grade}/classes`),
+  createClass: (grade, name) =>
+    json(`/grades/${grade}/classes`, { method: "POST", body: JSON.stringify({ name }) }),
+  deleteClass: (grade, classId) =>
+    send(`/grades/${grade}/classes/${classId}`, { method: "DELETE" }),
 
   // Students
-  async getStudents(grade, classId) {
-    const res = await apiFetch(`/grades/${grade}/classes/${classId}/students`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async createStudent(grade, classId, displayName, avatarEmoji = "😊", accessPin = null) {
-    const res = await apiFetch(`/grades/${grade}/classes/${classId}/students`, {
+  getStudents: (grade, classId) => json(`/grades/${grade}/classes/${classId}/students`),
+  createStudent: (grade, classId, displayName, avatarEmoji = "😊", accessPin = null) =>
+    json(`/grades/${grade}/classes/${classId}/students`, {
       method: "POST",
-      body: JSON.stringify({
-        display_name: displayName,
-        avatar_emoji: avatarEmoji,
-        access_pin: accessPin,
-      }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async updateStudent(studentId, updates) {
-    const res = await apiFetch(`/students/${studentId}`, {
-      method: "PATCH",
-      body: JSON.stringify(updates),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async deleteStudent(studentId) {
-    const res = await apiFetch(`/students/${studentId}`, { method: "DELETE" });
-    if (!res.ok) throw await parseError(res);
-  },
+      body: JSON.stringify({ display_name: displayName, avatar_emoji: avatarEmoji, access_pin: accessPin }),
+    }),
+  updateStudent: (studentId, updates) =>
+    json(`/students/${studentId}`, { method: "PATCH", body: JSON.stringify(updates) }),
+  deleteStudent: (studentId) => send(`/students/${studentId}`, { method: "DELETE" }),
 
   // Progress
-  async getProgress(studentId, grade) {
-    const res = await apiFetch(`/students/${studentId}/progress/${grade}`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async recordProgress(studentId, grade, week, activity, starsEarned) {
-    const res = await apiFetch(`/students/${studentId}/progress`, {
+  getProgress: (studentId, grade) => json(`/students/${studentId}/progress/${grade}`),
+  recordProgress: (studentId, grade, week, activity, starsEarned) =>
+    json(`/students/${studentId}/progress`, {
       method: "POST",
-      body: JSON.stringify({
-        grade,
-        week,
-        activity,
-        stars_earned: starsEarned,
-      }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
+      body: JSON.stringify({ grade, week, activity, stars_earned: starsEarned }),
+    }),
 
   // Bookmarks
-  async getBookmarks(studentId, grade) {
-    const res = await apiFetch(`/students/${studentId}/bookmarks/${grade}`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async createBookmark(studentId, bookmark) {
-    const res = await apiFetch(`/students/${studentId}/bookmarks`, {
-      method: "POST",
-      body: JSON.stringify(bookmark),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async deleteBookmark(studentId, bookmarkId) {
-    const res = await apiFetch(`/students/${studentId}/bookmarks/${bookmarkId}`, {
-      method: "DELETE",
-    });
-    if (!res.ok) throw await parseError(res);
-  },
+  getBookmarks: (studentId, grade) => json(`/students/${studentId}/bookmarks/${grade}`),
+  createBookmark: (studentId, bookmark) =>
+    json(`/students/${studentId}/bookmarks`, { method: "POST", body: JSON.stringify(bookmark) }),
+  deleteBookmark: (studentId, bookmarkId) =>
+    send(`/students/${studentId}/bookmarks/${bookmarkId}`, { method: "DELETE" }),
 
   // Session overrides
-  async getSessionOverrides(grade) {
-    const res = await apiFetch(`/grades/${grade}/sessions`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async upsertSessionOverride(grade, week, sessionData) {
-    const res = await apiFetch(`/grades/${grade}/sessions/${week}`, {
-      method: "PUT",
-      body: JSON.stringify({ session_data: sessionData }),
-    });
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async deleteSessionOverride(grade, week) {
-    const res = await apiFetch(`/grades/${grade}/sessions/${week}`, {
-      method: "DELETE",
-    });
-    if (!res.ok) throw await parseError(res);
-  },
+  getSessionOverrides: (grade) => json(`/grades/${grade}/sessions`),
+  upsertSessionOverride: (grade, week, sessionData) =>
+    json(`/grades/${grade}/sessions/${week}`, { method: "PUT", body: JSON.stringify({ session_data: sessionData }) }),
+  deleteSessionOverride: (grade, week) =>
+    send(`/grades/${grade}/sessions/${week}`, { method: "DELETE" }),
 
   // Reports
-  async getParishOverview() {
-    const res = await apiFetch("/reports/parish/overview");
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async getClassProgressGrid(grade, classId) {
-    const res = await apiFetch(`/reports/grade/${grade}/class/${classId}/grid`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
-  async getStudentSummary(studentId, grade) {
-    const res = await apiFetch(`/reports/student/${studentId}/summary?grade=${grade}`);
-    if (!res.ok) throw await parseError(res);
-    return res.json();
-  },
-
+  getParishOverview: () => json("/reports/parish/overview"),
+  getClassProgressGrid: (grade, classId) => json(`/reports/grade/${grade}/class/${classId}/grid`),
+  getStudentSummary: (studentId, grade) =>
+    json(`/reports/student/${studentId}/summary?grade=${grade}`),
   async exportCsv(grade, classId) {
     const res = await apiFetch(`/reports/export/csv?grade=${grade}&class_id=${classId}`);
     if (!res.ok) throw await parseError(res);

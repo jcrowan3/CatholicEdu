@@ -1,3 +1,4 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import {
   getClasses,
@@ -9,7 +10,6 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function ClassSelector({ grade, classId, onClassChange }) {
   const auth = useAuth();

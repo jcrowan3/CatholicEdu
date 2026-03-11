@@ -1,13 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { api, hasToken } from "../api/client";
-
-function storageKey(grade, classId, userId) {
-  if (!grade) return null;
-  if (classId && userId)
-    return `catechist_bookmarks_g${grade}_c${classId}_${userId}`;
-  if (userId) return `catechist_bookmarks_g${grade}_${userId}`;
-  return `catechist_bookmarks_g${grade}_v1`;
-}
+import { bookmarkStorageKey as storageKey } from "../data/store";
 
 function loadBookmarks(grade, classId, userId) {
   try {

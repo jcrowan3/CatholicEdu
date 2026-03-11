@@ -1,10 +1,10 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
-const displayFont = "'Lilita One', cursive";
 
 /* ─── Shared form styles ─── */
 const inputStyle = {
