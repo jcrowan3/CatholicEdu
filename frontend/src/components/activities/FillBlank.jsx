@@ -1,8 +1,9 @@
+import { DISPLAY_FONT as displayFont, answerOptionStyle, stepBarColor } from "../../utils/constants";
 import { useState } from "react";
+import ActivityHeader from "../shared/ActivityHeader";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function FillBlank({ data, earn, isDone, onBack }) {
   const [idx, setIdx] = useState(0);
@@ -71,25 +72,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
 
   return (
     <div style={{ animation: "su .4s ease" }}>
-      <h2
-        style={{
-          fontFamily: displayFont,
-          fontSize: 22,
-          color: "var(--text-primary)",
-          margin: "0 0 5px",
-        }}
-      >
-        {data.title}
-      </h2>
-      <p
-        style={{
-          color: "var(--text-tertiary)",
-          fontSize: 12,
-          margin: "0 0 14px",
-        }}
-      >
-        {data.instruction}
-      </p>
+      <ActivityHeader title={data.title} instruction={data.instruction} />
 
       {/* Progress dots */}
       <div style={{ display: "flex", gap: 4, marginBottom: 14 }}>
@@ -100,14 +83,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
               flex: 1,
               height: 3,
               borderRadius: 2,
-              background:
-                i < idx
-                  ? answers[i]
-                    ? "#6DB87B"
-                    : "#D94A4A"
-                  : i === idx
-                  ? "#D4A843"
-                  : "var(--text-invisible)",
+              background: stepBarColor(i, idx, answers),
             }}
           />
         ))}
@@ -153,17 +129,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
       {/* Options */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
         {shuffled[idx].map((opt) => {
-          let bg = "var(--surface-card)";
-          let bc = "rgba(255,255,255,.07)";
-          if (picked !== null) {
-            if (opt === current.answer) {
-              bg = "rgba(109,184,123,.15)";
-              bc = "#6DB87B";
-            } else if (opt === picked) {
-              bg = "rgba(217,74,74,.15)";
-              bc = "#D94A4A";
-            }
-          }
+          const { bg, borderColor } = answerOptionStyle(picked, opt, current.answer);
           return (
             <div
               key={opt}
@@ -171,7 +137,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
               onClick={() => pick(opt)}
               style={{
                 background: bg,
-                border: `2px solid ${bc}`,
+                border: `2px solid ${borderColor}`,
                 borderRadius: 10,
                 padding: "12px 10px",
                 textAlign: "center",

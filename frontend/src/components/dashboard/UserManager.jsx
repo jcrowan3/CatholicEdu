@@ -1,9 +1,9 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import { getUsers, addUser, updateUser, removeUser } from "../../data/store";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
-const displayFont = "'Lilita One', cursive";
 
 const AVATARS = [
   "😊", "😄", "🤗", "😎", "🥳",

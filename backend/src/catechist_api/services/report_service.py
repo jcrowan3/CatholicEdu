@@ -5,6 +5,7 @@ import io
 import uuid
 from collections import defaultdict
 
+from fastapi import HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,58 +21,38 @@ from catechist_api.models import (
 )
 
 
+async def _count(db: AsyncSession, stmt) -> int:
+    """Execute a count query and return the scalar result."""
+    return (await db.execute(stmt)).scalar() or 0
+
+
 async def get_parish_overview(
     db: AsyncSession,
     *,
     parish_id: uuid.UUID,
 ) -> dict:
     """Get parish-wide statistics."""
-    # Get parish
     parish_result = await db.execute(select(Parish).where(Parish.id == parish_id))
-    parish = parish_result.scalar_one()
+    parish = parish_result.scalar_one_or_none()
+    if parish is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parish not found")
 
-    # Counts
-    catechist_count = (
-        await db.execute(
-            select(func.count()).select_from(Catechist).where(
-                Catechist.parish_id == parish_id,
-                Catechist.is_active.is_(True),
-            )
-        )
-    ).scalar() or 0
+    catechist_count = await _count(db, select(func.count()).select_from(Catechist).where(
+        Catechist.parish_id == parish_id, Catechist.is_active.is_(True),
+    ))
+    student_count = await _count(db, select(func.count()).select_from(Student).where(
+        Student.parish_id == parish_id, Student.is_active.is_(True),
+    ))
+    grade_count = await _count(db, select(func.count()).select_from(GradeConfig).where(
+        GradeConfig.parish_id == parish_id, GradeConfig.is_active.is_(True),
+    ))
+    class_count = await _count(db, (
+        select(func.count())
+        .select_from(Class)
+        .join(GradeConfig, GradeConfig.id == Class.grade_config_id)
+        .where(GradeConfig.parish_id == parish_id, Class.is_active.is_(True))
+    ))
 
-    student_count = (
-        await db.execute(
-            select(func.count()).select_from(Student).where(
-                Student.parish_id == parish_id,
-                Student.is_active.is_(True),
-            )
-        )
-    ).scalar() or 0
-
-    grade_count = (
-        await db.execute(
-            select(func.count()).select_from(GradeConfig).where(
-                GradeConfig.parish_id == parish_id,
-                GradeConfig.is_active.is_(True),
-            )
-        )
-    ).scalar() or 0
-
-    # Classes count (via grade_configs)
-    class_count = (
-        await db.execute(
-            select(func.count())
-            .select_from(Class)
-            .join(GradeConfig, GradeConfig.id == Class.grade_config_id)
-            .where(
-                GradeConfig.parish_id == parish_id,
-                Class.is_active.is_(True),
-            )
-        )
-    ).scalar() or 0
-
-    # Progress totals (via students in this parish)
     progress_stats = await db.execute(
         select(
             func.count(ProgressEntry.id),
@@ -103,7 +84,9 @@ async def get_class_progress_grid(
     """Get the progress grid for a class — all students' week-by-week progress."""
     # Get class info
     cls_result = await db.execute(select(Class).where(Class.id == class_id))
-    cls = cls_result.scalar_one()
+    cls = cls_result.scalar_one_or_none()
+    if cls is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Class not found")
 
     # Get enrolled students
     students_result = await db.execute(
@@ -170,7 +153,9 @@ async def get_student_summary(
     """Get an individual student's report card."""
     # Get student
     student_result = await db.execute(select(Student).where(Student.id == student_id))
-    student = student_result.scalar_one()
+    student = student_result.scalar_one_or_none()
+    if student is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
 
     # Progress entries
     progress_result = await db.execute(
@@ -181,15 +166,9 @@ async def get_student_summary(
     )
     entries = progress_result.scalars().all()
 
-    # Bookmarks count
-    bookmark_count = (
-        await db.execute(
-            select(func.count()).select_from(Bookmark).where(
-                Bookmark.student_id == student_id,
-                Bookmark.grade == grade,
-            )
-        )
-    ).scalar() or 0
+    bookmark_count = await _count(db, select(func.count()).select_from(Bookmark).where(
+        Bookmark.student_id == student_id, Bookmark.grade == grade,
+    ))
 
     # Activity breakdown
     activity_breakdown: dict[str, int] = defaultdict(int)

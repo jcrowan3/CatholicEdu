@@ -1,7 +1,7 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useMemo } from "react";
 import { extractGradeVocabulary } from "../../utils/extractVocabulary";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function VocabularyScreen({
   sessions,

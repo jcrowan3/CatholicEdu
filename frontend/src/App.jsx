@@ -408,6 +408,7 @@ function AppInner() {
             {screen === "bookmarks" && (
               <BookmarksScreen
                 bookmarks={getAllBookmarks()}
+                sessions={sessions}
                 pillarColors={pillarColors}
                 onNavigateToSession={(weekIdx) => {
                   setSessionIdx(weekIdx);

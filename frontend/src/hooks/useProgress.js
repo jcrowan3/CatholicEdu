@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { api, hasToken } from "../api/client";
+import { progressStorageKey as storageKey } from "../data/store";
 
 const STAR_VALUES = {
   discover: 2,
@@ -9,13 +10,6 @@ const STAR_VALUES = {
   quiz: 5,
   prayer: 1,
 };
-
-function storageKey(grade, classId, userId) {
-  if (!grade) return null;
-  if (classId && userId) return `catechist_progress_g${grade}_c${classId}_${userId}`;
-  if (userId) return `catechist_progress_g${grade}_${userId}`;
-  return `catechist_progress_g${grade}_v1`;
-}
 
 function loadProgress(grade, classId, userId) {
   try {

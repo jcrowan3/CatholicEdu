@@ -1,8 +1,8 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { GRADES } from "../../data/grades";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useAuth } from "../../context/AuthContext";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
   const auth = useAuth();

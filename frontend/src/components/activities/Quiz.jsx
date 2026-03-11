@@ -1,8 +1,8 @@
+import { DISPLAY_FONT as displayFont, answerOptionStyle, stepBarColor } from "../../utils/constants";
 import { useState } from "react";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function Quiz({ data, earn, isDone, onBack }) {
   const [qIdx, setQIdx] = useState(0);
@@ -87,17 +87,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
           {b.opts.map((opt, i) => {
-            let bg = "var(--surface-card)";
-            let bc = "rgba(255,255,255,.07)";
-            if (bonusPicked !== null) {
-              if (i === b.correct) {
-                bg = "rgba(109,184,123,.15)";
-                bc = "#6DB87B";
-              } else if (i === bonusPicked) {
-                bg = "rgba(217,74,74,.15)";
-                bc = "#D94A4A";
-              }
-            }
+            const { bg, borderColor } = answerOptionStyle(bonusPicked, i, b.correct);
             return (
               <div
                 key={i}
@@ -105,7 +95,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
                 onClick={() => answerBonus(i)}
                 style={{
                   background: bg,
-                  border: `2px solid ${bc}`,
+                  border: `2px solid ${borderColor}`,
                   borderRadius: 10,
                   padding: "12px 10px",
                   textAlign: "center",
@@ -298,14 +288,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
               flex: 1,
               height: 3,
               borderRadius: 2,
-              background:
-                i < qIdx
-                  ? results[i]
-                    ? "#6DB87B"
-                    : "#D94A4A"
-                  : i === qIdx
-                  ? "#D4A843"
-                  : "var(--text-invisible)",
+              background: stepBarColor(i, qIdx, results),
             }}
           />
         ))}
@@ -338,17 +321,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
       {/* Options */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
         {q.opts.map((opt, i) => {
-          let bg = "var(--surface-card)";
-          let bc = "rgba(255,255,255,.07)";
-          if (selected !== null) {
-            if (i === q.correct) {
-              bg = "rgba(109,184,123,.15)";
-              bc = "#6DB87B";
-            } else if (i === selected) {
-              bg = "rgba(217,74,74,.15)";
-              bc = "#D94A4A";
-            }
-          }
+          const { bg, borderColor } = answerOptionStyle(selected, i, q.correct);
           return (
             <div
               key={i}
@@ -356,7 +329,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
               onClick={() => answer(i)}
               style={{
                 background: bg,
-                border: `2px solid ${bc}`,
+                border: `2px solid ${borderColor}`,
                 borderRadius: 10,
                 padding: "12px 10px",
                 textAlign: "center",

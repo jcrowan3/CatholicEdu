@@ -1,8 +1,8 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
 import { setPin, setProgramName } from "../../data/store";
 import { GRADES } from "../../data/grades";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function CatechistSetup({ grade, onComplete }) {
   const [step, setStep] = useState(0);

@@ -1,4 +1,4 @@
-const displayFont = "'Lilita One', cursive";
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 
 export default function SessionPicker({ sessions, current, onPick, pillarColors = {} }) {
   return (

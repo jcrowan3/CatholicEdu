@@ -1,6 +1,6 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import ThemeToggle from "../ui/ThemeToggle";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function TopBar({
   session,

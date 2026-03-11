@@ -1,3 +1,4 @@
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 /**
  * OnlineAuth — catechist login/registration for the online (API-backed) flow.
  *
@@ -7,7 +8,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-const displayFont = "'Lilita One', cursive";
 
 export default function OnlineAuth({ onComplete, onBack }) {
   const auth = useAuth();

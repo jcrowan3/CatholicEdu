@@ -1,4 +1,4 @@
-const displayFont = "'Lilita One', cursive";
+import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 
 export default function RelatedSessions({ sessions, pillarColors, onSelect }) {
   if (!sessions || sessions.length === 0) return null;
