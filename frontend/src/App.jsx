@@ -6,12 +6,11 @@ import {
   seedDemoStudent,
   getPillarColors,
   ensureDefaultClass,
-  getActiveClassId,
-  setActiveClassId,
 } from "./data/store";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { useProgress } from "./hooks/useProgress";
 import { useBookmarks } from "./hooks/useBookmarks";
+import { useOnlineStatus } from "./hooks/useOnlineStatus";
 import LandingPage from "./components/landing/LandingPage";
 import TopBar from "./components/session/TopBar";
 import SessionHome from "./components/session/SessionHome";
@@ -33,12 +32,14 @@ import Dashboard from "./components/dashboard/Dashboard";
 import UserManager from "./components/dashboard/UserManager";
 import ProgressGrid from "./components/dashboard/ProgressGrid";
 import SessionEditor from "./components/admin/SessionEditor";
+import ConnectionBanner from "./components/system/ConnectionBanner";
 
 // Run migration once on app load
 migrateOldKeys();
 
 function AppInner() {
   const auth = useAuth();
+  const isOnline = useOnlineStatus();
 
   // Grade selection
   const [grade, setGrade] = useState(null);
@@ -171,7 +172,7 @@ function AppInner() {
 
   // ─── Online flow handlers ───
 
-  const handleOnlineAuthComplete = (userData) => {
+  const handleOnlineAuthComplete = () => {
     // After catechist login/register — userData has grade info if available
     setActiveUser({ id: null, name: "Catechist", role: "catechist" });
     setMode("catechist");
@@ -240,6 +241,7 @@ function AppInner() {
       }}
     >
       {background}
+      <ConnectionBanner visible={!isOnline} />
 
       {/* ─── Landing Page ─── */}
       {mode === "landing" && (
