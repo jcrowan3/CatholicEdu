@@ -172,6 +172,16 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ display_name: displayName, avatar_emoji: avatarEmoji, access_pin: accessPin }),
     }),
+  previewRosterImport: (grade, classId, rows) =>
+    json(`/grades/${grade}/classes/${classId}/students/import/preview`, {
+      method: "POST",
+      body: JSON.stringify({ rows }),
+    }),
+  importRoster: (grade, classId, rows) =>
+    json(`/grades/${grade}/classes/${classId}/students/import`, {
+      method: "POST",
+      body: JSON.stringify({ rows }),
+    }),
   updateStudent: (studentId, updates) =>
     json(`/students/${studentId}`, { method: "PATCH", body: JSON.stringify(updates) }),
   deleteStudent: (studentId) => send(`/students/${studentId}`, { method: "DELETE" }),

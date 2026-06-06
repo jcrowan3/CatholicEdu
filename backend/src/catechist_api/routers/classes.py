@@ -5,11 +5,17 @@ import uuid
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from catechist_api.auth.dependencies import require_catechist, require_parish_admin
+from catechist_api.auth.dependencies import require_catechist
 from catechist_api.auth.jwt import TokenPayload
 from catechist_api.database import get_db
 from catechist_api.schemas.class_ import ClassCreateRequest, ClassResponse, ClassUpdateRequest
-from catechist_api.schemas.student import StudentCreateRequest, StudentResponse
+from catechist_api.schemas.student import (
+    RosterImportPreviewResponse,
+    RosterImportRequest,
+    RosterImportResponse,
+    StudentCreateRequest,
+    StudentResponse,
+)
 from catechist_api.services import class_service, grade_service, student_service
 
 router = APIRouter()
@@ -155,4 +161,73 @@ async def create_student(
         has_pin=student.access_pin is not None,
         is_active=student.is_active,
         created_at=student.created_at,
+    )
+
+
+@router.post(
+    "/grades/{grade}/classes/{class_id}/students/import/preview",
+    response_model=RosterImportPreviewResponse,
+)
+async def preview_roster_import(
+    grade: int,
+    class_id: uuid.UUID,
+    body: RosterImportRequest,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Preview a roster import with duplicate-family matching."""
+    gc = await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
+    rows = await student_service.preview_roster_import(
+        db,
+        class_id=class_id,
+        rows=body.rows,
+    )
+    return _build_roster_preview_response(rows)
+
+
+@router.post(
+    "/grades/{grade}/classes/{class_id}/students/import",
+    response_model=RosterImportResponse,
+    status_code=201,
+)
+async def import_roster(
+    grade: int,
+    class_id: uuid.UUID,
+    body: RosterImportRequest,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Import roster rows, skipping exact duplicate students."""
+    gc = await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
+    students, rows = await student_service.import_roster(
+        db,
+        parish_id=user.parish_id,
+        class_id=class_id,
+        rows=body.rows,
+    )
+    return RosterImportResponse(
+        imported_students=[
+            StudentResponse(
+                id=s.id,
+                parish_id=s.parish_id,
+                display_name=s.display_name,
+                avatar_emoji=s.avatar_emoji,
+                has_pin=s.access_pin is not None,
+                is_active=s.is_active,
+                created_at=s.created_at,
+            )
+            for s in students
+        ],
+        preview=_build_roster_preview_response(rows),
+    )
+
+
+def _build_roster_preview_response(rows):
+    return RosterImportPreviewResponse(
+        rows=rows,
+        ready_count=sum(1 for row in rows if row.match_status == "ready"),
+        warning_count=sum(1 for row in rows if row.match_status == "warning"),
+        duplicate_count=sum(1 for row in rows if row.match_status == "duplicate"),
     )

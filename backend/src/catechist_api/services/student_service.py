@@ -1,12 +1,24 @@
 """Student business logic."""
 
 import uuid
+from collections import defaultdict
+from dataclasses import dataclass
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from catechist_api.models import ClassEnrollment, Student
+from catechist_api.schemas.student import RosterImportPreviewRow, RosterImportRow
+
+
+@dataclass(frozen=True)
+class _ExistingStudentMatch:
+    """Normalized details used for roster matching."""
+
+    display_name: str
+    name_key: str
+    family_key: str
 
 
 async def list_students_in_class(
@@ -26,6 +38,86 @@ async def list_students_in_class(
         .order_by(Student.display_name)
     )
     return list(result.scalars().all())
+
+
+def _normalize_match_key(value: str | None) -> str:
+    """Normalize a name fragment for conservative roster matching."""
+    if not value:
+        return ""
+    return " ".join(
+        "".join(ch.lower() if ch.isalnum() else " " for ch in value).split()
+    )
+
+
+def _family_key(row: RosterImportRow) -> str:
+    if row.family_name:
+        return _normalize_match_key(row.family_name)
+    parts = row.display_name.split()
+    if len(parts) < 2:
+        return ""
+    return _normalize_match_key(parts[-1])
+
+
+def _existing_match(student: Student) -> _ExistingStudentMatch:
+    parts = student.display_name.split()
+    family_name = parts[-1] if len(parts) > 1 else ""
+    return _ExistingStudentMatch(
+        display_name=student.display_name,
+        name_key=_normalize_match_key(student.display_name),
+        family_key=_normalize_match_key(family_name),
+    )
+
+
+async def preview_roster_import(
+    db: AsyncSession,
+    *,
+    class_id: uuid.UUID,
+    rows: list[RosterImportRow],
+) -> list[RosterImportPreviewRow]:
+    """Preview duplicate names and possible duplicate-family matches."""
+    existing_students = await list_students_in_class(db, class_id=class_id)
+    existing_matches = [_existing_match(student) for student in existing_students]
+    existing_name_keys = {student.name_key for student in existing_matches}
+
+    family_students: dict[str, list[str]] = defaultdict(list)
+    for student in existing_matches:
+        if student.family_key:
+            family_students[student.family_key].append(student.display_name)
+
+    seen_import_names: set[str] = set()
+    preview_rows: list[RosterImportPreviewRow] = []
+    for index, row in enumerate(rows):
+        name_key = _normalize_match_key(row.display_name)
+        family_key = _family_key(row)
+        existing_family_students = family_students.get(family_key, []) if family_key else []
+
+        if name_key in existing_name_keys:
+            match_status = "duplicate"
+            match_reason = "Student already exists in this class."
+        elif name_key in seen_import_names:
+            match_status = "duplicate"
+            match_reason = "Duplicate student name in this import."
+        elif existing_family_students:
+            match_status = "warning"
+            match_reason = "Possible family match in this class."
+        else:
+            match_status = "ready"
+            match_reason = "Ready to import."
+
+        preview_rows.append(
+            RosterImportPreviewRow(
+                row_index=index,
+                display_name=row.display_name.strip(),
+                family_name=row.family_name.strip() if row.family_name else None,
+                avatar_emoji=row.avatar_emoji,
+                match_status=match_status,
+                match_reason=match_reason,
+                existing_family_students=existing_family_students,
+            )
+        )
+        seen_import_names.add(name_key)
+
+    return preview_rows
 
 
 async def create_student_and_enroll(
@@ -52,6 +144,30 @@ async def create_student_and_enroll(
     await db.flush()
 
     return student
+
+
+async def import_roster(
+    db: AsyncSession,
+    *,
+    parish_id: uuid.UUID,
+    class_id: uuid.UUID,
+    rows: list[RosterImportRow],
+) -> tuple[list[Student], list[RosterImportPreviewRow]]:
+    """Import roster rows, skipping exact duplicates."""
+    preview_rows = await preview_roster_import(db, class_id=class_id, rows=rows)
+    imported_students: list[Student] = []
+    for row, preview in zip(rows, preview_rows, strict=True):
+        if preview.match_status == "duplicate":
+            continue
+        student = await create_student_and_enroll(
+            db,
+            parish_id=parish_id,
+            class_id=class_id,
+            display_name=row.display_name.strip(),
+            avatar_emoji=row.avatar_emoji,
+        )
+        imported_students.append(student)
+    return imported_students, preview_rows
 
 
 async def get_student(
