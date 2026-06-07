@@ -228,3 +228,71 @@ async def test_student_crud(client: AsyncClient):
         f"/api/v1/grades/6/classes/{class_id}/students", headers=headers
     )
     assert len(r_list2.json()) == 1  # Only Jose remains active
+
+
+@pytest.mark.asyncio
+async def test_roster_import_preview_and_import(client: AsyncClient):
+    """Roster import previews exact duplicates and duplicate-family matches."""
+    headers = await _register_and_get_headers(client, "roster-import")
+
+    await client.post("/api/v1/grades", json={"grade": 5}, headers=headers)
+    cls = await client.post(
+        "/api/v1/grades/5/classes",
+        json={"name": "Sunday 9am"},
+        headers=headers,
+    )
+    class_id = cls.json()["id"]
+
+    existing = await client.post(
+        f"/api/v1/grades/5/classes/{class_id}/students",
+        json={"display_name": "Maria Santos", "avatar_emoji": "🌟"},
+        headers=headers,
+    )
+    assert existing.status_code == 201
+
+    rows = [
+        {"display_name": "Maria Santos", "family_name": "Santos"},
+        {"display_name": "Jose Santos", "family_name": "Santos"},
+        {"display_name": "Ana Rivera", "family_name": "Rivera", "avatar_emoji": "📚"},
+        {"display_name": "Ana Rivera", "family_name": "Rivera"},
+    ]
+
+    preview = await client.post(
+        f"/api/v1/grades/5/classes/{class_id}/students/import/preview",
+        json={"rows": rows},
+        headers=headers,
+    )
+    assert preview.status_code == 200
+    data = preview.json()
+    assert data["ready_count"] == 1
+    assert data["warning_count"] == 1
+    assert data["duplicate_count"] == 2
+    assert [row["match_status"] for row in data["rows"]] == [
+        "duplicate",
+        "warning",
+        "ready",
+        "duplicate",
+    ]
+    assert data["rows"][1]["existing_family_students"] == ["Maria Santos"]
+
+    imported = await client.post(
+        f"/api/v1/grades/5/classes/{class_id}/students/import",
+        json={"rows": rows},
+        headers=headers,
+    )
+    assert imported.status_code == 201
+    import_data = imported.json()
+    assert [s["display_name"] for s in import_data["imported_students"]] == [
+        "Jose Santos",
+        "Ana Rivera",
+    ]
+
+    roster = await client.get(
+        f"/api/v1/grades/5/classes/{class_id}/students", headers=headers
+    )
+    assert roster.status_code == 200
+    assert [student["display_name"] for student in roster.json()] == [
+        "Ana Rivera",
+        "Jose Santos",
+        "Maria Santos",
+    ]
