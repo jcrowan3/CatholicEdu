@@ -2,9 +2,10 @@ import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import { getUsers, getSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
 import { useAuth } from "../../context/AuthContext";
-import { api, hasToken } from "../../api/client";
+import { api } from "../../api/client";
 import { GRADES } from "../../data/grades";
 import ClassSelector from "./ClassSelector";
+import { generateStandardsCoveragePdf } from "../../utils/generateStandardsCoveragePdf";
 
 
 export default function Dashboard({ grade, classId, onClassChange, onGradeChange, onNavigate }) {
@@ -460,7 +461,7 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
           gap: 8,
           marginBottom: 20,
         }}
@@ -498,6 +499,31 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
           }}
         >
           📊 View Progress
+        </button>
+        <button
+          className="ch"
+          onClick={() =>
+            generateStandardsCoveragePdf({
+              grade: effectiveGrade,
+              gradeInfo,
+              sessions,
+            })
+          }
+          disabled={!effectiveGrade || sessions.length === 0}
+          style={{
+            padding: "14px 12px",
+            borderRadius: 10,
+            background: "rgba(109,184,123,.1)",
+            border: "1px solid rgba(109,184,123,.2)",
+            color: "#6DB87B",
+            fontFamily: displayFont,
+            fontSize: 13,
+            textAlign: "center",
+            cursor: sessions.length > 0 ? "pointer" : "default",
+            opacity: sessions.length > 0 ? 1 : 0.55,
+          }}
+        >
+          📄 Standards PDF
         </button>
       </div>
 
