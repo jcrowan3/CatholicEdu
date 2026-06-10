@@ -127,6 +127,43 @@ async def test_class_progress_grid(client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_standards_coverage_report(client: AsyncClient):
+    """Standards coverage maps grade weeks to catechetical evidence."""
+    ctx = await _setup_with_progress(client, "rpt-coverage")
+    r = await client.get(
+        "/api/v1/reports/grade/3/standards/coverage",
+        headers=ctx["cat_headers"],
+    )
+    assert r.status_code == 200
+
+    data = r.json()
+    assert data["grade"] == 3
+    assert data["total_weeks"] >= 30
+
+    first_week = data["rows"][0]
+    assert first_week["week"] == 1
+    assert first_week["title"] == "The Church Jesus Built"
+    assert "748-769" in first_week["ccc_paragraphs"]
+    assert first_week["scripture_reference"] == "Matthew 16:18"
+    assert first_week["prayer"] == "Prayer for the Church"
+    assert first_week["diocesan_outcomes"]
+
+
+@pytest.mark.asyncio
+async def test_standards_coverage_pdf_export(client: AsyncClient):
+    """Standards coverage PDF export returns a downloadable PDF."""
+    ctx = await _setup_with_progress(client, "rpt-coverage-pdf")
+    r = await client.get(
+        "/api/v1/reports/grade/3/standards/pdf",
+        headers=ctx["cat_headers"],
+    )
+    assert r.status_code == 200
+    assert r.headers["content-type"] == "application/pdf"
+    assert "standards-coverage-grade3.pdf" in r.headers["content-disposition"]
+    assert r.content.startswith(b"%PDF-1.4")
+
+
+@pytest.mark.asyncio
 async def test_student_summary(client: AsyncClient):
     """Student summary returns activity breakdown and bookmark count."""
     ctx = await _setup_with_progress(client, "rpt-3")

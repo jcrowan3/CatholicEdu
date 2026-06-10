@@ -39,6 +39,28 @@ class ClassProgressGridResponse(BaseModel):
     students: list[StudentProgressSummary]
 
 
+class StandardsCoverageRow(BaseModel):
+    """Curriculum coverage evidence for one week."""
+
+    grade: int
+    week: int
+    title: str
+    pillar: str
+    ccc_paragraphs: list[str]
+    scripture_reference: str
+    scripture_theme: str
+    prayer: str
+    diocesan_outcomes: list[str]
+
+
+class StandardsCoverageResponse(BaseModel):
+    """DRE-facing curriculum coverage report."""
+
+    grade: int
+    total_weeks: int
+    rows: list[StandardsCoverageRow]
+
+
 class StudentSummaryResponse(BaseModel):
     """Individual student report."""
 
