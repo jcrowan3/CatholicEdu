@@ -12,6 +12,7 @@ from catechist_api.database import get_db
 from catechist_api.schemas.report import (
     ClassProgressGridResponse,
     ParishOverviewResponse,
+    StandardsCoverageResponse,
     StudentSummaryResponse,
 )
 from catechist_api.services import grade_service, class_service, report_service
@@ -42,6 +43,36 @@ async def class_progress_grid(
     await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
     return await report_service.get_class_progress_grid(
         db, class_id=class_id, grade=grade
+    )
+
+
+@router.get("/grade/{grade}/standards/coverage", response_model=StandardsCoverageResponse)
+async def standards_coverage(
+    grade: int,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Get a grade's curriculum coverage against standards evidence."""
+    await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    return report_service.get_standards_coverage(grade=grade)
+
+
+@router.get("/grade/{grade}/standards/pdf")
+async def standards_coverage_pdf(
+    grade: int,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Export a grade's standards coverage report as a PDF download."""
+    await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    pdf_content = report_service.export_standards_coverage_pdf(grade=grade)
+
+    return StreamingResponse(
+        iter([pdf_content]),
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f"attachment; filename=standards-coverage-grade{grade}.pdf"
+        },
     )
 
 
