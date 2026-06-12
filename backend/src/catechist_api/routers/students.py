@@ -29,6 +29,11 @@ async def update_student(
         display_name=body.display_name,
         avatar_emoji=body.avatar_emoji,
         access_pin=body.access_pin,
+        parent_email=str(body.parent_email) if body.parent_email else None,
+        pickup_contact_notes=body.pickup_contact_notes,
+        media_permission_granted=body.media_permission_granted,
+        allergy_privacy_flags=body.allergy_privacy_flags,
+        weekly_digest_permission=body.weekly_digest_permission,
         is_active=body.is_active,
     )
     return StudentResponse(
@@ -36,6 +41,11 @@ async def update_student(
         parish_id=student.parish_id,
         display_name=student.display_name,
         avatar_emoji=student.avatar_emoji,
+        parent_email=student.parent_email,
+        pickup_contact_notes=student.pickup_contact_notes,
+        media_permission_granted=student.media_permission_granted,
+        allergy_privacy_flags=student.allergy_privacy_flags,
+        weekly_digest_permission=student.weekly_digest_permission,
         has_pin=student.access_pin is not None,
         is_active=student.is_active,
         created_at=student.created_at,
@@ -49,6 +59,4 @@ async def delete_student(
     db: AsyncSession = Depends(get_db),
 ):
     """Soft-delete a student (deactivate)."""
-    await student_service.deactivate_student(
-        db, student_id=student_id, parish_id=user.parish_id
-    )
+    await student_service.deactivate_student(db, student_id=student_id, parish_id=user.parish_id)
