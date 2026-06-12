@@ -1,5 +1,8 @@
 """Tests for CRUD endpoints — parish, grades, classes, students."""
 
+import csv
+import io
+
 import pytest
 from httpx import AsyncClient
 
@@ -180,13 +183,26 @@ async def test_student_crud(client: AsyncClient):
     # Create student
     r1 = await client.post(
         f"/api/v1/grades/6/classes/{class_id}/students",
-        json={"display_name": "Maria", "avatar_emoji": "🌟"},
+        json={
+            "display_name": "Maria",
+            "avatar_emoji": "🌟",
+            "parent_email": "maria.parent@example.org",
+            "pickup_contact_notes": "Aunt Lucia may pick up after class.",
+            "media_permission_granted": True,
+            "allergy_privacy_flags": "Peanut allergy",
+            "weekly_digest_permission": True,
+        },
         headers=headers,
     )
     assert r1.status_code == 201
     data = r1.json()
     assert data["display_name"] == "Maria"
     assert data["avatar_emoji"] == "🌟"
+    assert data["parent_email"] == "maria.parent@example.org"
+    assert data["pickup_contact_notes"] == "Aunt Lucia may pick up after class."
+    assert data["media_permission_granted"] is True
+    assert data["allergy_privacy_flags"] == "Peanut allergy"
+    assert data["weekly_digest_permission"] is True
     assert data["has_pin"] is False
     student_id = data["id"]
 
@@ -200,21 +216,61 @@ async def test_student_crud(client: AsyncClient):
     assert r2.json()["has_pin"] is True
 
     # List students
-    r_list = await client.get(
-        f"/api/v1/grades/6/classes/{class_id}/students", headers=headers
-    )
+    r_list = await client.get(f"/api/v1/grades/6/classes/{class_id}/students", headers=headers)
     assert r_list.status_code == 200
     assert len(r_list.json()) == 2
+    maria = next(student for student in r_list.json() if student["display_name"] == "Maria")
+    assert maria["parent_email"] == "maria.parent@example.org"
+    assert maria["weekly_digest_permission"] is True
 
     # Update student
     r_update = await client.patch(
         f"/api/v1/students/{student_id}",
-        json={"display_name": "Maria Elena", "avatar_emoji": "💖"},
+        json={
+            "display_name": "Maria Elena",
+            "avatar_emoji": "💖",
+            "parent_email": "new.parent@example.org",
+            "pickup_contact_notes": "Only listed guardians may pick up.",
+            "media_permission_granted": False,
+            "allergy_privacy_flags": "Peanut allergy; carries epipen",
+            "weekly_digest_permission": False,
+        },
         headers=headers,
     )
     assert r_update.status_code == 200
     assert r_update.json()["display_name"] == "Maria Elena"
     assert r_update.json()["avatar_emoji"] == "💖"
+    assert r_update.json()["parent_email"] == "new.parent@example.org"
+    assert r_update.json()["pickup_contact_notes"] == "Only listed guardians may pick up."
+    assert r_update.json()["media_permission_granted"] is False
+    assert r_update.json()["allergy_privacy_flags"] == "Peanut allergy; carries epipen"
+    assert r_update.json()["weekly_digest_permission"] is False
+
+    export = await client.get(
+        f"/api/v1/grades/6/classes/{class_id}/students/communication-export",
+        headers=headers,
+    )
+    assert export.status_code == 200
+    assert export.headers["content-type"].startswith("text/csv")
+    csv_rows = list(csv.DictReader(io.StringIO(export.text)))
+    assert csv_rows == [
+        {
+            "student_name": "Jose",
+            "parent_email": "",
+            "pickup_contact_notes": "",
+            "media_permission_granted": "no",
+            "allergy_privacy_flags": "",
+            "weekly_digest_permission": "no",
+        },
+        {
+            "student_name": "Maria Elena",
+            "parent_email": "new.parent@example.org",
+            "pickup_contact_notes": "Only listed guardians may pick up.",
+            "media_permission_granted": "no",
+            "allergy_privacy_flags": "Peanut allergy; carries epipen",
+            "weekly_digest_permission": "no",
+        },
+    ]
 
     # Soft-delete student
     r_delete = await client.delete(
@@ -224,9 +280,7 @@ async def test_student_crud(client: AsyncClient):
     assert r_delete.status_code == 204
 
     # After deactivation, list should show fewer active students
-    r_list2 = await client.get(
-        f"/api/v1/grades/6/classes/{class_id}/students", headers=headers
-    )
+    r_list2 = await client.get(f"/api/v1/grades/6/classes/{class_id}/students", headers=headers)
     assert len(r_list2.json()) == 1  # Only Jose remains active
 
 
@@ -287,9 +341,7 @@ async def test_roster_import_preview_and_import(client: AsyncClient):
         "Ana Rivera",
     ]
 
-    roster = await client.get(
-        f"/api/v1/grades/5/classes/{class_id}/students", headers=headers
-    )
+    roster = await client.get(f"/api/v1/grades/5/classes/{class_id}/students", headers=headers)
     assert roster.status_code == 200
     assert [student["display_name"] for student in roster.json()] == [
         "Ana Rivera",

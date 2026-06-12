@@ -2,12 +2,13 @@
 
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from catechist_api.auth.dependencies import require_catechist
 from catechist_api.auth.jwt import TokenPayload
 from catechist_api.database import get_db
+from catechist_api.models import Student
 from catechist_api.schemas.class_ import ClassCreateRequest, ClassResponse, ClassUpdateRequest
 from catechist_api.schemas.student import (
     RosterImportPreviewResponse,
@@ -115,18 +116,7 @@ async def list_students(
     # Verify the class belongs to this grade
     await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
     students = await student_service.list_students_in_class(db, class_id=class_id)
-    return [
-        StudentResponse(
-            id=s.id,
-            parish_id=s.parish_id,
-            display_name=s.display_name,
-            avatar_emoji=s.avatar_emoji,
-            has_pin=s.access_pin is not None,
-            is_active=s.is_active,
-            created_at=s.created_at,
-        )
-        for s in students
-    ]
+    return [_build_student_response(s) for s in students]
 
 
 @router.post(
@@ -152,15 +142,35 @@ async def create_student(
         display_name=body.display_name,
         avatar_emoji=body.avatar_emoji,
         access_pin=body.access_pin,
+        parent_email=str(body.parent_email) if body.parent_email else None,
+        pickup_contact_notes=body.pickup_contact_notes,
+        media_permission_granted=body.media_permission_granted,
+        allergy_privacy_flags=body.allergy_privacy_flags,
+        weekly_digest_permission=body.weekly_digest_permission,
     )
-    return StudentResponse(
-        id=student.id,
-        parish_id=student.parish_id,
-        display_name=student.display_name,
-        avatar_emoji=student.avatar_emoji,
-        has_pin=student.access_pin is not None,
-        is_active=student.is_active,
-        created_at=student.created_at,
+    return _build_student_response(student)
+
+
+@router.get("/grades/{grade}/classes/{class_id}/students/communication-export")
+async def export_family_communication_csv(
+    grade: int,
+    class_id: uuid.UUID,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Export family consent and communication details for a class roster."""
+    gc = await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
+    students = await student_service.list_students_in_class(db, class_id=class_id)
+    csv_body = student_service.build_family_communication_csv(students)
+    return Response(
+        content=csv_body,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": (
+                f'attachment; filename="grade-{grade}-class-{class_id}-communication.csv"'
+            )
+        },
     )
 
 
@@ -208,18 +218,7 @@ async def import_roster(
         rows=body.rows,
     )
     return RosterImportResponse(
-        imported_students=[
-            StudentResponse(
-                id=s.id,
-                parish_id=s.parish_id,
-                display_name=s.display_name,
-                avatar_emoji=s.avatar_emoji,
-                has_pin=s.access_pin is not None,
-                is_active=s.is_active,
-                created_at=s.created_at,
-            )
-            for s in students
-        ],
+        imported_students=[_build_student_response(s) for s in students],
         preview=_build_roster_preview_response(rows),
     )
 
@@ -230,4 +229,21 @@ def _build_roster_preview_response(rows):
         ready_count=sum(1 for row in rows if row.match_status == "ready"),
         warning_count=sum(1 for row in rows if row.match_status == "warning"),
         duplicate_count=sum(1 for row in rows if row.match_status == "duplicate"),
+    )
+
+
+def _build_student_response(student: Student) -> StudentResponse:
+    return StudentResponse(
+        id=student.id,
+        parish_id=student.parish_id,
+        display_name=student.display_name,
+        avatar_emoji=student.avatar_emoji,
+        parent_email=student.parent_email,
+        pickup_contact_notes=student.pickup_contact_notes,
+        media_permission_granted=student.media_permission_granted,
+        allergy_privacy_flags=student.allergy_privacy_flags,
+        weekly_digest_permission=student.weekly_digest_permission,
+        has_pin=student.access_pin is not None,
+        is_active=student.is_active,
+        created_at=student.created_at,
     )

@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 
 class StudentResponse(BaseModel):
@@ -15,6 +15,11 @@ class StudentResponse(BaseModel):
     parish_id: uuid.UUID
     display_name: str
     avatar_emoji: str
+    parent_email: EmailStr | None = None
+    pickup_contact_notes: str | None = None
+    media_permission_granted: bool = False
+    allergy_privacy_flags: str | None = None
+    weekly_digest_permission: bool = False
     has_pin: bool = False
     is_active: bool
     created_at: datetime
@@ -26,6 +31,11 @@ class StudentCreateRequest(BaseModel):
     display_name: str = Field(..., min_length=1, max_length=100)
     avatar_emoji: str = Field(default="😊", max_length=10)
     access_pin: str | None = Field(None, min_length=4, max_length=4, pattern=r"^\d{4}$")
+    parent_email: EmailStr | None = None
+    pickup_contact_notes: str | None = Field(None, max_length=2000)
+    media_permission_granted: bool = False
+    allergy_privacy_flags: str | None = Field(None, max_length=2000)
+    weekly_digest_permission: bool = False
 
 
 class StudentUpdateRequest(BaseModel):
@@ -34,6 +44,11 @@ class StudentUpdateRequest(BaseModel):
     display_name: str | None = Field(None, min_length=1, max_length=100)
     avatar_emoji: str | None = Field(None, max_length=10)
     access_pin: str | None = Field(None, min_length=4, max_length=4, pattern=r"^\d{4}$")
+    parent_email: EmailStr | None = None
+    pickup_contact_notes: str | None = Field(None, max_length=2000)
+    media_permission_granted: bool | None = None
+    allergy_privacy_flags: str | None = Field(None, max_length=2000)
+    weekly_digest_permission: bool | None = None
     is_active: bool | None = None
 
 

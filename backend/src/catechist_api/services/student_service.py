@@ -1,5 +1,7 @@
 """Student business logic."""
 
+import csv
+import io
 import uuid
 from collections import defaultdict
 from dataclasses import dataclass
@@ -44,9 +46,7 @@ def _normalize_match_key(value: str | None) -> str:
     """Normalize a name fragment for conservative roster matching."""
     if not value:
         return ""
-    return " ".join(
-        "".join(ch.lower() if ch.isalnum() else " " for ch in value).split()
-    )
+    return " ".join("".join(ch.lower() if ch.isalnum() else " " for ch in value).split())
 
 
 def _family_key(row: RosterImportRow) -> str:
@@ -128,6 +128,11 @@ async def create_student_and_enroll(
     display_name: str,
     avatar_emoji: str = "😊",
     access_pin: str | None = None,
+    parent_email: str | None = None,
+    pickup_contact_notes: str | None = None,
+    media_permission_granted: bool = False,
+    allergy_privacy_flags: str | None = None,
+    weekly_digest_permission: bool = False,
 ) -> Student:
     """Create a student and enroll them in a class."""
     student = Student(
@@ -135,6 +140,11 @@ async def create_student_and_enroll(
         display_name=display_name,
         avatar_emoji=avatar_emoji,
         access_pin=access_pin,
+        parent_email=parent_email,
+        pickup_contact_notes=pickup_contact_notes,
+        media_permission_granted=media_permission_granted,
+        allergy_privacy_flags=allergy_privacy_flags,
+        weekly_digest_permission=weekly_digest_permission,
     )
     db.add(student)
     await db.flush()
@@ -200,6 +210,11 @@ async def update_student(
     display_name: str | None = None,
     avatar_emoji: str | None = None,
     access_pin: str | None = None,
+    parent_email: str | None = None,
+    pickup_contact_notes: str | None = None,
+    media_permission_granted: bool | None = None,
+    allergy_privacy_flags: str | None = None,
+    weekly_digest_permission: bool | None = None,
     is_active: bool | None = None,
 ) -> Student:
     """Update a student."""
@@ -210,6 +225,16 @@ async def update_student(
         student.avatar_emoji = avatar_emoji
     if access_pin is not None:
         student.access_pin = access_pin
+    if parent_email is not None:
+        student.parent_email = parent_email
+    if pickup_contact_notes is not None:
+        student.pickup_contact_notes = pickup_contact_notes
+    if media_permission_granted is not None:
+        student.media_permission_granted = media_permission_granted
+    if allergy_privacy_flags is not None:
+        student.allergy_privacy_flags = allergy_privacy_flags
+    if weekly_digest_permission is not None:
+        student.weekly_digest_permission = weekly_digest_permission
     if is_active is not None:
         student.is_active = is_active
     await db.flush()
@@ -223,6 +248,33 @@ async def deactivate_student(
     parish_id: uuid.UUID,
 ) -> Student:
     """Soft-delete a student."""
-    return await update_student(
-        db, student_id=student_id, parish_id=parish_id, is_active=False
+    return await update_student(db, student_id=student_id, parish_id=parish_id, is_active=False)
+
+
+def build_family_communication_csv(students: list[Student]) -> str:
+    """Build an audit CSV for family communication permissions."""
+    output = io.StringIO()
+    writer = csv.DictWriter(
+        output,
+        fieldnames=[
+            "student_name",
+            "parent_email",
+            "pickup_contact_notes",
+            "media_permission_granted",
+            "allergy_privacy_flags",
+            "weekly_digest_permission",
+        ],
     )
+    writer.writeheader()
+    for student in students:
+        writer.writerow(
+            {
+                "student_name": student.display_name,
+                "parent_email": student.parent_email or "",
+                "pickup_contact_notes": student.pickup_contact_notes or "",
+                "media_permission_granted": "yes" if student.media_permission_granted else "no",
+                "allergy_privacy_flags": student.allergy_privacy_flags or "",
+                "weekly_digest_permission": "yes" if student.weekly_digest_permission else "no",
+            }
+        )
+    return output.getvalue()
