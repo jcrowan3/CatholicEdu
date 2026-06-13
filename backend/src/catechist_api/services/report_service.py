@@ -23,6 +23,7 @@ from catechist_api.models import (
     ProgressEntry,
     Student,
 )
+from catechist_api.services.csv_safety import sanitize_csv_cell
 
 
 PILLAR_OUTCOMES = {
@@ -230,7 +231,7 @@ async def export_csv(
 
     # Data rows
     for s in grid["students"]:
-        row = [s["display_name"], s["total_stars"], s["activities_completed"]]
+        row = [sanitize_csv_cell(s["display_name"]), s["total_stars"], s["activities_completed"]]
         for w in weeks_sorted:
             wp = s["week_progress"].get(str(w), {})
             for a in activities:

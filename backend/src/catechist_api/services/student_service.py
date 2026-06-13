@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from catechist_api.models import ClassEnrollment, Student
 from catechist_api.schemas.student import RosterImportPreviewRow, RosterImportRow
+from catechist_api.services.csv_safety import sanitize_csv_cell
 
 
 @dataclass(frozen=True)
@@ -269,11 +270,11 @@ def build_family_communication_csv(students: list[Student]) -> str:
     for student in students:
         writer.writerow(
             {
-                "student_name": student.display_name,
-                "parent_email": student.parent_email or "",
-                "pickup_contact_notes": student.pickup_contact_notes or "",
+                "student_name": sanitize_csv_cell(student.display_name),
+                "parent_email": sanitize_csv_cell(student.parent_email or ""),
+                "pickup_contact_notes": sanitize_csv_cell(student.pickup_contact_notes or ""),
                 "media_permission_granted": "yes" if student.media_permission_granted else "no",
-                "allergy_privacy_flags": student.allergy_privacy_flags or "",
+                "allergy_privacy_flags": sanitize_csv_cell(student.allergy_privacy_flags or ""),
                 "weekly_digest_permission": "yes" if student.weekly_digest_permission else "no",
             }
         )
