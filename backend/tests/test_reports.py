@@ -186,6 +186,12 @@ async def test_student_summary(client: AsyncClient):
 async def test_csv_export(client: AsyncClient):
     """CSV export returns valid CSV data."""
     ctx = await _setup_with_progress(client, "rpt-4")
+    rename = await client.patch(
+        f"/api/v1/students/{ctx['sid1']}",
+        json={"display_name": "@Maria"},
+        headers=ctx["cat_headers"],
+    )
+    assert rename.status_code == 200
     r = await client.get(
         f"/api/v1/reports/export/csv?grade=3&class_id={ctx['class_id']}",
         headers=ctx["cat_headers"],
@@ -196,4 +202,4 @@ async def test_csv_export(client: AsyncClient):
     lines = r.text.strip().split("\n")
     assert len(lines) == 3  # header + 2 students
     assert "Student" in lines[0]
-    assert "Maria" in r.text or "Jose" in r.text
+    assert "'@Maria" in r.text

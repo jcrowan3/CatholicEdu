@@ -285,6 +285,42 @@ async def test_student_crud(client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_family_communication_csv_sanitizes_formula_cells(client: AsyncClient):
+    """Family communication CSV escapes spreadsheet formula-like cells."""
+    headers = await _register_and_get_headers(client, "student-csv-safety")
+
+    await client.post("/api/v1/grades", json={"grade": 6}, headers=headers)
+    cls = await client.post(
+        "/api/v1/grades/6/classes",
+        json={"name": "Saturday 10am"},
+        headers=headers,
+    )
+    class_id = cls.json()["id"]
+
+    response = await client.post(
+        f"/api/v1/grades/6/classes/{class_id}/students",
+        json={
+            "display_name": "=Maria",
+            "pickup_contact_notes": "+Call before release",
+            "allergy_privacy_flags": "\tPeanut allergy",
+        },
+        headers=headers,
+    )
+    assert response.status_code == 201
+
+    export = await client.get(
+        f"/api/v1/grades/6/classes/{class_id}/students/communication-export",
+        headers=headers,
+    )
+    assert export.status_code == 200
+
+    [row] = list(csv.DictReader(io.StringIO(export.text)))
+    assert row["student_name"] == "'=Maria"
+    assert row["pickup_contact_notes"] == "'+Call before release"
+    assert row["allergy_privacy_flags"] == "'\tPeanut allergy"
+
+
+@pytest.mark.asyncio
 async def test_roster_import_preview_and_import(client: AsyncClient):
     """Roster import previews exact duplicates and duplicate-family matches."""
     headers = await _register_and_get_headers(client, "roster-import")
