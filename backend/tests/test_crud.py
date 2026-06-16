@@ -300,7 +300,7 @@ async def test_family_communication_csv_sanitizes_formula_cells(client: AsyncCli
     response = await client.post(
         f"/api/v1/grades/6/classes/{class_id}/students",
         json={
-            "display_name": "=Maria",
+            "display_name": "\nMaria",
             "pickup_contact_notes": "+Call before release",
             "allergy_privacy_flags": "\tPeanut allergy",
         },
@@ -315,7 +315,7 @@ async def test_family_communication_csv_sanitizes_formula_cells(client: AsyncCli
     assert export.status_code == 200
 
     [row] = list(csv.DictReader(io.StringIO(export.text)))
-    assert row["student_name"] == "'=Maria"
+    assert row["student_name"] == "'\nMaria"
     assert row["pickup_contact_notes"] == "'+Call before release"
     assert row["allergy_privacy_flags"] == "'\tPeanut allergy"
 

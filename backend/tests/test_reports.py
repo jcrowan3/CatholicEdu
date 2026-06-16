@@ -1,5 +1,8 @@
 """Tests for reporting endpoints."""
 
+import csv
+import io
+
 import pytest
 from httpx import AsyncClient
 
@@ -188,7 +191,7 @@ async def test_csv_export(client: AsyncClient):
     ctx = await _setup_with_progress(client, "rpt-4")
     rename = await client.patch(
         f"/api/v1/students/{ctx['sid1']}",
-        json={"display_name": "@Maria"},
+        json={"display_name": "\nMaria"},
         headers=ctx["cat_headers"],
     )
     assert rename.status_code == 200
@@ -199,7 +202,7 @@ async def test_csv_export(client: AsyncClient):
     assert r.status_code == 200
     assert "text/csv" in r.headers["content-type"]
 
-    lines = r.text.strip().split("\n")
-    assert len(lines) == 3  # header + 2 students
-    assert "Student" in lines[0]
-    assert "'@Maria" in r.text
+    rows = list(csv.DictReader(io.StringIO(r.text)))
+    assert len(rows) == 2
+    assert "Student" in rows[0]
+    assert "'\nMaria" in {row["Student"] for row in rows}

@@ -5,7 +5,7 @@ import pytest
 from catechist_api.services.csv_safety import sanitize_csv_cell
 
 
-@pytest.mark.parametrize("prefix", ["=", "+", "-", "@", "\t", "\r"])
+@pytest.mark.parametrize("prefix", ["=", "+", "-", "@", "\t", "\r", "\n"])
 def test_sanitize_csv_cell_prefixes_formula_triggers(prefix: str):
     assert sanitize_csv_cell(f"{prefix}SUM(A1:A2)") == f"'{prefix}SUM(A1:A2)"
 
