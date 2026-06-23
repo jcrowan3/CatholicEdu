@@ -108,6 +108,13 @@ async function send(path, options) {
   if (!res.ok) throw await parseError(res);
 }
 
+/** Authenticated text request — throws on error, returns body and headers. */
+async function text(path, options) {
+  const res = await apiFetch(path, options);
+  if (!res.ok) throw await parseError(res);
+  return { body: await res.text(), headers: res.headers };
+}
+
 /** Unauthenticated POST for auth endpoints. */
 async function authPost(path, body) {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -167,11 +174,25 @@ export const api = {
 
   // Students
   getStudents: (grade, classId) => json(`/grades/${grade}/classes/${classId}/students`),
-  createStudent: (grade, classId, displayName, avatarEmoji = "😊", accessPin = null) =>
+  createStudent: (grade, classId, displayName, avatarEmoji = "😊", accessPin = null, details = {}) =>
     json(`/grades/${grade}/classes/${classId}/students`, {
       method: "POST",
-      body: JSON.stringify({ display_name: displayName, avatar_emoji: avatarEmoji, access_pin: accessPin }),
+      body: JSON.stringify({
+        display_name: displayName,
+        avatar_emoji: avatarEmoji,
+        access_pin: accessPin,
+        ...details,
+      }),
     }),
+  exportFamilyCommunicationCsv: async (grade, classId) => {
+    const result = await text(`/grades/${grade}/classes/${classId}/students/communication-export`);
+    const disposition = result.headers.get("Content-Disposition") || "";
+    const match = disposition.match(/filename="?([^"]+)"?/);
+    return {
+      csv: result.body,
+      filename: match?.[1] || `grade-${grade}-communication.csv`,
+    };
+  },
   previewRosterImport: (grade, classId, rows) =>
     json(`/grades/${grade}/classes/${classId}/students/import/preview`, {
       method: "POST",
