@@ -12,6 +12,38 @@ const AVATARS = [
   "🎵", "📚", "🌻", "🕊️", "💫",
 ];
 
+const EMPTY_COMMUNICATION = {
+  parentEmail: "",
+  pickupContactNotes: "",
+  mediaPermissionGranted: false,
+  allergyPrivacyFlags: "",
+  weeklyDigestPermission: false,
+};
+
+function studentFromApi(student) {
+  return {
+    id: student.id,
+    name: student.display_name,
+    avatarEmoji: student.avatar_emoji,
+    parentEmail: student.parent_email || "",
+    pickupContactNotes: student.pickup_contact_notes || "",
+    mediaPermissionGranted: Boolean(student.media_permission_granted),
+    allergyPrivacyFlags: student.allergy_privacy_flags || "",
+    weeklyDigestPermission: Boolean(student.weekly_digest_permission),
+    role: "student",
+  };
+}
+
+function communicationPayload(form) {
+  return {
+    parent_email: form.parentEmail.trim() || null,
+    pickup_contact_notes: form.pickupContactNotes.trim() || null,
+    media_permission_granted: form.mediaPermissionGranted,
+    allergy_privacy_flags: form.allergyPrivacyFlags.trim() || null,
+    weekly_digest_permission: form.weeklyDigestPermission,
+  };
+}
+
 function splitRosterLine(line) {
   const delimiter = line.includes("\t") ? "\t" : ",";
   return line.split(delimiter).map((part) => part.trim()).filter(Boolean);
@@ -64,26 +96,24 @@ export default function UserManager({ grade, classId, onRefresh }) {
   const [adding, setAdding] = useState(false);
   const [newName, setNewName] = useState("");
   const [newAvatar, setNewAvatar] = useState("😊");
+  const [newCommunication, setNewCommunication] = useState(EMPTY_COMMUNICATION);
   const [editing, setEditing] = useState(null);
   const [editName, setEditName] = useState("");
   const [editAvatar, setEditAvatar] = useState("");
+  const [editCommunication, setEditCommunication] = useState(EMPTY_COMMUNICATION);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [importOpen, setImportOpen] = useState(false);
   const [importText, setImportText] = useState("");
   const [importPreview, setImportPreview] = useState(null);
   const [importError, setImportError] = useState("");
   const [importing, setImporting] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const loadUsers = useCallback(() => {
     if (isOnline && classId) {
       return api.getStudents(grade, classId)
         .then((data) => {
-          setUsers(data.map((s) => ({
-            id: s.id,
-            name: s.display_name,
-            avatarEmoji: s.avatar_emoji,
-            role: "student",
-          })));
+          setUsers(data.map(studentFromApi));
         })
         .catch(() => setUsers(getUsers(grade, classId)));
     } else {
@@ -100,13 +130,15 @@ export default function UserManager({ grade, classId, onRefresh }) {
     if (!newName.trim()) return;
     if (isOnline && classId) {
       try {
-        const created = await api.createStudent(grade, classId, newName.trim(), newAvatar);
-        setUsers((prev) => [...prev, {
-          id: created.id,
-          name: created.display_name,
-          avatarEmoji: created.avatar_emoji,
-          role: "student",
-        }]);
+        const created = await api.createStudent(
+          grade,
+          classId,
+          newName.trim(),
+          newAvatar,
+          null,
+          communicationPayload(newCommunication)
+        );
+        setUsers((prev) => [...prev, studentFromApi(created)]);
       } catch {
         // Fallback to localStorage
         const user = addUser(grade, classId, newName.trim(), newAvatar);
@@ -118,6 +150,7 @@ export default function UserManager({ grade, classId, onRefresh }) {
     }
     setNewName("");
     setNewAvatar("😊");
+    setNewCommunication(EMPTY_COMMUNICATION);
     setAdding(false);
     onRefresh?.();
   };
@@ -129,10 +162,13 @@ export default function UserManager({ grade, classId, onRefresh }) {
         await api.updateStudent(id, {
           display_name: editName.trim(),
           avatar_emoji: editAvatar,
+          ...communicationPayload(editCommunication),
         });
         setUsers((prev) =>
           prev.map((u) =>
-            u.id === id ? { ...u, name: editName.trim(), avatarEmoji: editAvatar } : u
+            u.id === id
+              ? { ...u, name: editName.trim(), avatarEmoji: editAvatar, ...editCommunication }
+              : u
           )
         );
       } catch {
@@ -168,7 +204,87 @@ export default function UserManager({ grade, classId, onRefresh }) {
     setEditing(user.id);
     setEditName(user.name);
     setEditAvatar(user.avatarEmoji);
+    setEditCommunication({
+      parentEmail: user.parentEmail || "",
+      pickupContactNotes: user.pickupContactNotes || "",
+      mediaPermissionGranted: Boolean(user.mediaPermissionGranted),
+      allergyPrivacyFlags: user.allergyPrivacyFlags || "",
+      weeklyDigestPermission: Boolean(user.weeklyDigestPermission),
+    });
   };
+
+  const handleExportCommunication = async () => {
+    if (!isOnline || !classId) return;
+    try {
+      setExporting(true);
+      const { csv, filename } = await api.exportFamilyCommunicationCsv(grade, classId);
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const fieldStyle = {
+    width: "100%",
+    padding: "8px 10px",
+    borderRadius: 6,
+    border: "1px solid var(--border-strong)",
+    background: "var(--surface-input)",
+    color: "var(--text-primary)",
+    fontSize: 12,
+    fontFamily: "inherit",
+    outline: "none",
+    boxSizing: "border-box",
+  };
+
+  const CommunicationFields = ({ value, onChange }) => (
+    <div style={{ display: "grid", gap: 8, marginBottom: 10 }}>
+      <input
+        type="email"
+        value={value.parentEmail}
+        onChange={(e) => onChange({ ...value, parentEmail: e.target.value })}
+        placeholder="Parent email"
+        style={fieldStyle}
+      />
+      <textarea
+        value={value.pickupContactNotes}
+        onChange={(e) => onChange({ ...value, pickupContactNotes: e.target.value })}
+        placeholder="Pickup/contact notes"
+        rows={2}
+        style={{ ...fieldStyle, resize: "vertical" }}
+      />
+      <textarea
+        value={value.allergyPrivacyFlags}
+        onChange={(e) => onChange({ ...value, allergyPrivacyFlags: e.target.value })}
+        placeholder="Allergy/privacy flags"
+        rows={2}
+        style={{ ...fieldStyle, resize: "vertical" }}
+      />
+      <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-tertiary)", fontSize: 12 }}>
+        <input
+          type="checkbox"
+          checked={value.mediaPermissionGranted}
+          onChange={(e) => onChange({ ...value, mediaPermissionGranted: e.target.checked })}
+        />
+        Media permission granted
+      </label>
+      <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-tertiary)", fontSize: 12 }}>
+        <input
+          type="checkbox"
+          checked={value.weeklyDigestPermission}
+          onChange={(e) => onChange({ ...value, weeklyDigestPermission: e.target.checked })}
+        />
+        Weekly digest permission
+      </label>
+    </div>
+  );
 
   const handlePreviewImport = async () => {
     const rows = parseRosterText(importText);
@@ -229,6 +345,25 @@ export default function UserManager({ grade, classId, onRefresh }) {
         </h2>
         {!adding && (
           <div style={{ display: "flex", gap: 8 }}>
+            {isOnline && classId && (
+              <button
+                onClick={handleExportCommunication}
+                disabled={exporting || users.length === 0}
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 8,
+                  background: "rgba(212,168,67,.16)",
+                  color: "#B88418",
+                  fontFamily: displayFont,
+                  fontSize: 12,
+                  border: "1px solid rgba(212,168,67,.32)",
+                  cursor: exporting || users.length === 0 ? "default" : "pointer",
+                  opacity: exporting || users.length === 0 ? .6 : 1,
+                }}
+              >
+                Export CSV
+              </button>
+            )}
             {isOnline && classId && (
               <button
                 onClick={() => setImportOpen((open) => !open)}
@@ -501,6 +636,9 @@ export default function UserManager({ grade, classId, onRefresh }) {
               </div>
             ))}
           </div>
+          {isOnline && (
+            <CommunicationFields value={newCommunication} onChange={setNewCommunication} />
+          )}
           <div style={{ display: "flex", gap: 8 }}>
             <button
               onClick={handleAdd}
@@ -618,6 +756,9 @@ export default function UserManager({ grade, classId, onRefresh }) {
                     </div>
                   ))}
                 </div>
+                {isOnline && (
+                  <CommunicationFields value={editCommunication} onChange={setEditCommunication} />
+                )}
                 <div style={{ display: "flex", gap: 6 }}>
                   <button
                     onClick={() => handleEdit(user.id)}
@@ -722,6 +863,15 @@ export default function UserManager({ grade, classId, onRefresh }) {
                   <div style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}>
                     {user.name}
                   </div>
+                  {isOnline && (
+                    <div style={{ color: "var(--text-faint)", fontSize: 11, marginTop: 3 }}>
+                      {user.parentEmail || "No parent email"}
+                      {" · "}
+                      Media {user.mediaPermissionGranted ? "yes" : "no"}
+                      {" · "}
+                      Digest {user.weeklyDigestPermission ? "yes" : "no"}
+                    </div>
+                  )}
                 </div>
                 <button
                   onClick={() => startEdit(user)}
