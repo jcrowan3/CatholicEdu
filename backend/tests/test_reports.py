@@ -2,9 +2,13 @@
 
 import csv
 import io
+import shutil
+from pathlib import Path
 
 import pytest
 from httpx import AsyncClient
+
+from catechist_api.services import report_service
 
 
 async def _setup_with_progress(client: AsyncClient, suffix: str) -> dict:
@@ -164,6 +168,23 @@ async def test_standards_coverage_pdf_export(client: AsyncClient):
     assert r.headers["content-type"] == "application/pdf"
     assert "standards-coverage-grade3.pdf" in r.headers["content-disposition"]
     assert r.content.startswith(b"%PDF-1.4")
+
+
+def test_standards_coverage_uses_configured_curriculum_dir(monkeypatch, tmp_path):
+    """Coverage loads packaged backend curriculum without a monorepo frontend tree."""
+    curriculum_dir = tmp_path / "curriculum"
+    curriculum_dir.mkdir()
+    source = Path(__file__).resolve().parents[2] / "frontend" / "src" / "data" / "grade3.js"
+    shutil.copy(source, curriculum_dir / "grade3.js")
+
+    monkeypatch.setenv("CATECHIST_CURRICULUM_DIR", str(curriculum_dir))
+    monkeypatch.setattr(report_service, "_repo_root", lambda: tmp_path / "missing-repo-root")
+
+    coverage = report_service.get_standards_coverage(grade=3)
+
+    assert coverage["total_weeks"] >= 30
+    assert coverage["rows"][0]["title"] == "The Church Jesus Built"
+    assert coverage["rows"][0]["ccc_paragraphs"] == ["748-769"]
 
 
 @pytest.mark.asyncio
