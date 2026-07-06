@@ -3,6 +3,7 @@
 import csv
 import io
 import json
+import os
 import re
 import uuid
 from collections import defaultdict
@@ -246,6 +247,28 @@ def _repo_root() -> Path:
     return Path(__file__).resolve().parents[4]
 
 
+def _curriculum_data_dirs() -> list[Path]:
+    """Return curriculum data directories in deployed and local-dev order."""
+    dirs: list[Path] = []
+    if configured_dir := os.environ.get("CATECHIST_CURRICULUM_DIR"):
+        dirs.append(Path(configured_dir))
+
+    dirs.append(Path("/app/curriculum"))
+    dirs.append(_repo_root() / "backend" / "curriculum")
+    dirs.append(_repo_root() / "frontend" / "src" / "data")
+    return dirs
+
+
+def _curriculum_path(grade: int) -> Path | None:
+    """Find bundled curriculum data for a grade."""
+    filename = f"grade{grade}.js"
+    for directory in _curriculum_data_dirs():
+        candidate = directory / filename
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def _decode_js_string(value: str) -> str:
     """Decode a simple JavaScript string literal body."""
     return json.loads(f'"{value}"')
@@ -318,8 +341,8 @@ def _coverage_outcomes(grade: int, title: str, pillar: str) -> list[str]:
 
 def get_standards_coverage(*, grade: int) -> dict:
     """Build a curriculum standards coverage report from bundled grade metadata."""
-    curriculum_path = _repo_root() / "frontend" / "src" / "data" / f"grade{grade}.js"
-    if not curriculum_path.exists():
+    curriculum_path = _curriculum_path(grade)
+    if curriculum_path is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Coverage data not found for grade {grade}",
