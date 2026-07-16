@@ -52,6 +52,11 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
             id: s.id,
             name: s.display_name,
             avatarEmoji: s.avatar_emoji,
+            parentEmail: s.parent_email || "",
+            pickupContactNotes: s.pickup_contact_notes || "",
+            mediaPermissionGranted: Boolean(s.media_permission_granted),
+            allergyPrivacyFlags: s.allergy_privacy_flags || "",
+            weeklyDigestPermission: Boolean(s.weekly_digest_permission),
             role: "student",
           })));
         })
@@ -115,6 +120,74 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
           allProgress.reduce((s, p) => s + p.stars, 0) / users.length
         )
       : 0;
+
+  const hasProgress =
+    allProgress.some((prog) => Object.keys(prog.completed || {}).length > 0);
+  const contactReady =
+    users.length > 0 && users.every((user) => (user.parentEmail || "").trim());
+  const permissionReviewReady =
+    users.length > 0 &&
+    users.every((user) =>
+      user.mediaPermissionGranted ||
+      (user.allergyPrivacyFlags || "").trim() ||
+      (user.pickupContactNotes || "").trim()
+    );
+  const readinessItems = [
+    {
+      key: "grade",
+      label: "Grade program configured",
+      detail: gradeInfo ? gradeInfo.title : "Choose a grade level",
+      ready: Boolean(effectiveGrade),
+    },
+    {
+      key: "class",
+      label: "Pilot class selected",
+      detail: classId ? "Class workspace is active" : "Create or select a class",
+      ready: Boolean(classId),
+    },
+    {
+      key: "roster",
+      label: "Student roster seeded",
+      detail: `${users.length} ${users.length === 1 ? "student" : "students"} loaded`,
+      ready: users.length > 0,
+      action: "admin-users",
+    },
+    {
+      key: "family",
+      label: "Family contact fields complete",
+      detail: contactReady ? "Parent emails are present" : "Add parent email details",
+      ready: contactReady,
+      action: "admin-users",
+    },
+    {
+      key: "permissions",
+      label: "Pickup and permission notes reviewed",
+      detail: permissionReviewReady ? "Roster notes are present" : "Record media, pickup, or allergy notes",
+      ready: permissionReviewReady,
+      action: "admin-users",
+    },
+    {
+      key: "curriculum",
+      label: "Curriculum sessions available",
+      detail: `${sessions.length} ${sessions.length === 1 ? "session" : "sessions"} ready`,
+      ready: sessions.length > 0,
+    },
+    {
+      key: "standards",
+      label: "Standards evidence packet ready",
+      detail: sessions.length > 0 ? "Coverage PDF can be generated" : "Load sessions first",
+      ready: sessions.length > 0,
+    },
+    {
+      key: "progress",
+      label: "Progress tracking verified",
+      detail: hasProgress ? "At least one activity has progress" : "Progress grid is ready for first check-in",
+      ready: hasProgress || (users.length > 0 && sessions.length > 0),
+      action: "admin-progress",
+    },
+  ];
+  const readinessDone = readinessItems.filter((item) => item.ready).length;
+  const readinessPct = Math.round((readinessDone / readinessItems.length) * 100);
 
   // ─── Add Grade (online) ───
   const [addingGrade, setAddingGrade] = useState(false);
@@ -455,6 +528,191 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Pilot readiness checklist */}
+      <div
+        style={{
+          background: "var(--surface-card)",
+          borderRadius: 10,
+          padding: "14px 14px 12px",
+          border: "1px solid var(--border-default)",
+          marginBottom: 20,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            marginBottom: 10,
+          }}
+        >
+          <div>
+            <p
+              style={{
+                color: "var(--text-muted)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: 1,
+                margin: "0 0 3px",
+              }}
+            >
+              PILOT READINESS
+            </p>
+            <h2
+              style={{
+                fontFamily: displayFont,
+                fontSize: 18,
+                color: "var(--text-primary)",
+                margin: 0,
+              }}
+            >
+              Parish launch checklist
+            </h2>
+          </div>
+          <div
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: "50%",
+              background: `conic-gradient(#6DB87B ${readinessPct * 3.6}deg, rgba(255,255,255,.08) 0deg)`,
+              display: "grid",
+              placeItems: "center",
+              flex: "0 0 auto",
+            }}
+          >
+            <div
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: "50%",
+                background: "var(--surface-card)",
+                display: "grid",
+                placeItems: "center",
+                color: "var(--text-primary)",
+                fontWeight: 800,
+                fontSize: 13,
+              }}
+            >
+              {readinessPct}%
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            height: 5,
+            borderRadius: 99,
+            background: "rgba(255,255,255,.07)",
+            overflow: "hidden",
+            marginBottom: 12,
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${readinessPct}%`,
+              background: "linear-gradient(90deg, #6DB87B, #D4A843)",
+              borderRadius: 99,
+            }}
+          />
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+            gap: 8,
+          }}
+        >
+          {readinessItems.map((item) => (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => item.action && onNavigate(item.action)}
+              disabled={!item.action}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "24px 1fr",
+                gap: 8,
+                alignItems: "start",
+                minHeight: 64,
+                padding: "10px 9px",
+                borderRadius: 8,
+                border: item.ready
+                  ? "1px solid rgba(109,184,123,.32)"
+                  : "1px solid var(--border-default)",
+                background: item.ready
+                  ? "rgba(109,184,123,.1)"
+                  : "var(--surface-input)",
+                color: "inherit",
+                textAlign: "left",
+                cursor: item.action ? "pointer" : "default",
+                opacity: item.action || item.ready ? 1 : 0.8,
+              }}
+            >
+              <span
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: "50%",
+                  background: item.ready
+                    ? "rgba(109,184,123,.2)"
+                    : "rgba(255,255,255,.08)",
+                  color: item.ready ? "#6DB87B" : "var(--text-ghost)",
+                  display: "grid",
+                  placeItems: "center",
+                  fontWeight: 900,
+                  fontSize: 13,
+                  lineHeight: 1,
+                }}
+              >
+                {item.ready ? "✓" : "•"}
+              </span>
+              <span>
+                <span
+                  style={{
+                    display: "block",
+                    color: "var(--text-primary)",
+                    fontSize: 12,
+                    fontWeight: 800,
+                    lineHeight: 1.2,
+                    marginBottom: 3,
+                  }}
+                >
+                  {item.label}
+                </span>
+                <span
+                  style={{
+                    display: "block",
+                    color: "var(--text-faint)",
+                    fontSize: 10,
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {item.detail}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 8,
+            flexWrap: "wrap",
+            marginTop: 12,
+            color: "var(--text-faint)",
+            fontSize: 11,
+            fontWeight: 700,
+          }}
+        >
+          <span>
+            {readinessDone} of {readinessItems.length} checks complete
+          </span>
+          <span>{readinessPct === 100 ? "Ready for pilot launch" : "Pilot prep in progress"}</span>
+        </div>
       </div>
 
       {/* Quick actions */}
