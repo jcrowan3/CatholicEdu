@@ -4,6 +4,7 @@ import uuid
 
 from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from catechist_api.models import ProgressEntry
@@ -50,22 +51,33 @@ async def record_progress(
     If the student already has progress for this (grade, week, activity),
     update stars_earned only if the new value is higher (best score wins).
     """
-    stmt = (
-        pg_insert(ProgressEntry)
-        .values(
-            student_id=student_id,
-            grade=grade,
-            week=week,
-            activity=activity,
-            stars_earned=stars_earned,
+    values = {
+        "student_id": student_id,
+        "grade": grade,
+        "week": week,
+        "activity": activity,
+        "stars_earned": stars_earned,
+    }
+    bind = db.get_bind()
+    if bind.dialect.name == "sqlite":
+        stmt = (
+            sqlite_insert(ProgressEntry)
+            .values(**values)
+            .on_conflict_do_update(
+                index_elements=["student_id", "grade", "week", "activity"],
+                set_={"stars_earned": func.max(ProgressEntry.stars_earned, stars_earned)},
+            )
+            .returning(ProgressEntry)
         )
-        .on_conflict_do_update(
-            constraint="uq_progress_student_grade_week_activity",
-            set_={
-                "stars_earned": func.greatest(ProgressEntry.stars_earned, stars_earned),
-            },
-        )
-        .returning(ProgressEntry)
+    else:
+        stmt = (
+            pg_insert(ProgressEntry)
+            .values(**values)
+            .on_conflict_do_update(
+                constraint="uq_progress_student_grade_week_activity",
+                set_={"stars_earned": func.greatest(ProgressEntry.stars_earned, stars_earned)},
+            )
+            .returning(ProgressEntry)
     )
     result = await db.execute(stmt)
     entry = result.scalar_one()
