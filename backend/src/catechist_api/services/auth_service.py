@@ -11,7 +11,7 @@ from sqlalchemy.orm import selectinload
 
 from catechist_api.auth.jwt import create_access_token, create_refresh_token, decode_token
 from catechist_api.auth.password import hash_password, verify_password
-from catechist_api.models import Catechist, Class, ClassEnrollment, GradeConfig, Parish, Student
+from catechist_api.models import Catechist, Class, ClassEnrollment, Parish, Student
 
 
 def _slugify(name: str) -> str:
