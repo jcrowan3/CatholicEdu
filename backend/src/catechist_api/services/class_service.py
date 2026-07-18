@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from catechist_api.models import Class, ClassEnrollment, GradeConfig
+from catechist_api.models import Class, ClassEnrollment
 
 
 async def list_classes(
