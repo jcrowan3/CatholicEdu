@@ -1,5 +1,6 @@
 """Shared test fixtures for the catechist API tests."""
 
+import os
 import uuid
 from collections.abc import AsyncGenerator
 
@@ -7,7 +8,7 @@ import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
 from catechist_api.database import Base, get_db
 from catechist_api.main import create_app
@@ -18,8 +19,9 @@ from catechist_api.models import Catechist, Class, ClassEnrollment, GradeConfig,
 from catechist_api.auth.password import hash_password
 from catechist_api.auth.jwt import create_access_token
 
-# Test database URL — uses the same Postgres but a separate database
-TEST_DATABASE_URL = "postgresql+asyncpg://catechist:devpassword@localhost:5432/catechist_test"
+# Use a self-contained SQLite database by default so report/API tests can run without
+# a local Postgres service. Set TEST_DATABASE_URL to exercise a real Postgres database.
+TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL", "sqlite+aiosqlite:///./.pytest-catechist.db")
 
 
 @pytest.fixture(scope="session")
@@ -28,7 +30,7 @@ def anyio_backend():
 
 
 @pytest_asyncio.fixture(scope="session", loop_scope="session")
-async def test_engine():
+async def test_engine() -> AsyncGenerator[AsyncEngine, None]:
     """Create the test engine on the session event loop."""
     engine = create_async_engine(TEST_DATABASE_URL, echo=False)
     async with engine.begin() as conn:

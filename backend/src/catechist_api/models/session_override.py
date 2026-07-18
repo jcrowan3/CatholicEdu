@@ -2,12 +2,16 @@
 
 import uuid
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, ForeignKey, SmallInteger, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, JSON, SmallInteger, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from catechist_api.database import Base
+
+if TYPE_CHECKING:
+    from catechist_api.models import GradeConfig
 
 
 class SessionOverride(Base):
@@ -23,7 +27,7 @@ class SessionOverride(Base):
         ForeignKey("grade_configs.id", ondelete="CASCADE"), nullable=False, index=True
     )
     week: Mapped[int] = mapped_column(SmallInteger, nullable=False)
-    session_data: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    session_data: Mapped[dict] = mapped_column(JSONB().with_variant(JSON(), "sqlite"), nullable=False)
     created_by: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("catechists.id", ondelete="SET NULL")
     )
