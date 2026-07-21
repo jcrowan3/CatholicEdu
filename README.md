@@ -156,6 +156,7 @@ Interactive API docs at **http://localhost:8000/docs** when the backend is runni
 - CCC (Catechism) paragraph numbers are cited but all content is original
 - Doctrinally aligned with official Catholic teaching
 - The Real Presence in the Eucharist is taught as transubstantiation, not symbolic
+- AI provenance and disclosure posture is documented in [docs/ai-provenance-audit.md](docs/ai-provenance-audit.md)
 
 ## Target Devices
 

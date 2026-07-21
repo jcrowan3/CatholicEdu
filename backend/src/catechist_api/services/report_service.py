@@ -34,6 +34,11 @@ PILLAR_OUTCOMES = {
     "Prayer": "Practice Catholic prayer and describe how prayer deepens discipleship.",
 }
 
+STANDARDS_PDF_PROVENANCE_NOTE = (
+    "Source: Catholic Catechist Toolkit bundled curriculum; "
+    "generated without AI model calls."
+)
+
 
 async def _count(db: AsyncSession, stmt) -> int:
     """Execute a count query and return the scalar result."""
@@ -446,6 +451,7 @@ def export_standards_coverage_pdf(*, grade: int) -> bytes:
     lines = [
         f"Grade {grade} Diocesan Standards Coverage Report",
         f"Total weeks mapped: {coverage['total_weeks']}",
+        STANDARDS_PDF_PROVENANCE_NOTE,
         "",
     ]
 

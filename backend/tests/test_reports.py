@@ -168,6 +168,7 @@ async def test_standards_coverage_pdf_export(client: AsyncClient):
     assert r.headers["content-type"] == "application/pdf"
     assert "standards-coverage-grade3.pdf" in r.headers["content-disposition"]
     assert r.content.startswith(b"%PDF-1.4")
+    assert b"generated without AI model calls" in r.content
 
 
 def test_standards_coverage_uses_configured_curriculum_dir(monkeypatch, tmp_path):
