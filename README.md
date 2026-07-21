@@ -154,6 +154,7 @@ Interactive API docs at **http://localhost:8000/docs** when the backend is runni
 
 - All Scripture uses the **Catholic Public Domain Version (CPDV)** — public domain
 - CCC (Catechism) paragraph numbers are cited but all content is original
+- Curriculum text may include AI-assisted drafting and is reviewed before release; provenance is tracked in `frontend/src/data/contentProvenance.js`
 - Doctrinally aligned with official Catholic teaching
 - The Real Presence in the Eucharist is taught as transubstantiation, not symbolic
 

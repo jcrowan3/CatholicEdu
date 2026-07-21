@@ -1,4 +1,5 @@
 import { jsPDF } from "jspdf";
+import { CONTENT_PROVENANCE } from "../data/contentProvenance";
 
 /**
  * Generate a printable PDF for a session.
@@ -187,15 +188,25 @@ export function generateSessionPdf(session) {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(150);
+    const pageH = doc.internal.pageSize.getHeight();
+    const disclosureLines = doc.splitTextToSize(
+      CONTENT_PROVENANCE.disclosure,
+      contentW
+    );
+    doc.text(
+      disclosureLines,
+      margin,
+      pageH - 42
+    );
     doc.text(
       "Catholic Catechist Toolkit",
       margin,
-      doc.internal.pageSize.getHeight() - 30
+      pageH - 18
     );
     doc.text(
       `Page ${i} of ${pages}`,
       pageW - margin,
-      doc.internal.pageSize.getHeight() - 30,
+      pageH - 18,
       { align: "right" }
     );
     doc.setTextColor(0);

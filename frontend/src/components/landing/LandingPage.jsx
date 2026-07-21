@@ -1,4 +1,5 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
+import { CONTENT_PROVENANCE } from "../../data/contentProvenance";
 import { GRADES } from "../../data/grades";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useAuth } from "../../context/AuthContext";
@@ -256,12 +257,22 @@ export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
             color: "var(--text-faint)",
             fontSize: 12,
             lineHeight: 1.6,
-            margin: 0,
+            margin: "0 0 10px",
           }}
         >
           Free, interactive activities for parish CCD and faith formation
           programs. Each grade includes 30 weeks of sessions aligned with
           Catholic teaching, with quizzes, sorting games, and guided prayers.
+        </p>
+        <p
+          style={{
+            color: "var(--text-ghost)",
+            fontSize: 10,
+            lineHeight: 1.5,
+            margin: 0,
+          }}
+        >
+          {CONTENT_PROVENANCE.disclosure}
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
+import { CONTENT_PROVENANCE } from "../../data/contentProvenance";
 
 /**
  * Parent/Family Take-Home Summary.
@@ -257,10 +258,12 @@ export default function TakeHome({ session, onBack }) {
           textAlign: "center",
           color: "var(--text-ghost)",
           fontSize: 10,
-          marginTop: 12,
+          lineHeight: 1.4,
+          margin: "12px auto 0",
+          maxWidth: 420,
         }}
       >
-        Tip: Take a screenshot to share with your family!
+        {CONTENT_PROVENANCE.disclosure}
       </p>
     </div>
   );
