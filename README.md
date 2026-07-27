@@ -45,6 +45,26 @@ Alternatively, run everything via Docker:
 docker compose up
 ```
 
+### Backend Verification (no Postgres required)
+
+The backend test fixtures use a self-contained SQLite database by default. From the
+repository root, install the development dependencies and run the report tests:
+
+```bash
+cd backend
+uv sync --extra dev
+uv run --extra dev pytest tests/test_reports.py
+```
+
+Run the full backend test suite with:
+
+```bash
+uv run --extra dev pytest
+```
+
+To exercise a real Postgres database instead, set `TEST_DATABASE_URL` to a
+`postgresql+asyncpg://...` URL before running pytest.
+
 ## How It Works
 
 ### For Catechists (Teachers)
