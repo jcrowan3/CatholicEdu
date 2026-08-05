@@ -6,10 +6,27 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from catechist_api.auth.dependencies import require_catechist
 from catechist_api.auth.jwt import TokenPayload
 from catechist_api.database import get_db
-from catechist_api.schemas.session import SessionOverrideCreateRequest, SessionOverrideResponse
-from catechist_api.services import grade_service, session_service
+from catechist_api.schemas.session import (
+    DoctrinalReviewResponse,
+    SessionOverrideCreateRequest,
+    SessionOverrideResponse,
+)
+from catechist_api.services import doctrinal_review, grade_service, session_service
 
 router = APIRouter()
+
+
+@router.post("/{grade}/sessions/review", response_model=DoctrinalReviewResponse)
+async def review_session(
+    grade: int,
+    body: SessionOverrideCreateRequest,
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+):
+    """Review an edited session with deterministic doctrinal safety rules."""
+    await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
+    findings = doctrinal_review.review_session(body.session_data)
+    return {"passed": not findings, "findings": findings}
 
 
 @router.get("/{grade}/sessions", response_model=list[SessionOverrideResponse])

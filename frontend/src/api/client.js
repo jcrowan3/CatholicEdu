@@ -226,6 +226,8 @@ export const api = {
   getSessionOverrides: (grade) => json(`/grades/${grade}/sessions`),
   upsertSessionOverride: (grade, week, sessionData) =>
     json(`/grades/${grade}/sessions/${week}`, { method: "PUT", body: JSON.stringify({ session_data: sessionData }) }),
+  reviewSession: (grade, sessionData) =>
+    json(`/grades/${grade}/sessions/review`, { method: "POST", body: JSON.stringify({ session_data: sessionData }) }),
   deleteSessionOverride: (grade, week) =>
     send(`/grades/${grade}/sessions/${week}`, { method: "DELETE" }),
 

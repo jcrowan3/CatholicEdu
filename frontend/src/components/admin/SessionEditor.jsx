@@ -415,6 +415,8 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
   const session = sessions.find((s) => s.week === weekNum);
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [reviewFindings, setReviewFindings] = useState([]);
+  const [reviewing, setReviewing] = useState(false);
 
   if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
 
@@ -427,17 +429,22 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
   };
 
   const handleSave = async () => {
-    // Always save to localStorage
-    saveSessions(grade, sessions);
-
-    // Also save to API when online
     if (isOnline) {
       try {
+        setReviewing(true);
+        const review = await api.reviewSession(grade, session);
+        setReviewFindings(review.findings);
+        if (!review.passed) return;
         await api.upsertSessionOverride(grade, weekNum, session);
       } catch {
-        // API save failed — localStorage save still succeeded
+        setReviewFindings([{ message: "The doctrinal review could not run. Check your connection and try again." }]);
+        return;
+      } finally {
+        setReviewing(false);
       }
     }
+
+    saveSessions(grade, sessions);
 
     setSaved(true);
     onSessionsChange?.(sessions);
@@ -529,6 +536,14 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
       </Section>
 
       {/* Action buttons */}
+      {reviewFindings.length > 0 && (
+        <div role="alert" style={{ background: "rgba(217,74,74,.12)", border: "1px solid rgba(217,74,74,.35)", borderRadius: 10, padding: 12, marginTop: 16 }}>
+          <strong style={{ color: "#D94A4A" }}>Fix before publishing</strong>
+          <ul style={{ color: "var(--text-primary)", margin: "8px 0 0", paddingLeft: 20 }}>
+            {reviewFindings.map((finding, index) => <li key={`${finding.code || "review"}-${index}`}>{finding.message}</li>)}
+          </ul>
+        </div>
+      )}
       <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 20 }}>
         <button
           onClick={handleSave}
@@ -546,7 +561,7 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
             cursor: "pointer",
           }}
         >
-          {saved ? "Saved ✓" : "Save Changes"}
+          {reviewing ? "Reviewing…" : saved ? "Saved ✓" : "Review & Save"}
         </button>
         {!confirmReset ? (
           <button
