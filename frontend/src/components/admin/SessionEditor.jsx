@@ -2,6 +2,7 @@ import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
+import { reviewSessionLocally } from "../../utils/doctrinalReview";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
@@ -407,7 +408,7 @@ function FillBlankEditor({ fillblank, onChange }) {
 }
 
 /* ─── Main Session Editor ─── */
-export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange }) {
+export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   const auth = useAuth();
   const isOnline = auth.isAuthenticated && auth.isOnline;
 
@@ -426,21 +427,34 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
     );
     setSessions(updated);
     setSaved(false);
+    setReviewFindings([]);
   };
 
   const handleSave = async () => {
+    let review;
     if (isOnline) {
       try {
         setReviewing(true);
-        const review = await api.reviewSession(grade, session);
-        setReviewFindings(review.findings);
-        if (!review.passed) return;
-        await api.upsertSessionOverride(grade, weekNum, session);
+        review = await api.reviewSession(grade, session);
       } catch {
         setReviewFindings([{ message: "The doctrinal review could not run. Check your connection and try again." }]);
         return;
       } finally {
         setReviewing(false);
+      }
+    } else {
+      review = reviewSessionLocally(session);
+    }
+
+    setReviewFindings(review.findings);
+    if (!review.passed) return;
+
+    if (isOnline) {
+      try {
+        await api.upsertSessionOverride(grade, weekNum, session);
+      } catch {
+        setReviewFindings([{ message: "The reviewed session could not be saved. Check your connection and try again." }]);
+        return;
       }
     }
 
@@ -547,6 +561,7 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
       <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 20 }}>
         <button
           onClick={handleSave}
+          disabled={reviewing}
           style={{
             flex: 1,
             padding: "14px 0",
