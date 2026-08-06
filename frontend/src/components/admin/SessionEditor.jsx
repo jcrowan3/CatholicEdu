@@ -1,8 +1,9 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
 import { reviewSessionLocally } from "../../utils/doctrinalReview";
+import { createSessionSaveLifecycle } from "../../utils/sessionSaveLifecycle";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
@@ -417,7 +418,9 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [reviewFindings, setReviewFindings] = useState([]);
-  const [reviewing, setReviewing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const saveLifecycle = useRef(null);
+  if (!saveLifecycle.current) saveLifecycle.current = createSessionSaveLifecycle();
 
   if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
 
@@ -431,38 +434,32 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   };
 
   const handleSave = async () => {
-    let review;
-    if (isOnline) {
-      try {
-        setReviewing(true);
-        review = await api.reviewSession(grade, session);
-      } catch {
-        setReviewFindings([{ message: "The doctrinal review could not run. Check your connection and try again." }]);
-        return;
-      } finally {
-        setReviewing(false);
-      }
-    } else {
-      review = reviewSessionLocally(session);
+    if (saveLifecycle.current.isSaving) return;
+
+    const draft = JSON.parse(JSON.stringify({ session, sessions }));
+    setSaving(true);
+    try {
+      const result = await saveLifecycle.current.save({
+        draft,
+        persistDraft: ({ sessions: draftSessions }) => saveSessions(grade, draftSessions),
+        review: (draftSession) => isOnline
+          ? api.reviewSession(grade, draftSession)
+          : reviewSessionLocally(draftSession),
+        upsert: (draftSession) => isOnline
+          ? api.upsertSessionOverride(grade, weekNum, draftSession)
+          : Promise.resolve(),
+      });
+
+      setReviewFindings(result.review.findings);
+      if (result.status !== "saved") return;
+      setSaved(true);
+      onSessionsChange?.(draft.sessions);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      setReviewFindings([{ message: "Your draft is safe on this device, but review or publishing failed. Check your connection and try again." }]);
+    } finally {
+      setSaving(false);
     }
-
-    setReviewFindings(review.findings);
-    if (!review.passed) return;
-
-    if (isOnline) {
-      try {
-        await api.upsertSessionOverride(grade, weekNum, session);
-      } catch {
-        setReviewFindings([{ message: "The reviewed session could not be saved. Check your connection and try again." }]);
-        return;
-      }
-    }
-
-    saveSessions(grade, sessions);
-
-    setSaved(true);
-    onSessionsChange?.(sessions);
-    setTimeout(() => setSaved(false), 2000);
   };
 
   const handleReset = async () => {
@@ -561,7 +558,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
       <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 20 }}>
         <button
           onClick={handleSave}
-          disabled={reviewing}
+          disabled={saving}
           style={{
             flex: 1,
             padding: "14px 0",
@@ -573,10 +570,10 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
             fontFamily: displayFont,
             fontSize: 15,
             border: "none",
-            cursor: "pointer",
+            cursor: saving ? "wait" : "pointer",
           }}
         >
-          {reviewing ? "Reviewing…" : saved ? "Saved ✓" : "Review & Save"}
+          {saving ? "Saving…" : saved ? "Saved ✓" : "Review & Save"}
         </button>
         {!confirmReset ? (
           <button
