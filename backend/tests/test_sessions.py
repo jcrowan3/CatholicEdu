@@ -74,3 +74,42 @@ async def test_delete_nonexistent_session_returns_404(client: AsyncClient):
     ctx = await _setup_with_grade(client, "sess-2")
     r = await client.delete("/api/v1/grades/4/sessions/99", headers=ctx["headers"])
     assert r.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_doctrinal_review_returns_concrete_fix_checklist(client: AsyncClient):
+    ctx = await _setup_with_grade(client, "review-1")
+    response = await client.post(
+        "/api/v1/grades/4/sessions/review",
+        json={"session_data": {
+            "title": "A changed lesson",
+            "verse": "God loved the world very much.",
+            "discover": {"items": [{"desc": "Jesus was only a teacher."}]},
+        }},
+        headers=ctx["headers"],
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result["passed"] is False
+    assert {finding["code"] for finding in result["findings"]} == {
+        "missing_ccc_reference",
+        "unsupported_scripture_paraphrase",
+        "weakened_doctrine",
+    }
+    assert all(finding["message"] for finding in result["findings"])
+
+
+@pytest.mark.asyncio
+async def test_doctrinal_review_passes_supported_session(client: AsyncClient):
+    ctx = await _setup_with_grade(client, "review-2")
+    response = await client.post(
+        "/api/v1/grades/4/sessions/review",
+        json={"session_data": {
+            "title": "The Incarnation",
+            "verse": "The Word was made flesh. — John 1:14",
+            "discover": {"items": [{"desc": "Jesus is true God and true man (CCC 464)."}]},
+        }},
+        headers=ctx["headers"],
+    )
+    assert response.status_code == 200
+    assert response.json() == {"passed": True, "findings": []}

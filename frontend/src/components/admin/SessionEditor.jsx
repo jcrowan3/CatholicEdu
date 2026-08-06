@@ -2,6 +2,7 @@ import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
+import { reviewSessionLocally } from "../../utils/doctrinalReview";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../api/client";
 
@@ -407,7 +408,7 @@ function FillBlankEditor({ fillblank, onChange }) {
 }
 
 /* ─── Main Session Editor ─── */
-export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange }) {
+export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   const auth = useAuth();
   const isOnline = auth.isAuthenticated && auth.isOnline;
 
@@ -415,6 +416,8 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
   const session = sessions.find((s) => s.week === weekNum);
   const [saved, setSaved] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const [reviewFindings, setReviewFindings] = useState([]);
+  const [reviewing, setReviewing] = useState(false);
 
   if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
 
@@ -424,20 +427,38 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
     );
     setSessions(updated);
     setSaved(false);
+    setReviewFindings([]);
   };
 
   const handleSave = async () => {
-    // Always save to localStorage
-    saveSessions(grade, sessions);
+    let review;
+    if (isOnline) {
+      try {
+        setReviewing(true);
+        review = await api.reviewSession(grade, session);
+      } catch {
+        setReviewFindings([{ message: "The doctrinal review could not run. Check your connection and try again." }]);
+        return;
+      } finally {
+        setReviewing(false);
+      }
+    } else {
+      review = reviewSessionLocally(session);
+    }
 
-    // Also save to API when online
+    setReviewFindings(review.findings);
+    if (!review.passed) return;
+
     if (isOnline) {
       try {
         await api.upsertSessionOverride(grade, weekNum, session);
       } catch {
-        // API save failed — localStorage save still succeeded
+        setReviewFindings([{ message: "The reviewed session could not be saved. Check your connection and try again." }]);
+        return;
       }
     }
+
+    saveSessions(grade, sessions);
 
     setSaved(true);
     onSessionsChange?.(sessions);
@@ -529,9 +550,18 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
       </Section>
 
       {/* Action buttons */}
+      {reviewFindings.length > 0 && (
+        <div role="alert" style={{ background: "rgba(217,74,74,.12)", border: "1px solid rgba(217,74,74,.35)", borderRadius: 10, padding: 12, marginTop: 16 }}>
+          <strong style={{ color: "#D94A4A" }}>Fix before publishing</strong>
+          <ul style={{ color: "var(--text-primary)", margin: "8px 0 0", paddingLeft: 20 }}>
+            {reviewFindings.map((finding, index) => <li key={`${finding.code || "review"}-${index}`}>{finding.message}</li>)}
+          </ul>
+        </div>
+      )}
       <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 20 }}>
         <button
           onClick={handleSave}
+          disabled={reviewing}
           style={{
             flex: 1,
             padding: "14px 0",
@@ -546,7 +576,7 @@ export default function SessionEditor({ grade, weekNum, onBack, onSessionsChange
             cursor: "pointer",
           }}
         >
-          {saved ? "Saved ✓" : "Save Changes"}
+          {reviewing ? "Reviewing…" : saved ? "Saved ✓" : "Review & Save"}
         </button>
         {!confirmReset ? (
           <button

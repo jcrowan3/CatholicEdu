@@ -13,6 +13,17 @@ class SessionOverrideCreateRequest(BaseModel):
     session_data: dict[str, Any] = Field(..., description="Full session data as JSON")
 
 
+class DoctrinalReviewFinding(BaseModel):
+    code: str
+    severity: str
+    message: str
+
+
+class DoctrinalReviewResponse(BaseModel):
+    passed: bool
+    findings: list[DoctrinalReviewFinding]
+
+
 class SessionOverrideResponse(BaseModel):
     """Session override response."""
 
