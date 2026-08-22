@@ -23,7 +23,7 @@ An offline-friendly, open-source toolkit for Catholic parish faith formation. It
 
 ### Offline classroom mode
 
-Requirements: Node.js 22 or later and npm.
+Requirements: Node.js 22.13 or later and npm.
 
 ```bash
 git clone https://github.com/jcrowan3/CatholicEdu.git
@@ -55,7 +55,7 @@ The Compose configuration is for local development. Its database password and JW
 
 ### Full stack without Docker
 
-Requirements: Node.js 22+, Python 3.12+, [uv](https://docs.astral.sh/uv/), and PostgreSQL 17+.
+Requirements: Node.js 22.13+, Python 3.12+, [uv](https://docs.astral.sh/uv/), and PostgreSQL 17+.
 
 In one terminal, start the backend:
 
