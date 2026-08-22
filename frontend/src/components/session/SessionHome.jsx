@@ -107,6 +107,7 @@ export default function SessionHome({
           <button
             onClick={() => onNavigate("takehome")}
             title="Family Faith Connection"
+            aria-label="Open family faith connection"
             style={{
               background: "var(--surface-input)",
               border: "1px solid var(--border-medium)",
@@ -122,6 +123,7 @@ export default function SessionHome({
           <button
             onClick={() => generateSessionPdf(session)}
             title="Print session as PDF"
+            aria-label="Download session PDF"
             style={{
               background: "var(--surface-input)",
               border: "1px solid var(--border-medium)",
@@ -231,11 +233,17 @@ export default function SessionHome({
         {acts.map((a, i) => {
           const d = isDone(a.id);
           return (
-            <div
+            <button
               key={a.id}
+              type="button"
               className="ch"
               onClick={() => onNavigate(a.id)}
               style={{
+                width: "100%",
+                textAlign: "left",
+                cursor: "pointer",
+                fontFamily: "inherit",
+                color: "inherit",
                 background: d
                   ? "rgba(109,184,123,.1)"
                   : "var(--surface-card)",
@@ -318,7 +326,7 @@ export default function SessionHome({
                   {a.sv}
                 </span>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
@@ -409,7 +417,6 @@ export default function SessionHome({
 
       {/* Saint Quest placeholder */}
       <div
-        className="ch"
         style={{
           marginTop: 14,
           background:
@@ -435,7 +442,16 @@ export default function SessionHome({
             Complete this session to unlock the next adventure!
           </div>
         </div>
-        <span style={{ color: "var(--text-ghost)", fontSize: 16 }}>→</span>
+        <span
+          style={{
+            color: "var(--text-ghost)",
+            fontSize: 9,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+          }}
+        >
+          COMING SOON
+        </span>
       </div>
 
       {/* Related Sessions */}

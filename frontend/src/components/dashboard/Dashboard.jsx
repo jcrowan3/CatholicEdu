@@ -1,11 +1,16 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
-import { getUsers, getSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
-import { useAuth } from "../../context/AuthContext";
+import { getUsers, loadSessions, getAllProgress, getProgramName, getPillarColors } from "../../data/store";
+import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
 import { GRADES } from "../../data/grades";
 import ClassSelector from "./ClassSelector";
 import { generateStandardsCoveragePdf } from "../../utils/generateStandardsCoveragePdf";
+import {
+  getSessionActivities,
+  mapApiStudent,
+  mapProgressGrid,
+} from "../../utils/progressData";
 
 
 export default function Dashboard({ grade, classId, onClassChange, onGradeChange, onNavigate }) {
@@ -39,41 +44,23 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
 
       api.getParish().then((p) => setProgramName(p.name)).catch(() => {});
     }
-  }, [isOnline]);
+  }, [isOnline, effectiveGrade, onGradeChange]);
 
-  // Load data when grade/class changes
+  // Offline mode hydrates React state from the localStorage-backed external store.
+  /* eslint-disable react-hooks/set-state-in-effect -- Synchronizing external offline data when the active class changes. */
   useEffect(() => {
     if (!effectiveGrade) return;
 
     if (isOnline && classId) {
       api.getStudents(effectiveGrade, classId)
         .then((data) => {
-          setUsers(data.map((s) => ({
-            id: s.id,
-            name: s.display_name,
-            avatarEmoji: s.avatar_emoji,
-            parentEmail: s.parent_email || "",
-            pickupContactNotes: s.pickup_contact_notes || "",
-            mediaPermissionGranted: Boolean(s.media_permission_granted),
-            allergyPrivacyFlags: s.allergy_privacy_flags || "",
-            weeklyDigestPermission: Boolean(s.weekly_digest_permission),
-            role: "student",
-          })));
+          setUsers(data.map(mapApiStudent));
         })
         .catch(() => setUsers([]));
 
       api.getClassProgressGrid(effectiveGrade, classId)
         .then((gridData) => {
-          const progress = gridData.students.map((s) => {
-            const completed = {};
-            for (const [week, activities] of Object.entries(s.week_progress)) {
-              for (const [activity, actStars] of Object.entries(activities)) {
-                completed[`${week}-${activity}`] = { stars: actStars };
-              }
-            }
-            return { userId: s.student_id, stars: s.total_stars, completed };
-          });
-          setAllProgress(progress);
+          setAllProgress(mapProgressGrid(gridData));
         })
         .catch(() => setAllProgress([]));
     } else if (!isOnline) {
@@ -84,12 +71,13 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
       );
     }
 
-    setSessions(getSessions(effectiveGrade));
+    loadSessions(effectiveGrade).then(setSessions);
 
     if (!isOnline) {
       setProgramName(getProgramName(effectiveGrade));
     }
   }, [effectiveGrade, classId, isOnline]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleGradeSelect = (g) => {
     setSelectedGrade(g);
@@ -99,10 +87,7 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
 
   // Compute per-week completion stats
   const weekStats = sessions.map((session) => {
-    const actIds = ["discover", "quiz", "prayer"];
-    if (session.sort) actIds.push("sort");
-    if (session.timeline) actIds.push("timeline");
-    if (session.fillblank) actIds.push("fillblank");
+    const actIds = getSessionActivities(session);
 
     let completedCount = 0;
     for (const prog of allProgress) {

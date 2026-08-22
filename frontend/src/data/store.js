@@ -1,4 +1,8 @@
-import { getDefaultSessions, getPillarColors } from "./gradeLoader";
+import {
+  getDefaultSessions,
+  getPillarColors,
+  loadDefaultSessions,
+} from "./gradeLoader";
 
 /* ─── Shared storage key builders ─── */
 
@@ -175,7 +179,7 @@ export function ensureDefaultClass(grade) {
 
 /* ─── Session Data (grade-scoped, NOT class-scoped) ─── */
 
-export function getSessions(grade) {
+function getStoredSessions(grade) {
   try {
     const raw = localStorage.getItem(sessionsKey(grade));
     if (raw) {
@@ -185,7 +189,15 @@ export function getSessions(grade) {
   } catch {
     /* fall through */
   }
-  return getDefaultSessions(grade);
+  return null;
+}
+
+export function getSessions(grade) {
+  return getStoredSessions(grade) || getDefaultSessions(grade);
+}
+
+export async function loadSessions(grade) {
+  return getStoredSessions(grade) || loadDefaultSessions(grade);
 }
 
 export function saveSessions(grade, sessions) {
@@ -195,9 +207,9 @@ export function saveSessions(grade, sessions) {
   );
 }
 
-export function resetSessionToDefault(grade, weekNum) {
-  const sessions = getSessions(grade);
-  const defaults = getDefaultSessions(grade);
+export async function resetSessionToDefault(grade, weekNum) {
+  const sessions = await loadSessions(grade);
+  const defaults = await loadDefaultSessions(grade);
   const defaultSession = defaults.find((s) => s.week === weekNum);
   if (!defaultSession) return sessions;
   const updated = sessions.map((s) => (s.week === weekNum ? defaultSession : s));

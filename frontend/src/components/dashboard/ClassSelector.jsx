@@ -1,13 +1,11 @@
-import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
 import {
   getClasses,
   addClass,
   removeClass,
-  getActiveClassId,
   setActiveClassId,
 } from "../../data/store";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
 
 
@@ -20,7 +18,8 @@ export default function ClassSelector({ grade, classId, onClassChange }) {
   const [newName, setNewName] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(null);
 
-  // Load classes
+  // localStorage is an external data source, so offline mode hydrates state here.
+  /* eslint-disable react-hooks/set-state-in-effect -- Synchronizing the local class store after the selected grade changes. */
   useEffect(() => {
     if (!grade) return;
     if (isOnline) {
@@ -42,7 +41,8 @@ export default function ClassSelector({ grade, classId, onClassChange }) {
     } else {
       setClasses(getClasses(grade));
     }
-  }, [grade, isOnline]);
+  }, [grade, isOnline, classId, onClassChange]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleAdd = async () => {
     if (!newName.trim()) return;

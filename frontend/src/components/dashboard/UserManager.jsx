@@ -1,7 +1,7 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useCallback, useState, useEffect } from "react";
 import { getUsers, addUser, updateUser, removeUser } from "../../data/store";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
 
 

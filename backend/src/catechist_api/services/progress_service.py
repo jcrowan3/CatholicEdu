@@ -78,7 +78,7 @@ async def record_progress(
                 set_={"stars_earned": func.greatest(ProgressEntry.stars_earned, stars_earned)},
             )
             .returning(ProgressEntry)
-    )
+        )
     result = await db.execute(stmt)
     entry = result.scalar_one()
     return entry

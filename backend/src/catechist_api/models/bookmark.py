@@ -1,7 +1,7 @@
 """Bookmark model — saved discover items."""
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, SmallInteger, String, Text, UniqueConstraint
@@ -17,7 +17,10 @@ class Bookmark(Base):
     __tablename__ = "bookmarks"
     __table_args__ = (
         UniqueConstraint(
-            "student_id", "grade", "week", "discover_index",
+            "student_id",
+            "grade",
+            "week",
+            "discover_index",
             name="uq_bookmark_student_grade_week_index",
         ),
     )
@@ -35,7 +38,7 @@ class Bookmark(Base):
     item_icon: Mapped[str | None] = mapped_column(String(10))
     pillar: Mapped[str | None] = mapped_column(String(20))
     saved_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
 
     # Relationships

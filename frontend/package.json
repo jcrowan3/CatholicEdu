@@ -2,7 +2,7 @@
   "name": "catechist-toolkit",
   "private": true,
   "version": "1.0.0",
-  "description": "Catholic Catechist Toolkit — Grade 3: The Church and the Sacraments",
+  "description": "Offline-friendly Catholic faith-formation activities for grades 2–8",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,7 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "jspdf": "^4.2.0",
+    "jspdf": "^4.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

@@ -242,9 +242,7 @@ async def test_student_login_with_pin(client: AsyncClient):
     headers = {"Authorization": f"Bearer {token}"}
 
     await client.post("/api/v1/grades", json={"grade": 5}, headers=headers)
-    cls = await client.post(
-        "/api/v1/grades/5/classes", json={"name": "Wed 5pm"}, headers=headers
-    )
+    cls = await client.post("/api/v1/grades/5/classes", json={"name": "Wed 5pm"}, headers=headers)
     join_code = cls.json()["join_code"]
     class_id = cls.json()["id"]
 

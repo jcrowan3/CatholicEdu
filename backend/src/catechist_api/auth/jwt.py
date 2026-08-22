@@ -1,7 +1,7 @@
 """JWT token creation and validation."""
 
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from jose import JWTError, jwt
 from pydantic import BaseModel
@@ -36,7 +36,7 @@ def create_access_token(
     else:
         expire_delta = timedelta(minutes=settings.access_token_expire_minutes)
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     payload = {
         "sub": str(sub),
         "parish_id": str(parish_id),
@@ -57,7 +57,7 @@ def create_access_token(
 
 def create_refresh_token(*, sub: uuid.UUID, parish_id: uuid.UUID) -> str:
     """Create a long-lived refresh token for catechists."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     payload = {
         "sub": str(sub),
         "parish_id": str(parish_id),
@@ -79,7 +79,7 @@ def decode_token(token: str) -> TokenPayload:
             role=payload.get("role"),
             class_id=uuid.UUID(payload["class_id"]) if payload.get("class_id") else None,
             grade=payload.get("grade"),
-            exp=datetime.fromtimestamp(payload["exp"], tz=timezone.utc) if payload.get("exp") else None,
+            exp=datetime.fromtimestamp(payload["exp"], tz=UTC) if payload.get("exp") else None,
         )
     except (JWTError, KeyError, ValueError) as e:
         raise JWTError(f"Invalid token: {e}") from e

@@ -18,9 +18,9 @@ async def list_classes(
     result = await db.execute(
         select(
             Class,
-            func.count(ClassEnrollment.id).filter(ClassEnrollment.is_active.is_(True)).label(
-                "student_count"
-            ),
+            func.count(ClassEnrollment.id)
+            .filter(ClassEnrollment.is_active.is_(True))
+            .label("student_count"),
         )
         .outerjoin(ClassEnrollment, ClassEnrollment.class_id == Class.id)
         .where(Class.grade_config_id == grade_config_id)

@@ -2,7 +2,7 @@ import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { CONTENT_PROVENANCE } from "../../data/contentProvenance";
 import { GRADES } from "../../data/grades";
 import ThemeToggle from "../ui/ThemeToggle";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 
 
 export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
@@ -125,11 +125,17 @@ export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
         {GRADES.map((g, i) => {
           const isActive = g.status === "active";
           return (
-            <div
+            <button
               key={g.grade}
+              type="button"
               className={isActive ? "ch" : ""}
               onClick={() => isActive && onSelectGrade(g.grade)}
+              disabled={!isActive}
               style={{
+                width: "100%",
+                textAlign: "left",
+                fontFamily: "inherit",
+                color: "inherit",
                 background: isActive
                   ? "rgba(212,168,67,.1)"
                   : "var(--surface-card)",
@@ -139,7 +145,7 @@ export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
                   ? "2px solid rgba(212,168,67,.35)"
                   : "1px solid var(--border-default)",
                 opacity: isActive ? 1 : 0.45,
-                cursor: isActive ? "pointer" : "default",
+                cursor: isActive ? "pointer" : "not-allowed",
                 animation: `pi .35s ease ${i * 0.06}s both`,
               }}
             >
@@ -227,7 +233,7 @@ export default function LandingPage({ onSelectGrade, onSignIn, onJoinClass }) {
                   </span>
                 </div>
               )}
-            </div>
+            </button>
           );
         })}
       </div>

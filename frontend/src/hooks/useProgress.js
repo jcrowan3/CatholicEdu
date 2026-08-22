@@ -60,7 +60,8 @@ export function useProgress(grade, classId = null, userId = null) {
   // Track whether this instance is connected to the API
   const isOnline = useRef(false);
 
-  // Load progress: API first (when online), then localStorage fallback
+  // Hydrate from the API or localStorage whenever the active learner changes.
+  /* eslint-disable react-hooks/set-state-in-effect -- Synchronizing external progress storage with hook state. */
   useEffect(() => {
     if (!grade) {
       setState(EMPTY);
@@ -109,6 +110,7 @@ export function useProgress(grade, classId = null, userId = null) {
       setState(saved ? { stars: saved.stars, completed: saved.completed } : EMPTY);
     }
   }, [grade, classId, userId]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Persist every state change to localStorage (both modes)
   useEffect(() => {

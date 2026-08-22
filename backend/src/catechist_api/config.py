@@ -1,5 +1,6 @@
 """Application settings loaded from environment variables."""
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -14,7 +15,7 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+asyncpg://catechist:devpassword@localhost:5432/catechist"
 
     # JWT
-    jwt_secret: str = "CHANGE-ME-IN-PRODUCTION"
+    jwt_secret: str = Field(min_length=32)
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 30

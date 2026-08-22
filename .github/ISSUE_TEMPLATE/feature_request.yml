@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a focused improvement to the toolkit.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Catechist or learner need
+      description: Describe the problem before proposing the implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+    validations:
+      required: true
+  - type: checkboxes
+    id: considerations
+    attributes:
+      label: Considerations
+      options:
+        - label: I considered accessibility.
+        - label: I considered privacy and safeguarding.
+        - label: I identified any curriculum or doctrinal-review implications.

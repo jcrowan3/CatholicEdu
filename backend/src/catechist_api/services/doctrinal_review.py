@@ -16,14 +16,35 @@ SCRIPTURE_REFERENCE = re.compile(
 )
 
 WEAKENED_DOCTRINE = (
-    (re.compile(r"\bJesus (?:was|is) (?:only|just) (?:a )?(?:man|teacher|prophet)\b", re.IGNORECASE),
-     "Jesus must be presented as true God and true man."),
-    (re.compile(r"\bEucharist (?:is|was) (?:only|just|merely) (?:a )?symbol\b", re.IGNORECASE),
-     "The Eucharist must not be reduced to a symbol; affirm Christ's Real Presence."),
-    (re.compile(r"\bResurrection (?:is|was) (?:only|just|merely) (?:a )?(?:story|symbol|metaphor)\b", re.IGNORECASE),
-     "The Resurrection must be taught as a real event, not merely a symbol."),
-    (re.compile(r"\bsin (?:does not|doesn't) (?:matter|separate us from God)\b", re.IGNORECASE),
-     "Revise the statement to preserve the Church's teaching on sin and conversion."),
+    (
+        re.compile(
+            r"\bJesus (?:was|is) (?:only|just) (?:a )?(?:man|teacher|prophet)\b",
+            re.IGNORECASE,
+        ),
+        "Jesus must be presented as true God and true man.",
+    ),
+    (
+        re.compile(
+            r"\bEucharist (?:is|was) (?:only|just|merely) (?:a )?symbol\b",
+            re.IGNORECASE,
+        ),
+        "The Eucharist must not be reduced to a symbol; affirm Christ's Real Presence.",
+    ),
+    (
+        re.compile(
+            r"\bResurrection (?:is|was) (?:only|just|merely) "
+            r"(?:a )?(?:story|symbol|metaphor)\b",
+            re.IGNORECASE,
+        ),
+        "The Resurrection must be taught as a real event, not merely a symbol.",
+    ),
+    (
+        re.compile(
+            r"\bsin (?:does not|doesn't) (?:matter|separate us from God)\b",
+            re.IGNORECASE,
+        ),
+        "Revise the statement to preserve the Church's teaching on sin and conversion.",
+    ),
 )
 
 
@@ -44,26 +65,35 @@ def review_session(session_data: dict[str, Any]) -> list[dict[str, str]]:
     findings: list[dict[str, str]] = []
 
     if not CCC_REFERENCE.search(text):
-        findings.append({
-            "code": "missing_ccc_reference",
-            "severity": "error",
-            "message": "Add at least one specific Catechism citation (for example, CCC 461).",
-        })
+        findings.append(
+            {
+                "code": "missing_ccc_reference",
+                "severity": "error",
+                "message": "Add at least one specific Catechism citation (for example, CCC 461).",
+            }
+        )
 
     verse = session_data.get("verse")
     if isinstance(verse, str) and verse.strip() and not SCRIPTURE_REFERENCE.search(verse):
-        findings.append({
-            "code": "unsupported_scripture_paraphrase",
-            "severity": "error",
-            "message": "Add a book, chapter, and verse to the Scripture text (for example, John 3:16) and verify it against CPDV.",
-        })
+        findings.append(
+            {
+                "code": "unsupported_scripture_paraphrase",
+                "severity": "error",
+                "message": (
+                    "Add a book, chapter, and verse to the Scripture text "
+                    "(for example, John 3:16) and verify it against CPDV."
+                ),
+            }
+        )
 
     for pattern, message in WEAKENED_DOCTRINE:
         if pattern.search(text):
-            findings.append({
-                "code": "weakened_doctrine",
-                "severity": "error",
-                "message": message,
-            })
+            findings.append(
+                {
+                    "code": "weakened_doctrine",
+                    "severity": "error",
+                    "message": message,
+                }
+            )
 
     return findings

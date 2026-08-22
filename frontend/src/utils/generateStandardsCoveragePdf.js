@@ -1,5 +1,3 @@
-import { jsPDF } from "jspdf";
-
 const PILLAR_OUTCOMES = {
   Creed: "Explains central Catholic doctrine and connects it to Scripture, Tradition, and the life of the Church.",
   Sacraments: "Identifies sacramental signs, grace, worship, and parish practice as encounters with Christ.",
@@ -63,7 +61,8 @@ function summarizePillars(rows) {
   }, {});
 }
 
-export function generateStandardsCoveragePdf({ grade, gradeInfo, sessions }) {
+export async function generateStandardsCoveragePdf({ grade, gradeInfo, sessions }) {
+  const { jsPDF } = await import("jspdf");
   const rows = buildCoverageRows(sessions);
   const pillarSummary = summarizePillars(rows);
   const doc = new jsPDF({ unit: "pt", format: "letter" });

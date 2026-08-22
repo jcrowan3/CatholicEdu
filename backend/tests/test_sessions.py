@@ -81,11 +81,13 @@ async def test_doctrinal_review_returns_concrete_fix_checklist(client: AsyncClie
     ctx = await _setup_with_grade(client, "review-1")
     response = await client.post(
         "/api/v1/grades/4/sessions/review",
-        json={"session_data": {
-            "title": "A changed lesson",
-            "verse": "God loved the world very much.",
-            "discover": {"items": [{"desc": "Jesus was only a teacher."}]},
-        }},
+        json={
+            "session_data": {
+                "title": "A changed lesson",
+                "verse": "God loved the world very much.",
+                "discover": {"items": [{"desc": "Jesus was only a teacher."}]},
+            }
+        },
         headers=ctx["headers"],
     )
     assert response.status_code == 200
@@ -104,11 +106,13 @@ async def test_doctrinal_review_passes_supported_session(client: AsyncClient):
     ctx = await _setup_with_grade(client, "review-2")
     response = await client.post(
         "/api/v1/grades/4/sessions/review",
-        json={"session_data": {
-            "title": "The Incarnation",
-            "verse": "The Word was made flesh. — John 1:14",
-            "discover": {"items": [{"desc": "Jesus is true God and true man (CCC 464)."}]},
-        }},
+        json={
+            "session_data": {
+                "title": "The Incarnation",
+                "verse": "The Word was made flesh. — John 1:14",
+                "discover": {"items": [{"desc": "Jesus is true God and true man (CCC 464)."}]},
+            }
+        },
         headers=ctx["headers"],
     )
     assert response.status_code == 200

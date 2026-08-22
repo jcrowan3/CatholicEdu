@@ -1,0 +1,36 @@
+name: Bug report
+description: Report reproducible behavior that is not working as intended.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include real student, family, credential, or security-sensitive information.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the expected behavior and the actual behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Operating mode
+      options: [Offline, Online, Both, Not sure]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: "1. Choose…\n2. Open…\n3. Observe…"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, device, operating system, and relevant commit or release.
+    validations:
+      required: true

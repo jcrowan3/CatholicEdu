@@ -1,8 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { ThemeContext } from "./theme";
 
 const STORAGE_KEY = "catechist_theme_v1";
-
-const ThemeContext = createContext({ theme: "dark", toggleTheme: () => {} });
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
@@ -29,8 +28,4 @@ export function ThemeProvider({ children }) {
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  return useContext(ThemeContext);
 }

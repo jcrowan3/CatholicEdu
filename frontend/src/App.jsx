@@ -1,13 +1,15 @@
-import { useState, useCallback } from "react";
+import { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import {
   getSessions,
+  loadSessions,
   getPin,
   migrateOldKeys,
   seedDemoStudent,
   getPillarColors,
   ensureDefaultClass,
 } from "./data/store";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/auth";
 import { useProgress } from "./hooks/useProgress";
 import { useBookmarks } from "./hooks/useBookmarks";
 import { useOnlineStatus } from "./hooks/useOnlineStatus";
@@ -24,18 +26,37 @@ import Timeline from "./components/activities/Timeline";
 import FillBlank from "./components/activities/FillBlank";
 import Quiz from "./components/activities/Quiz";
 import Prayer from "./components/activities/Prayer";
-import CatechistSetup from "./components/auth/CatechistSetup";
-import LoginScreen from "./components/auth/LoginScreen";
-import OnlineAuth from "./components/auth/OnlineAuth";
-import JoinClass from "./components/auth/JoinClass";
-import Dashboard from "./components/dashboard/Dashboard";
-import UserManager from "./components/dashboard/UserManager";
-import ProgressGrid from "./components/dashboard/ProgressGrid";
-import SessionEditor from "./components/admin/SessionEditor";
 import ConnectionBanner from "./components/system/ConnectionBanner";
+
+const CatechistSetup = lazy(() => import("./components/auth/CatechistSetup"));
+const LoginScreen = lazy(() => import("./components/auth/LoginScreen"));
+const OnlineAuth = lazy(() => import("./components/auth/OnlineAuth"));
+const JoinClass = lazy(() => import("./components/auth/JoinClass"));
+const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
+const UserManager = lazy(() => import("./components/dashboard/UserManager"));
+const ProgressGrid = lazy(() => import("./components/dashboard/ProgressGrid"));
+const SessionEditor = lazy(() => import("./components/admin/SessionEditor"));
 
 // Run migration once on app load
 migrateOldKeys();
+
+function PageLoader() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        minHeight: 240,
+        display: "grid",
+        placeItems: "center",
+        color: "var(--text-tertiary)",
+        fontWeight: 700,
+      }}
+    >
+      Loading toolkit…
+    </div>
+  );
+}
 
 function AppInner() {
   const auth = useAuth();
@@ -89,6 +110,18 @@ function AppInner() {
   // Derive grade from auth for online students
   const effectiveGrade = grade || (auth.isAuthenticated ? auth.user?.grade : null);
 
+  useEffect(() => {
+    if (!effectiveGrade) return undefined;
+
+    let cancelled = false;
+    loadSessions(effectiveGrade).then((loadedSessions) => {
+      if (!cancelled) setSessions(loadedSessions);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [effectiveGrade]);
+
   const { stars, earn, isDone } = useProgress(effectiveGrade, classId, activeUser?.id);
   const { toggleBookmark, isBookmarked, getAllBookmarks } = useBookmarks(
     effectiveGrade,
@@ -123,9 +156,9 @@ function AppInner() {
 
   // ─── Offline flow handlers (unchanged) ───
 
-  const handleSelectGrade = (g) => {
+  const handleSelectGrade = async (g) => {
     setGrade(g);
-    setSessions(getSessions(g));
+    setSessions(await loadSessions(g));
     const pin = getPin(g);
     if (!pin) {
       setMode("setup");
@@ -165,10 +198,15 @@ function AppInner() {
     }
   };
 
-  const handleClassChange = (newClassId) => {
+  const handleClassChange = useCallback((newClassId) => {
     setClassId(newClassId);
     setActiveUser(null);
-  };
+  }, []);
+
+  const handleDashboardGradeChange = useCallback(async (nextGrade) => {
+    setGrade(nextGrade);
+    setSessions(await loadSessions(nextGrade));
+  }, []);
 
   // ─── Online flow handlers ───
 
@@ -179,13 +217,13 @@ function AppInner() {
     setScreen("dashboard");
   };
 
-  const handleJoinClassComplete = (studentData) => {
+  const handleJoinClassComplete = async (studentData) => {
     // After student join — studentData has the student info from JWT
     const g = auth.user?.grade;
     if (g) {
       setGrade(g);
       setClassId(auth.user?.classId);
-      setSessions(getSessions(g));
+      setSessions(await loadSessions(g));
     }
     setActiveUser({
       id: auth.user?.id,
@@ -233,7 +271,7 @@ function AppInner() {
   );
 
   return (
-    <div
+    <main
       style={{
         minHeight: "100vh",
         background: "var(--bg-gradient)",
@@ -242,6 +280,8 @@ function AppInner() {
     >
       {background}
       <ConnectionBanner visible={!isOnline} />
+
+      <Suspense fallback={<PageLoader />}>
 
       {/* ─── Landing Page ─── */}
       {mode === "landing" && (
@@ -272,11 +312,11 @@ function AppInner() {
       {mode === "setup" && (
         <CatechistSetup
           grade={grade}
-          onComplete={() => {
+          onComplete={async () => {
             const cid = ensureDefaultClass(grade);
             setClassId(cid);
             seedDemoStudent(grade, cid);
-            setSessions(getSessions(grade));
+            setSessions(await loadSessions(grade));
             setMode("login");
           }}
         />
@@ -461,10 +501,7 @@ function AppInner() {
                 grade={effectiveGrade || grade}
                 classId={classId}
                 onClassChange={handleClassChange}
-                onGradeChange={(g) => {
-                  setGrade(g);
-                  setSessions(getSessions(g));
-                }}
+                onGradeChange={handleDashboardGradeChange}
                 onNavigate={(target, weekNum) => {
                   if (target === "admin-users") go("admin-users");
                   else if (target === "admin-progress") go("admin-progress");
@@ -489,7 +526,6 @@ function AppInner() {
               <ProgressGrid
                 grade={effectiveGrade || grade}
                 classId={classId}
-                onBack={() => go("dashboard")}
               />
             )}
 
@@ -504,7 +540,8 @@ function AppInner() {
           </div>
         </>
       )}
-    </div>
+      </Suspense>
+    </main>
   );
 }
 

@@ -41,7 +41,15 @@ def create_app() -> FastAPI:
 
     # Routers
     from catechist_api.routers import (
-        auth, bookmarks, classes, grades, parish, progress, reports, sessions, students,
+        auth,
+        bookmarks,
+        classes,
+        grades,
+        parish,
+        progress,
+        reports,
+        sessions,
+        students,
     )
 
     app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])

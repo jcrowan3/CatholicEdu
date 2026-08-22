@@ -1,11 +1,16 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import { useState, useEffect } from "react";
-import { getUsers, getSessions, getAllProgress, getPillarColors } from "../../data/store";
-import { useAuth } from "../../context/AuthContext";
+import { getUsers, loadSessions, getAllProgress, getPillarColors } from "../../data/store";
+import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
+import {
+  getSessionActivities,
+  mapApiStudent,
+  mapProgressGrid,
+} from "../../utils/progressData";
 
 
-export default function ProgressGrid({ grade, classId, onBack }) {
+export default function ProgressGrid({ grade, classId }) {
   const auth = useAuth();
   const isOnline = auth.isAuthenticated && auth.isOnline;
 
@@ -14,33 +19,21 @@ export default function ProgressGrid({ grade, classId, onBack }) {
   const [allProgress, setAllProgress] = useState([]);
   const PILLAR_COLORS = grade ? getPillarColors(grade) : {};
 
+  /* eslint-disable react-hooks/set-state-in-effect -- Synchronizing the API/localStorage progress source after selection changes. */
   useEffect(() => {
     if (!grade) return;
-    setSessions(getSessions(grade));
+    loadSessions(grade).then(setSessions);
 
     if (isOnline && classId) {
       api.getStudents(grade, classId)
         .then((data) => {
-          setUsers(data.map((s) => ({
-            id: s.id,
-            name: s.display_name,
-            avatarEmoji: s.avatar_emoji,
-          })));
+          setUsers(data.map(mapApiStudent));
         })
         .catch(() => setUsers([]));
 
       api.getClassProgressGrid(grade, classId)
         .then((gridData) => {
-          const progress = gridData.students.map((s) => {
-            const completed = {};
-            for (const [week, activities] of Object.entries(s.week_progress)) {
-              for (const [activity, actStars] of Object.entries(activities)) {
-                completed[`${week}-${activity}`] = { stars: actStars };
-              }
-            }
-            return { userId: s.student_id, stars: s.total_stars, completed };
-          });
-          setAllProgress(progress);
+          setAllProgress(mapProgressGrid(gridData));
         })
         .catch(() => setAllProgress([]));
     } else {
@@ -51,14 +44,9 @@ export default function ProgressGrid({ grade, classId, onBack }) {
       );
     }
   }, [grade, classId, isOnline]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
-  const sessionActs = sessions.map((s) => {
-    const acts = ["discover", "quiz", "prayer"];
-    if (s.sort) acts.push("sort");
-    if (s.timeline) acts.push("timeline");
-    if (s.fillblank) acts.push("fillblank");
-    return acts;
-  });
+  const sessionActs = sessions.map(getSessionActivities);
 
   const grid = allProgress.map((prog) => ({
     userId: prog.userId,

@@ -26,12 +26,17 @@ export default function RelatedSessions({ sessions, pillarColors, onSelect }) {
         }}
       >
         {sessions.map((s) => (
-          <div
+          <button
             key={s.week}
+            type="button"
             className="ch"
             onClick={() => onSelect(s.week - 1)}
             style={{
               minWidth: 150,
+              textAlign: "left",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              color: "inherit",
               background: "var(--surface-card)",
               borderRadius: 10,
               padding: "10px 12px",
@@ -82,7 +87,7 @@ export default function RelatedSessions({ sessions, pillarColors, onSelect }) {
             >
               {s.title}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

@@ -84,11 +84,15 @@ export default function LoginScreen({
           }}
         >
           {users.map((user, i) => (
-            <div
+            <button
               key={user.id}
+              type="button"
               className="ch"
               onClick={() => onSelectStudent(user)}
               style={{
+                width: "100%",
+                cursor: "pointer",
+                fontFamily: "inherit",
                 background: "var(--surface-card)",
                 borderRadius: 12,
                 padding: "14px 8px",
@@ -112,7 +116,7 @@ export default function LoginScreen({
               >
                 {user.name}
               </div>
-            </div>
+            </button>
           ))}
         </div>
       ) : (
@@ -194,8 +198,11 @@ export default function LoginScreen({
           </p>
           <div style={{ display: "flex", gap: 8 }}>
             <input
+              aria-label="Catechist PIN"
               type="password"
               inputMode="numeric"
+              autoComplete="current-password"
+              aria-describedby={error ? "login-pin-error" : undefined}
               maxLength={4}
               value={pin}
               onChange={(e) => {
@@ -237,6 +244,8 @@ export default function LoginScreen({
           </div>
           {error && (
             <p
+              id="login-pin-error"
+              role="alert"
               style={{
                 color: "#D94A4A",
                 fontSize: 11,

@@ -1,7 +1,7 @@
 """GradeConfig model — per-parish grade setup."""
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, SmallInteger, String, UniqueConstraint
@@ -25,18 +25,16 @@ class GradeConfig(Base):
     program_name: Mapped[str | None] = mapped_column(String(200))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
+        default=lambda: datetime.now(UTC),
+        onupdate=lambda: datetime.now(UTC),
         nullable=False,
     )
 
     # Relationships
     parish: Mapped["Parish"] = relationship(back_populates="grade_configs")
     classes: Mapped[list["Class"]] = relationship(back_populates="grade_config")
-    session_overrides: Mapped[list["SessionOverride"]] = relationship(
-        back_populates="grade_config"
-    )
+    session_overrides: Mapped[list["SessionOverride"]] = relationship(back_populates="grade_config")
