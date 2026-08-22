@@ -7,6 +7,7 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from catechist_api.config import settings
 from catechist_api.database import Base
 
 # Import all models so they register with Base.metadata
@@ -14,6 +15,7 @@ import catechist_api.models  # noqa: F401
 
 # Alembic Config object
 config = context.config
+config.set_main_option("sqlalchemy.url", settings.database_url.replace("%", "%%"))
 
 # Set up logging from alembic.ini
 if config.config_file_name is not None:

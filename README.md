@@ -49,22 +49,28 @@ Open:
 - Application: <http://localhost:5173>
 - API documentation: <http://localhost:8000/docs>
 
+Compose waits for PostgreSQL, applies pending Alembic migrations, and then starts the API and frontend. Stop the stack with `docker compose down`; do not add `--volumes` if you want to preserve local database data.
+
 The Compose configuration is for local development. Its database password and JWT secret must never be reused in a deployed environment. See [deployment guidance](docs/deployment.md) before hosting the toolkit.
 
 ### Full stack without Docker
 
 Requirements: Node.js 22+, Python 3.12+, [uv](https://docs.astral.sh/uv/), and PostgreSQL 17+.
 
+In one terminal, start the backend:
+
 ```bash
-# Backend
 cd backend
 cp .env.example .env
-# Replace JWT_SECRET with: openssl rand -hex 32
+export JWT_SECRET="$(openssl rand -hex 32)"
 uv sync --frozen --extra dev
 uv run alembic upgrade head
 uv run uvicorn catechist_api.main:app --reload
+```
 
-# Frontend, in another terminal
+In a second terminal from the repository root, start the frontend:
+
+```bash
 cd frontend
 npm ci
 npm run dev
@@ -126,6 +132,17 @@ FastAPI service
 
 Read [docs/architecture.md](docs/architecture.md) for the main modules, data boundaries, and extension points.
 
+## Documentation
+
+- [Architecture](docs/architecture.md) — components, data flow, and extension points.
+- [Deployment](docs/deployment.md) — production configuration and operational requirements.
+- [Privacy and safeguarding](docs/privacy-and-safeguarding.md) — student-data and parish-process considerations.
+- [Content and review](docs/content-and-review.md) — curriculum editing and human-review expectations.
+- [AI provenance audit](docs/ai-provenance-audit.md) — content origins and tracked review posture.
+- [Contributing](CONTRIBUTING.md) — development workflow and pull-request expectations.
+- [Security policy](SECURITY.md) — supported versions and private vulnerability reporting.
+- [Changelog](CHANGELOG.md) — notable release changes.
+
 ## Curriculum and content
 
 Grades 2–8 currently include 30 sessions each. Curriculum modules live in `frontend/src/data/grade*.js` and are loaded only when a grade is selected.
@@ -145,7 +162,7 @@ Security issues should be reported privately according to [SECURITY.md](SECURITY
 
 ## Project status
 
-The toolkit is suitable for evaluation and local pilots. It should not be treated as a hosted, compliance-certified student information system. Current priorities are tracked through GitHub issues and [CHANGELOG.md](CHANGELOG.md).
+The software, automated checks, Docker development stack, and public-project documentation are release-candidate ready. The curriculum remains suitable for evaluation and locally reviewed pilots; it should not be treated as a hosted, compliance-certified student information system or as a substitute for parish or diocesan review. Current priorities are tracked through GitHub issues and [CHANGELOG.md](CHANGELOG.md).
 
 ## Contributing
 

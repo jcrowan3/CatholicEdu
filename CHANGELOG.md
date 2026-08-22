@@ -17,6 +17,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - Grade curriculum and PDF tooling now load on demand, reducing the initial JavaScript bundle substantially.
 - Repeated progress-report transformations now use tested shared utilities.
 - JWT configuration now requires a secret of at least 32 characters.
+- Alembic now honors the configured database URL, and Docker Compose applies pending migrations before starting the API.
 
 ### Security
 
