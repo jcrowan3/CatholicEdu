@@ -3,7 +3,8 @@
 import uuid
 from datetime import UTC, datetime, timedelta
 
-from jose import JWTError, jwt
+import jwt
+from jwt.exceptions import InvalidTokenError as JWTError
 from pydantic import BaseModel
 
 from catechist_api.config import settings

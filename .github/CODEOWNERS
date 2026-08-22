@@ -1,0 +1,7 @@
+# Default review ownership for code, curriculum, and repository policy.
+* @jcrowan3
+
+# Curriculum changes always require an explicit maintainer review.
+/frontend/src/data/ @jcrowan3
+/docs/content-and-review.md @jcrowan3
+/docs/ai-content-provenance-audit.md @jcrowan3

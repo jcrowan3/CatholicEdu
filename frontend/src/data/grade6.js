@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════
 //  GRADE 6 — "The Creed and Our Catholic Faith"
 //  Catholic Catechist Toolkit | grade6.js
-//  30 Weekly Sessions | All content original & doctrinally accurate
+//  30 weekly sessions; see docs/ai-content-provenance-audit.md.
 //  Scripture: Catholic Public Domain Version (CPDV)
 //  CCC references cited in discover card descriptions
 // ═══════════════════════════════════════════════════════════════

@@ -103,6 +103,7 @@ npm run lint
 npm test
 npm run audit:content
 npm run build
+npm run test:e2e
 
 cd ../backend
 uv sync --frozen --extra dev
@@ -137,8 +138,9 @@ Read [docs/architecture.md](docs/architecture.md) for the main modules, data bou
 - [Architecture](docs/architecture.md) — components, data flow, and extension points.
 - [Deployment](docs/deployment.md) — production configuration and operational requirements.
 - [Privacy and safeguarding](docs/privacy-and-safeguarding.md) — student-data and parish-process considerations.
+- [Production hosting roadmap](docs/production-roadmap.md) — controls required before operating an internet-facing student service.
 - [Content and review](docs/content-and-review.md) — curriculum editing and human-review expectations.
-- [AI provenance audit](docs/ai-provenance-audit.md) — content origins and tracked review posture.
+- [AI content provenance audit](docs/ai-content-provenance-audit.md) — content origins and tracked review posture.
 - [Contributing](CONTRIBUTING.md) — development workflow and pull-request expectations.
 - [Security policy](SECURITY.md) — supported versions and private vulnerability reporting.
 - [Changelog](CHANGELOG.md) — notable release changes.
@@ -149,7 +151,7 @@ Grades 2–8 currently include 30 sessions each. Curriculum modules live in `fro
 
 - Scripture quotations identify the Catholic Public Domain Version (CPDV). The [translator's site](https://sacredbible.org/studybible/version.htm) states that the CPDV is in the public domain.
 - Catechism references point readers to numbered paragraphs; the project does not reproduce the full Catechism.
-- Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-provenance-audit.md](docs/ai-provenance-audit.md) and enforced by `npm run audit:content`.
+- Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-content-provenance-audit.md](docs/ai-content-provenance-audit.md) and enforced by `npm run audit:content`.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.
@@ -162,7 +164,7 @@ Security issues should be reported privately according to [SECURITY.md](SECURITY
 
 ## Project status
 
-The software, automated checks, Docker development stack, and public-project documentation are release-candidate ready. The curriculum remains suitable for evaluation and locally reviewed pilots; it should not be treated as a hosted, compliance-certified student information system or as a substitute for parish or diocesan review. Current priorities are tracked through GitHub issues and [CHANGELOG.md](CHANGELOG.md).
+The software, automated checks, Docker development stack, and public-project documentation are release-candidate ready. The curriculum remains suitable for evaluation and qualified local review; it should not be treated as approved for parish use, as a hosted compliance-certified student information system, or as a substitute for parish or diocesan review. Hosting gaps are explicit in the [production roadmap](docs/production-roadmap.md), and current changes are tracked in [CHANGELOG.md](CHANGELOG.md).
 
 ## Contributing
 

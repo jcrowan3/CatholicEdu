@@ -2,7 +2,7 @@
 //  GRADE 4 — SESSION DATA
 //  "Who Is Jesus? The Life and Mission of Christ"
 //  30 Weekly Sessions | Catholic Catechist Toolkit
-//  All content original; Scripture: CPDV; Doctrine: CCC
+//  Scripture: CPDV; doctrine references: CCC; qualified review is required.
 // ============================================================
 
 export const PILLAR_COLORS = {

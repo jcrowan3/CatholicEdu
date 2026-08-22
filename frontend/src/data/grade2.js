@@ -1,6 +1,6 @@
 // GRADE 2 — "God's Love and the Sacraments"
 // Catholic Catechist Toolkit
-// 30 Sessions | Age 7-8 | All content original, doctrinally accurate (CCC)
+// 30 sessions for ages 7-8; see docs/ai-content-provenance-audit.md.
 // Scripture: Catholic Public Domain Version (CPDV)
 
 export const PILLAR_COLORS = {

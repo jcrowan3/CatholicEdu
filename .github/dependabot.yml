@@ -20,3 +20,19 @@ updates:
     directory: /
     schedule:
       interval: monthly
+
+  - package-ecosystem: docker
+    directory: /backend
+    schedule:
+      interval: monthly
+    groups:
+      backend-container:
+        patterns: ["*"]
+
+  - package-ecosystem: docker
+    directory: /frontend
+    schedule:
+      interval: monthly
+    groups:
+      frontend-container:
+        patterns: ["*"]

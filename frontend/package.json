@@ -1,7 +1,7 @@
 {
   "name": "catechist-toolkit",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Offline-friendly Catholic faith-formation activities for grades 2–8",
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "node --test src/**/*.test.js",
+    "test:e2e": "playwright test",
     "audit:content": "node scripts/audit-content-provenance.js",
     "preview": "vite preview"
   },
@@ -17,19 +18,21 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "jspdf": "^4.2.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@tailwindcss/vite": "^4.2.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@playwright/test": "^1.62.1",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
+    "eslint": "^10.8.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.4",
+    "globals": "^17.11.0",
     "tailwindcss": "^4.2.1",
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.3.0"

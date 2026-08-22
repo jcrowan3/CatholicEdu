@@ -20,7 +20,7 @@
 - Initial JavaScript changed from 1.46 MB (434 KB compressed) to approximately 317 KB (97 KB compressed).
 - Shared, tested transformations replaced duplicated progress-grid logic.
 - Authentication, setup, and catechist administration now have route-level lazy-loading boundaries.
-- Frontend focused tests increased from six to eleven.
+- Frontend focused tests increased from six to fourteen.
 
 ## Loop 3 — product and accessibility
 
@@ -36,13 +36,27 @@
 - Docker Compose now includes a built frontend service.
 - API startup configuration requires a JWT secret of at least 32 characters.
 
+## Loop 5 — dependency and trust hardening
+
+- Production JavaScript and Python dependency audits report zero known vulnerabilities.
+- The backend moved from `python-jose` to PyJWT and the container now runs as a dedicated non-root user.
+- GitHub Actions and base images use current major releases, container dependencies are tracked by Dependabot, and frontend responses include baseline security headers.
+- The two AI provenance documents were consolidated around one canonical, machine-checked record. Unverified human-review claims were replaced with an explicit qualified-review requirement.
+
+## Loop 6 — maintainability and browser coverage
+
+- Shared roster parsing, communication fields, and an accessible avatar picker were extracted from the student-management hotspot.
+- Roster parsing has focused unit coverage, bringing the frontend suite to fourteen tests.
+- Two Playwright Chromium journeys now cover the public landing page, WCAG rules through axe-core, and complete offline classroom setup through the first student session.
+- Frontend and backend packages now share the pre-release version `0.1.0`.
+
 ## Release gate
 
 Completed on 2026-08-22:
 
-- The combined local quality gate passed: 11 frontend tests, 53 backend tests, 96.65% backend coverage on the supported Python 3.12 baseline, content provenance checks, lint, formatting, production build, and dependency audit.
-- Docker images built and the Compose stack served the frontend and a healthy API; all containers were then stopped without deleting data.
+- The combined local quality gate passed: 14 frontend unit tests, two Chromium end-to-end tests, 53 backend tests, 96.65% backend coverage on the supported Python 3.12 baseline, content provenance checks, lint, formatting, production build, and zero-finding production dependency audits.
+- Docker images built and a fresh-volume Compose stack served the frontend and a healthy API. The API ran as UID/GID 10001, both application containers reported healthy, and the temporary validation stack and volume were removed afterward.
 - Gitleaks scanned all 51 commits and found no secrets.
 - The production landing page scored 96 performance and 100 for accessibility, best practices, and SEO in Lighthouse.
 
-Estimated public-release readiness: **93/100**, up from 48/100. The remaining work is maintainer-controlled publication, independent curriculum/privacy review, and production-specific infrastructure configuration. Publication and repository visibility changes remain explicit maintainer actions.
+Estimated source-release readiness: **96/100**, up from 48/100. The remaining publication gates are the maintainer's history/privacy choice, repository visibility change, and post-public security settings. Independent curriculum/privacy review and production-specific controls remain prerequisites for parish or hosted production use.
