@@ -18,6 +18,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - Repeated progress-report transformations now use tested shared utilities.
 - JWT configuration now requires a secret of at least 32 characters.
 - Alembic now honors the configured database URL, and Docker Compose applies pending migrations before starting the API.
+- Coverage tracing now follows SQLAlchemy's async greenlets consistently on Python 3.12.
 
 ### Security
 

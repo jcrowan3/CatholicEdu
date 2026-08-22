@@ -40,7 +40,7 @@
 
 Completed on 2026-08-22:
 
-- The combined local quality gate passed: 11 frontend tests, 53 backend tests, 96.29% backend coverage, content provenance checks, lint, formatting, production build, and dependency audit.
+- The combined local quality gate passed: 11 frontend tests, 53 backend tests, 96.65% backend coverage on the supported Python 3.12 baseline, content provenance checks, lint, formatting, production build, and dependency audit.
 - Docker images built and the Compose stack served the frontend and a healthy API; all containers were then stopped without deleting data.
 - Gitleaks scanned all 51 commits and found no secrets.
 - The production landing page scored 96 performance and 100 for accessibility, best practices, and SEO in Lighthouse.

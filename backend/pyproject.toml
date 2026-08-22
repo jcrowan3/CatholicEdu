@@ -41,6 +41,11 @@ asyncio_default_test_loop_scope = "session"
 testpaths = ["tests"]
 pythonpath = ["src"]
 
+[tool.coverage.run]
+# SQLAlchemy's async bridge executes database work in greenlets. Python 3.12's
+# tracer needs this declared explicitly or exercised service lines go uncounted.
+concurrency = ["greenlet"]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100
