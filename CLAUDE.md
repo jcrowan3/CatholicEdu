@@ -9,7 +9,7 @@ Grades 2-8, 30 weeks per grade, 6 activity types per session.
 - **Frontend**: React 19 + Vite 7 + Tailwind CSS v4
 - **Backend**: Python 3.12+, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2
 - **Database**: PostgreSQL 17 (asyncpg)
-- **Auth**: JWT (python-jose) + bcrypt
+- **Auth**: JWT (PyJWT) + bcrypt
 - **Testing**: pytest-asyncio + coverage (backend), Node test runner (frontend)
 - **Deploy**: Docker Compose
 
@@ -74,10 +74,11 @@ docker compose up -d db          # Just Postgres
 docker compose up                # Full stack
 ```
 
-## Content Rules (CRITICAL)
+## Content rules (critical)
 - All Scripture: **Catholic Public Domain Version (CPDV)** — public domain
-- CCC paragraph numbers cited but content is **original**
-- Must be **doctrinally accurate** to official Catholic teaching
+- CCC paragraph numbers are cited without reproducing the full Catechism
+- Bundled text may include AI-assisted drafting and requires qualified human review before parish use
+- Do not describe content as reviewed or doctrinally approved without a recorded qualified review
 - Real Presence = transubstantiation, **NOT symbolic**
 
 ## Design System

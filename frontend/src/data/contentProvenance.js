@@ -1,11 +1,11 @@
 export const CONTENT_PROVENANCE = {
-  auditDate: "2026-07-21",
+  auditDate: "2026-08-22",
   auditScope:
     "Bundled curriculum data, take-home summaries, and session PDF exports.",
   aiUse:
-    "Curriculum text may include AI-assisted drafting and has been human reviewed before release.",
+    "Curriculum text may include AI-assisted drafting; no grade-by-grade qualified human review record is currently committed.",
   disclosure:
-    "Curriculum text may include AI-assisted drafting and is reviewed before use. Scripture quotations use CPDV; CCC paragraph references point families to official teaching.",
+    "Curriculum text may include AI-assisted drafting and requires qualified human review before parish use. Scripture quotations use CPDV; CCC paragraph references point families to official teaching.",
   activeGradeFiles: [
     "frontend/src/data/grade2.js",
     "frontend/src/data/grade3.js",
@@ -15,11 +15,11 @@ export const CONTENT_PROVENANCE = {
     "frontend/src/data/grade7.js",
     "frontend/src/data/grade8.js",
   ],
-  reviewedSurfaces: [
+  trackedSurfaces: [
     {
       surface: "Bundled grade curriculum",
       path: "frontend/src/data/grade[2-8].js",
-      status: "reviewed",
+      status: "review-required",
     },
     {
       surface: "Family take-home summaries",

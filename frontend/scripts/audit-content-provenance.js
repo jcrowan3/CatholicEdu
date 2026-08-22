@@ -26,14 +26,23 @@ for (const file of CONTENT_PROVENANCE.activeGradeFiles) {
   }
 }
 
-for (const surface of CONTENT_PROVENANCE.reviewedSurfaces) {
+for (const surface of CONTENT_PROVENANCE.trackedSurfaces) {
   if (!surface.surface || !surface.path || !surface.status) {
-    failures.push("Each reviewed surface must include surface, path, and status.");
+    failures.push("Each tracked surface must include surface, path, and status.");
   }
 }
 
 if (!CONTENT_PROVENANCE.auditDate || !CONTENT_PROVENANCE.disclosure) {
   failures.push("Provenance metadata must include auditDate and disclosure.");
+}
+
+const curriculumSurface = CONTENT_PROVENANCE.trackedSurfaces.find(
+  (surface) => surface.surface === "Bundled grade curriculum",
+);
+if (!curriculumSurface || curriculumSurface.status === "reviewed") {
+  failures.push(
+    "Bundled curriculum must remain review-required until a qualified review record is committed.",
+  );
 }
 
 if (failures.length > 0) {
@@ -42,5 +51,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `content provenance audit ok: ${CONTENT_PROVENANCE.activeGradeFiles.length} grade files, ${CONTENT_PROVENANCE.reviewedSurfaces.length} surfaces`,
+  `content provenance audit ok: ${CONTENT_PROVENANCE.activeGradeFiles.length} grade files, ${CONTENT_PROVENANCE.trackedSurfaces.length} surfaces`,
 );

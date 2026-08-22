@@ -17,7 +17,7 @@ Use the offline quick start in [README.md](README.md), or install both applicati
 ./scripts/check.sh
 ```
 
-The gate covers frontend lint, tests, content provenance, production build and dependency audit, plus backend formatting, lint, tests, and coverage.
+The gate covers frontend lint, unit tests, content provenance, production build, dependency audit, and Chromium smoke/accessibility tests, plus backend formatting, lint, tests, coverage, and dependency audit. Install the browser once with `cd frontend && npx playwright install chromium` before running the complete gate locally.
 
 ## Pull requests
 

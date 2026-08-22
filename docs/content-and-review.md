@@ -13,6 +13,8 @@ Curriculum is stored as reviewable source code under `frontend/src/data/`. Scrip
 
 Automated checks are deliberately limited. Passing them does not constitute an imprimatur, nihil obstat, diocesan approval, or endorsement by any Church authority.
 
+No grade-by-grade qualified human review record is currently committed. Treat the bundled curriculum as evaluation material until an appropriately qualified reviewer records their name or role, review scope, date, and disposition.
+
 ## Editing checklist
 
 - State the grade, lesson objective, and intended learner outcome.
@@ -21,3 +23,4 @@ Automated checks are deliberately limited. Passing them does not constitute an i
 - Avoid fabricated quotations or implying that paraphrases are direct quotations.
 - Update `contentProvenance.js` when a tracked surface is added or materially changed.
 - Request review from a qualified human before describing content as ready for parish use.
+- Record completed reviews in `docs/ai-content-provenance-audit.md`; do not infer review from a passing automated check.

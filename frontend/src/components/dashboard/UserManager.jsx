@@ -3,14 +3,9 @@ import { useCallback, useState, useEffect } from "react";
 import { getUsers, addUser, updateUser, removeUser } from "../../data/store";
 import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
-
-
-const AVATARS = [
-  "😊", "😄", "🤗", "😎", "🥳",
-  "🦁", "🐶", "🐱", "🦋", "🐸",
-  "⭐", "🌟", "🌈", "🎨", "⚽",
-  "🎵", "📚", "🌻", "🕊️", "💫",
-];
+import { parseRosterText } from "../../utils/roster";
+import AvatarPicker from "./AvatarPicker";
+import CommunicationFields from "./CommunicationFields";
 
 const EMPTY_COMMUNICATION = {
   parentEmail: "",
@@ -44,55 +39,11 @@ function communicationPayload(form) {
   };
 }
 
-function splitRosterLine(line) {
-  const delimiter = line.includes("\t") ? "\t" : ",";
-  return line.split(delimiter).map((part) => part.trim()).filter(Boolean);
-}
-
-function parseRosterText(text) {
-  const lines = text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-  if (lines.length === 0) return [];
-
-  const firstCells = splitRosterLine(lines[0]).map((cell) => cell.toLowerCase());
-  const hasHeader = firstCells.some((cell) =>
-    ["student", "student name", "display name", "first", "first name", "last", "last name", "family", "family name"].includes(cell)
-  );
-  const headers = hasHeader ? firstCells : [];
-  const dataLines = hasHeader ? lines.slice(1) : lines;
-
-  return dataLines
-    .map((line) => {
-      const cells = splitRosterLine(line);
-      if (cells.length === 0) return null;
-
-      if (headers.length > 0) {
-        const get = (...names) => {
-          const index = headers.findIndex((header) => names.includes(header));
-          return index >= 0 ? cells[index] : "";
-        };
-        const displayName =
-          get("student", "student name", "display name", "name") ||
-          [get("first", "first name"), get("last", "last name")].filter(Boolean).join(" ");
-        const familyName = get("family", "family name", "last", "last name");
-        return displayName ? { display_name: displayName, family_name: familyName || null } : null;
-      }
-
-      return {
-        display_name: cells[0],
-        family_name: cells[1] || null,
-      };
-    })
-    .filter(Boolean);
-}
-
 export default function UserManager({ grade, classId, onRefresh }) {
   const auth = useAuth();
   const isOnline = auth.isAuthenticated && auth.isOnline;
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(() => getUsers(grade, classId));
   const [adding, setAdding] = useState(false);
   const [newName, setNewName] = useState("");
   const [newAvatar, setNewAvatar] = useState("😊");
@@ -109,22 +60,35 @@ export default function UserManager({ grade, classId, onRefresh }) {
   const [importing, setImporting] = useState(false);
   const [exporting, setExporting] = useState(false);
 
-  const loadUsers = useCallback(() => {
+  const loadUsers = useCallback(async () => {
     if (isOnline && classId) {
-      return api.getStudents(grade, classId)
-        .then((data) => {
-          setUsers(data.map(studentFromApi));
-        })
-        .catch(() => setUsers(getUsers(grade, classId)));
+      try {
+        const data = await api.getStudents(grade, classId);
+        setUsers(data.map(studentFromApi));
+      } catch {
+        setUsers(getUsers(grade, classId));
+      }
     } else {
       setUsers(getUsers(grade, classId));
     }
   }, [grade, classId, isOnline]);
 
-  // Load users on mount
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    if (!isOnline || !classId) return undefined;
+
+    let active = true;
+    api.getStudents(grade, classId)
+      .then((data) => {
+        if (active) setUsers(data.map(studentFromApi));
+      })
+      .catch(() => {
+        if (active) setUsers(getUsers(grade, classId));
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [grade, classId, isOnline]);
 
   const handleAdd = async () => {
     if (!newName.trim()) return;
@@ -230,61 +194,6 @@ export default function UserManager({ grade, classId, onRefresh }) {
       setExporting(false);
     }
   };
-
-  const fieldStyle = {
-    width: "100%",
-    padding: "8px 10px",
-    borderRadius: 6,
-    border: "1px solid var(--border-strong)",
-    background: "var(--surface-input)",
-    color: "var(--text-primary)",
-    fontSize: 12,
-    fontFamily: "inherit",
-    outline: "none",
-    boxSizing: "border-box",
-  };
-
-  const CommunicationFields = ({ value, onChange }) => (
-    <div style={{ display: "grid", gap: 8, marginBottom: 10 }}>
-      <input
-        type="email"
-        value={value.parentEmail}
-        onChange={(e) => onChange({ ...value, parentEmail: e.target.value })}
-        placeholder="Parent email"
-        style={fieldStyle}
-      />
-      <textarea
-        value={value.pickupContactNotes}
-        onChange={(e) => onChange({ ...value, pickupContactNotes: e.target.value })}
-        placeholder="Pickup/contact notes"
-        rows={2}
-        style={{ ...fieldStyle, resize: "vertical" }}
-      />
-      <textarea
-        value={value.allergyPrivacyFlags}
-        onChange={(e) => onChange({ ...value, allergyPrivacyFlags: e.target.value })}
-        placeholder="Allergy/privacy flags"
-        rows={2}
-        style={{ ...fieldStyle, resize: "vertical" }}
-      />
-      <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-tertiary)", fontSize: 12 }}>
-        <input
-          type="checkbox"
-          checked={value.mediaPermissionGranted}
-          onChange={(e) => onChange({ ...value, mediaPermissionGranted: e.target.checked })}
-        />
-        Media permission granted
-      </label>
-      <label style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-tertiary)", fontSize: 12 }}>
-        <input
-          type="checkbox"
-          checked={value.weeklyDigestPermission}
-          onChange={(e) => onChange({ ...value, weeklyDigestPermission: e.target.checked })}
-        />
-        Weekly digest permission
-      </label>
-    </div>
-  );
 
   const handlePreviewImport = async () => {
     const rows = parseRosterText(importText);
@@ -604,37 +513,8 @@ export default function UserManager({ grade, classId, onRefresh }) {
           >
             CHOOSE AVATAR
           </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(10, 1fr)",
-              gap: 4,
-              marginBottom: 12,
-            }}
-          >
-            {AVATARS.map((emoji) => (
-              <div
-                key={emoji}
-                onClick={() => setNewAvatar(emoji)}
-                style={{
-                  fontSize: 20,
-                  textAlign: "center",
-                  padding: "4px 0",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                  background:
-                    newAvatar === emoji
-                      ? "rgba(109,184,123,.2)"
-                      : "transparent",
-                  border:
-                    newAvatar === emoji
-                      ? "2px solid #6DB87B"
-                      : "2px solid transparent",
-                }}
-              >
-                {emoji}
-              </div>
-            ))}
+          <div style={{ marginBottom: 12 }}>
+            <AvatarPicker value={newAvatar} onChange={setNewAvatar} />
           </div>
           {isOnline && (
             <CommunicationFields value={newCommunication} onChange={setNewCommunication} />
@@ -724,37 +604,13 @@ export default function UserManager({ grade, classId, onRefresh }) {
                     }}
                   />
                 </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(10, 1fr)",
-                    gap: 3,
-                    marginBottom: 8,
-                  }}
-                >
-                  {AVATARS.map((emoji) => (
-                    <div
-                      key={emoji}
-                      onClick={() => setEditAvatar(emoji)}
-                      style={{
-                        fontSize: 16,
-                        textAlign: "center",
-                        padding: "2px 0",
-                        borderRadius: 4,
-                        cursor: "pointer",
-                        background:
-                          editAvatar === emoji
-                            ? "rgba(74,144,217,.2)"
-                            : "transparent",
-                        border:
-                          editAvatar === emoji
-                            ? "2px solid #4A90D9"
-                            : "2px solid transparent",
-                      }}
-                    >
-                      {emoji}
-                    </div>
-                  ))}
+                <div style={{ marginBottom: 8 }}>
+                  <AvatarPicker
+                    value={editAvatar}
+                    onChange={setEditAvatar}
+                    accent="#4A90D9"
+                    size={16}
+                  />
                 </div>
                 {isOnline && (
                   <CommunicationFields value={editCommunication} onChange={setEditCommunication} />

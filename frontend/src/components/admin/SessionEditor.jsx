@@ -1,5 +1,5 @@
 import { DISPLAY_FONT as displayFont } from "../../utils/constants";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { getSessions, saveSessions, resetSessionToDefault } from "../../data/store";
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
 import { reviewSessionLocally } from "../../utils/doctrinalReview";
@@ -419,8 +419,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   const [confirmReset, setConfirmReset] = useState(false);
   const [reviewFindings, setReviewFindings] = useState([]);
   const [saving, setSaving] = useState(false);
-  const saveLifecycle = useRef(null);
-  if (!saveLifecycle.current) saveLifecycle.current = createSessionSaveLifecycle();
+  const [saveLifecycle] = useState(() => createSessionSaveLifecycle());
 
   if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
 
@@ -434,12 +433,12 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   };
 
   const handleSave = async () => {
-    if (saveLifecycle.current.isSaving) return;
+    if (saveLifecycle.isSaving) return;
 
     const draft = JSON.parse(JSON.stringify({ session, sessions }));
     setSaving(true);
     try {
-      const result = await saveLifecycle.current.save({
+      const result = await saveLifecycle.save({
         draft,
         persistDraft: ({ sessions: draftSessions }) => saveSessions(grade, draftSessions),
         review: (draftSession) => isOnline
