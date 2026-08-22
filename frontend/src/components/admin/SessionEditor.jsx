@@ -4,7 +4,7 @@ import { getSessions, saveSessions, resetSessionToDefault } from "../../data/sto
 import { generateSessionPdf } from "../../utils/generateSessionPdf";
 import { reviewSessionLocally } from "../../utils/doctrinalReview";
 import { createSessionSaveLifecycle } from "../../utils/sessionSaveLifecycle";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
 
 
@@ -463,7 +463,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   };
 
   const handleReset = async () => {
-    const updated = resetSessionToDefault(grade, weekNum);
+    const updated = await resetSessionToDefault(grade, weekNum);
     setSessions(updated);
     onSessionsChange?.(updated);
     setConfirmReset(false);

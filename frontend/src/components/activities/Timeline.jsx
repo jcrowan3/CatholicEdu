@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { DISPLAY_FONT as displayFont } from "../../utils/constants";
 import ActivityHeader from "../shared/ActivityHeader";
 import {
   DndContext,

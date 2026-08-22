@@ -148,6 +148,7 @@ export default function TopBar({
             className="bh"
             onClick={onBookmarks}
             title="My Bookmarks"
+            aria-label="Open my bookmarks"
             style={{
               background: "var(--surface-input)",
               border: "1px solid var(--border-medium)",
@@ -167,6 +168,7 @@ export default function TopBar({
             className="bh"
             onClick={onVocabulary}
             title="Vocabulary"
+            aria-label="Open vocabulary"
             style={{
               background: "var(--surface-input)",
               border: "1px solid var(--border-medium)",
@@ -183,6 +185,7 @@ export default function TopBar({
         {/* Star counter (student mode) */}
         {!isCatechist && (
           <div
+            aria-label={`${stars} stars earned`}
             style={{
               display: "flex",
               alignItems: "center",
@@ -213,6 +216,8 @@ export default function TopBar({
         {onSwitchUser && (
           <button
             onClick={onSwitchUser}
+            aria-label="Switch user"
+            title="Switch user"
             style={{
               background: "var(--surface-input)",
               border: "1px solid var(--border-medium)",

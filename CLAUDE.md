@@ -7,10 +7,10 @@ Grades 2-8, 30 weeks per grade, 6 activity types per session.
 
 ## Tech Stack
 - **Frontend**: React 19 + Vite 7 + Tailwind CSS v4
-- **Backend**: Python 3.14, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2
+- **Backend**: Python 3.12+, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2
 - **Database**: PostgreSQL 17 (asyncpg)
 - **Auth**: JWT (python-jose) + bcrypt
-- **Testing**: pytest-asyncio (backend), frontend is manual
+- **Testing**: pytest-asyncio + coverage (backend), Node test runner (frontend)
 - **Deploy**: Docker Compose
 
 ## Project Structure
@@ -51,7 +51,7 @@ catechist-toolkit/
 │   │   ├── database.py            # Async engine + session
 │   │   └── main.py                # FastAPI app + CORS + routers
 │   ├── alembic/                   # DB migrations
-│   ├── tests/                     # 37 tests
+│   ├── tests/                     # API, isolation, report, and service tests
 │   └── pyproject.toml
 │
 └── docker-compose.yml
@@ -66,7 +66,7 @@ cd frontend && npm run build     # Production build
 # Backend
 cd backend && uv sync --extra dev
 cd backend && uv run uvicorn catechist_api.main:app --reload
-cd backend && uv run pytest tests/ -x -q
+cd backend && uv run --extra dev pytest tests/ -x -q
 cd backend && uv run alembic upgrade head
 
 # Docker
@@ -101,7 +101,7 @@ docker compose up                # Full stack
 - Pydantic v2 field named "register" triggers shadowing warning — suppress with `warnings.filterwarnings`
 - Merging lists of dicts with `id` keys during inheritance: use union-by-id
 - `model_dump_json()` + `json.loads()` for clean YAML serialization
-- Python 3.14 works fine with Pydantic 2.12, PyYAML 6, Typer 0.23
+- JWT secrets must be supplied through the environment and contain at least 32 characters
 
 ## Target Devices
 Chromebooks and tablets (parish classrooms). Mobile-friendly. Works offline.

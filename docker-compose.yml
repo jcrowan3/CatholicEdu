@@ -21,7 +21,7 @@ services:
       dockerfile: backend/Dockerfile
     environment:
       DATABASE_URL: "postgresql+asyncpg://catechist:devpassword@db:5432/catechist"
-      JWT_SECRET: "dev-secret-change-in-production"
+      JWT_SECRET: "local-development-secret-do-not-deploy"
       CORS_ORIGINS: '["http://localhost:5173","http://localhost:5175"]'
       DEBUG: "true"
     ports:
@@ -33,6 +33,15 @@ services:
       - ./backend/src:/app/src
       - ./backend/tests:/app/tests
     command: uv run uvicorn catechist_api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
 
 volumes:
   pgdata:

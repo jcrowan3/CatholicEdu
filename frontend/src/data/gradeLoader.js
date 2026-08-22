@@ -1,31 +1,51 @@
-import { SESSIONS as GRADE2_SESSIONS, PILLAR_COLORS as GRADE2_COLORS } from "./grade2";
-import { SESSIONS as GRADE3_SESSIONS, PILLAR_COLORS as GRADE3_COLORS } from "./grade3";
-import { SESSIONS as GRADE4_SESSIONS, PILLAR_COLORS as GRADE4_COLORS } from "./grade4";
-import { SESSIONS as GRADE5_SESSIONS, PILLAR_COLORS as GRADE5_COLORS } from "./grade5";
-import { SESSIONS as GRADE6_SESSIONS, PILLAR_COLORS as GRADE6_COLORS } from "./grade6";
-import { SESSIONS as GRADE7_SESSIONS, PILLAR_COLORS as GRADE7_COLORS } from "./grade7";
-import { SESSIONS as GRADE8_SESSIONS, PILLAR_COLORS as GRADE8_COLORS } from "./grade8";
-
-const GRADE_DATA = {
-  2: { sessions: GRADE2_SESSIONS, pillarColors: GRADE2_COLORS },
-  3: { sessions: GRADE3_SESSIONS, pillarColors: GRADE3_COLORS },
-  4: { sessions: GRADE4_SESSIONS, pillarColors: GRADE4_COLORS },
-  5: { sessions: GRADE5_SESSIONS, pillarColors: GRADE5_COLORS },
-  6: { sessions: GRADE6_SESSIONS, pillarColors: GRADE6_COLORS },
-  7: { sessions: GRADE7_SESSIONS, pillarColors: GRADE7_COLORS },
-  8: { sessions: GRADE8_SESSIONS, pillarColors: GRADE8_COLORS },
+const gradeModules = {
+  2: () => import("./grade2.js"),
+  3: () => import("./grade3.js"),
+  4: () => import("./grade4.js"),
+  5: () => import("./grade5.js"),
+  6: () => import("./grade6.js"),
+  7: () => import("./grade7.js"),
+  8: () => import("./grade8.js"),
 };
 
+const gradeCache = new Map();
+
+const pillarColors = {
+  2: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0607A" },
+  3: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8" },
+  4: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#D9704A" },
+  5: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0392B" },
+  6: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0736A" },
+  7: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0392B" },
+  8: { Creed: "#3B5BA5", Sacraments: "#9B5D1A", Morality: "#2A6B3E", Prayer: "#6B3B9A", Review: "#4A4A6A" },
+};
+
+export async function loadGradeData(grade) {
+  const numericGrade = Number(grade);
+  if (gradeCache.has(numericGrade)) return gradeCache.get(numericGrade);
+
+  const loadModule = gradeModules[numericGrade];
+  if (!loadModule) return null;
+
+  const module = await loadModule();
+  const data = { sessions: module.SESSIONS, pillarColors: module.PILLAR_COLORS };
+  gradeCache.set(numericGrade, data);
+  return data;
+}
+
 export function getGradeData(grade) {
-  return GRADE_DATA[grade] || null;
+  return gradeCache.get(Number(grade)) || null;
+}
+
+export async function loadDefaultSessions(grade) {
+  const data = await loadGradeData(grade);
+  return data?.sessions || [];
 }
 
 export function getDefaultSessions(grade) {
-  const data = GRADE_DATA[grade];
-  return data ? data.sessions : [];
+  return getGradeData(grade)?.sessions || [];
 }
 
 export function getPillarColors(grade) {
-  const data = GRADE_DATA[grade];
-  return data ? data.pillarColors : {};
+  return pillarColors[Number(grade)] || {};
 }

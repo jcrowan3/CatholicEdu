@@ -8,20 +8,28 @@ import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
-from catechist_api.database import Base, get_db
-from catechist_api.main import create_app
+os.environ.setdefault("JWT_SECRET", "test-only-jwt-secret-at-least-32-chars")
 
 # Import all models to register them with Base.metadata
 import catechist_api.models  # noqa: F401
-from catechist_api.models import Catechist, Class, ClassEnrollment, GradeConfig, Parish, Student
-from catechist_api.auth.password import hash_password
 from catechist_api.auth.jwt import create_access_token
+from catechist_api.auth.password import hash_password
+from catechist_api.database import Base, get_db
+from catechist_api.main import create_app
+from catechist_api.models import Catechist, Class, ClassEnrollment, GradeConfig, Parish, Student
 
 # Use a self-contained SQLite database by default so report/API tests can run without
 # a local Postgres service. Set TEST_DATABASE_URL to exercise a real Postgres database.
-TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL", "sqlite+aiosqlite:///./.pytest-catechist.db")
+TEST_DATABASE_URL = os.environ.get(
+    "TEST_DATABASE_URL", "sqlite+aiosqlite:///./.pytest-catechist.db"
+)
 
 
 @pytest.fixture(scope="session")

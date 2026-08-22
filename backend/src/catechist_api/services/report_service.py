@@ -26,7 +26,6 @@ from catechist_api.models import (
 )
 from catechist_api.services.csv_safety import sanitize_csv_cell
 
-
 PILLAR_OUTCOMES = {
     "Creed": "Explain central Catholic beliefs using Scripture and the Catechism.",
     "Sacraments": "Connect sacramental signs to God's grace and parish worship.",
@@ -35,8 +34,7 @@ PILLAR_OUTCOMES = {
 }
 
 STANDARDS_PDF_PROVENANCE_NOTE = (
-    "Source: Catholic Catechist Toolkit bundled curriculum; "
-    "generated without AI model calls."
+    "Source: Catholic Catechist Toolkit bundled curriculum; generated without AI model calls."
 )
 
 
@@ -56,21 +54,42 @@ async def get_parish_overview(
     if parish is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parish not found")
 
-    catechist_count = await _count(db, select(func.count()).select_from(Catechist).where(
-        Catechist.parish_id == parish_id, Catechist.is_active.is_(True),
-    ))
-    student_count = await _count(db, select(func.count()).select_from(Student).where(
-        Student.parish_id == parish_id, Student.is_active.is_(True),
-    ))
-    grade_count = await _count(db, select(func.count()).select_from(GradeConfig).where(
-        GradeConfig.parish_id == parish_id, GradeConfig.is_active.is_(True),
-    ))
-    class_count = await _count(db, (
+    catechist_count = await _count(
+        db,
         select(func.count())
-        .select_from(Class)
-        .join(GradeConfig, GradeConfig.id == Class.grade_config_id)
-        .where(GradeConfig.parish_id == parish_id, Class.is_active.is_(True))
-    ))
+        .select_from(Catechist)
+        .where(
+            Catechist.parish_id == parish_id,
+            Catechist.is_active.is_(True),
+        ),
+    )
+    student_count = await _count(
+        db,
+        select(func.count())
+        .select_from(Student)
+        .where(
+            Student.parish_id == parish_id,
+            Student.is_active.is_(True),
+        ),
+    )
+    grade_count = await _count(
+        db,
+        select(func.count())
+        .select_from(GradeConfig)
+        .where(
+            GradeConfig.parish_id == parish_id,
+            GradeConfig.is_active.is_(True),
+        ),
+    )
+    class_count = await _count(
+        db,
+        (
+            select(func.count())
+            .select_from(Class)
+            .join(GradeConfig, GradeConfig.id == Class.grade_config_id)
+            .where(GradeConfig.parish_id == parish_id, Class.is_active.is_(True))
+        ),
+    )
 
     progress_stats = await db.execute(
         select(
@@ -146,14 +165,16 @@ async def get_class_progress_grid(
         for e in entries:
             week_progress[str(e.week)][e.activity] = e.stars_earned
 
-        student_summaries.append({
-            "student_id": s.id,
-            "display_name": s.display_name,
-            "avatar_emoji": s.avatar_emoji,
-            "activities_completed": len(entries),
-            "total_stars": sum(e.stars_earned for e in entries),
-            "week_progress": dict(week_progress),
-        })
+        student_summaries.append(
+            {
+                "student_id": s.id,
+                "display_name": s.display_name,
+                "avatar_emoji": s.avatar_emoji,
+                "activities_completed": len(entries),
+                "total_stars": sum(e.stars_earned for e in entries),
+                "week_progress": dict(week_progress),
+            }
+        )
 
     return {
         "class_id": class_id,
@@ -185,9 +206,15 @@ async def get_student_summary(
     )
     entries = progress_result.scalars().all()
 
-    bookmark_count = await _count(db, select(func.count()).select_from(Bookmark).where(
-        Bookmark.student_id == student_id, Bookmark.grade == grade,
-    ))
+    bookmark_count = await _count(
+        db,
+        select(func.count())
+        .select_from(Bookmark)
+        .where(
+            Bookmark.student_id == student_id,
+            Bookmark.grade == grade,
+        ),
+    )
 
     # Activity breakdown
     activity_breakdown: dict[str, int] = defaultdict(int)
@@ -225,7 +252,7 @@ async def export_csv(
     all_weeks: set[int] = set()
     activities = ["discover", "sort", "timeline", "fillblank", "quiz", "prayer"]
     for s in grid["students"]:
-        all_weeks.update(int(w) for w in s["week_progress"].keys())
+        all_weeks.update(int(w) for w in s["week_progress"])
     weeks_sorted = sorted(all_weeks) if all_weeks else list(range(1, 31))
 
     # Header row
@@ -368,17 +395,19 @@ def get_standards_coverage(*, grade: int) -> dict:
         prayer = _decode_js_string(prayer_match.group(1)) if prayer_match else ""
         scripture_reference, scripture_theme = _scripture_parts(verse)
 
-        rows.append({
-            "grade": grade,
-            "week": int(week_match.group(1)),
-            "title": title,
-            "pillar": pillar,
-            "ccc_paragraphs": _split_ccc(ccc),
-            "scripture_reference": scripture_reference,
-            "scripture_theme": scripture_theme,
-            "prayer": prayer,
-            "diocesan_outcomes": _coverage_outcomes(grade, title, pillar),
-        })
+        rows.append(
+            {
+                "grade": grade,
+                "week": int(week_match.group(1)),
+                "title": title,
+                "pillar": pillar,
+                "ccc_paragraphs": _split_ccc(ccc),
+                "scripture_reference": scripture_reference,
+                "scripture_theme": scripture_theme,
+                "prayer": prayer,
+                "diocesan_outcomes": _coverage_outcomes(grade, title, pillar),
+            }
+        )
 
     rows.sort(key=lambda row: row["week"])
     return {"grade": grade, "total_weeks": len(rows), "rows": rows}

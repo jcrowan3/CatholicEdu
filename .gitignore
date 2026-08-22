@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .vite/
+output/
+.playwright-cli/
 
 # Python
 __pycache__/
@@ -19,7 +21,8 @@ __pycache__/
 *.egg-info/
 .venv/
 .env
-uv.lock
+.coverage
+.pytest-*
 
 # Editor directories and files
 .vscode/*

@@ -25,9 +25,7 @@ async def get_bookmarks(
     if user.type == "student" and user.sub != student_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
 
-    bookmarks = await bookmark_service.get_student_bookmarks(
-        db, student_id=student_id, grade=grade
-    )
+    bookmarks = await bookmark_service.get_student_bookmarks(db, student_id=student_id, grade=grade)
     return bookmarks
 
 

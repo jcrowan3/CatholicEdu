@@ -134,11 +134,11 @@ async def refresh_tokens(
     """Validate a refresh token and issue new access + refresh tokens."""
     try:
         payload = decode_token(refresh_token_str)
-    except JWTError:
+    except JWTError as error:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired refresh token",
-        )
+        ) from error
 
     if payload.type != "refresh":
         raise HTTPException(
@@ -265,12 +265,11 @@ async def login_student(
         )
 
     # Check PIN if required
-    if student.access_pin is not None:
-        if access_pin is None or access_pin != student.access_pin:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid PIN",
-            )
+    if student.access_pin is not None and (access_pin is None or access_pin != student.access_pin):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid PIN",
+        )
 
     # Get parish_id from grade_config
     grade_config = cls.grade_config

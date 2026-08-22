@@ -15,7 +15,7 @@ from catechist_api.schemas.report import (
     StandardsCoverageResponse,
     StudentSummaryResponse,
 )
-from catechist_api.services import grade_service, class_service, report_service
+from catechist_api.services import class_service, grade_service, report_service
 
 router = APIRouter()
 
@@ -41,9 +41,7 @@ async def class_progress_grid(
     gc = await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
     # Verify the class belongs to this grade
     await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
-    return await report_service.get_class_progress_grid(
-        db, class_id=class_id, grade=grade
-    )
+    return await report_service.get_class_progress_grid(db, class_id=class_id, grade=grade)
 
 
 @router.get("/grade/{grade}/standards/coverage", response_model=StandardsCoverageResponse)
@@ -84,9 +82,7 @@ async def student_summary(
     db: AsyncSession = Depends(get_db),
 ):
     """Get an individual student's progress report."""
-    return await report_service.get_student_summary(
-        db, student_id=student_id, grade=grade
-    )
+    return await report_service.get_student_summary(db, student_id=student_id, grade=grade)
 
 
 @router.get("/export/csv")
@@ -101,9 +97,7 @@ async def export_csv(
     gc = await grade_service.get_grade(db, parish_id=user.parish_id, grade=grade)
     await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
 
-    csv_content = await report_service.export_csv(
-        db, class_id=class_id, grade=grade
-    )
+    csv_content = await report_service.export_csv(db, class_id=class_id, grade=grade)
 
     return StreamingResponse(
         iter([csv_content]),

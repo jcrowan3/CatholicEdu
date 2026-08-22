@@ -12,9 +12,7 @@ from catechist_api.models import GradeConfig
 async def list_grades(db: AsyncSession, *, parish_id: uuid.UUID) -> list[GradeConfig]:
     """List all grade configs for a parish."""
     result = await db.execute(
-        select(GradeConfig)
-        .where(GradeConfig.parish_id == parish_id)
-        .order_by(GradeConfig.grade)
+        select(GradeConfig).where(GradeConfig.parish_id == parish_id).order_by(GradeConfig.grade)
     )
     return list(result.scalars().all())
 

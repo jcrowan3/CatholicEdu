@@ -14,10 +14,8 @@
 import {
   getClasses,
   getUsers,
-  getSessions,
   getUserProgress,
   getProgramName,
-  getPin,
 } from "../data/store";
 import { api } from "../api/client";
 

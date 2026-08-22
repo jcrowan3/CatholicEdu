@@ -1,7 +1,7 @@
 """ProgressEntry model — one row per activity completion."""
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, SmallInteger, String, UniqueConstraint
@@ -17,7 +17,10 @@ class ProgressEntry(Base):
     __tablename__ = "progress_entries"
     __table_args__ = (
         UniqueConstraint(
-            "student_id", "grade", "week", "activity",
+            "student_id",
+            "grade",
+            "week",
+            "activity",
             name="uq_progress_student_grade_week_activity",
         ),
     )
@@ -33,7 +36,7 @@ class ProgressEntry(Base):
     )  # discover, sort, timeline, fillblank, quiz, prayer
     stars_earned: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     earned_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
 
     # Relationships

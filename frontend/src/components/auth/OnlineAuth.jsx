@@ -6,7 +6,7 @@ import { DISPLAY_FONT as displayFont } from "../../utils/constants";
  */
 
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 
 
 export default function OnlineAuth({ onComplete, onBack }) {

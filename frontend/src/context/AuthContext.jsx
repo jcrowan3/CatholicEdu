@@ -8,7 +8,7 @@
  * Components use `useAuth()` to check auth state and call login/register/logout.
  */
 
-import { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
   api,
   hasToken,
@@ -16,8 +16,7 @@ import {
   decodeToken,
   clearTokens,
 } from "../api/client";
-
-const AuthContext = createContext(null);
+import { AuthContext } from "./auth";
 
 export function AuthProvider({ children }) {
   // Auth mode: "online" (API-backed) or "offline" (localStorage only)
@@ -43,24 +42,9 @@ export function AuthProvider({ children }) {
     return null;
   });
 
-  // Backend connectivity flag
-  const [backendAvailable, setBackendAvailable] = useState(null); // null = unknown
-
-  // Check backend health on mount
-  useEffect(() => {
-    const checkBackend = async () => {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1"}/health`,
-          { signal: AbortSignal.timeout(3000) }
-        );
-        setBackendAvailable(res.ok);
-      } catch {
-        setBackendAvailable(false);
-      }
-    };
-    checkBackend();
-  }, []);
+  // Online sign-in remains available without a noisy background health probe.
+  // Connection failures are shown only after the user chooses an online action.
+  const backendAvailable = true;
 
   // Register a new parish (catechist flow)
   const register = useCallback(async (parishName, email, password, displayName) => {
@@ -121,8 +105,8 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     clearTokens();
     setUser(null);
-    setAuthMode(backendAvailable ? "online" : "offline");
-  }, [backendAvailable]);
+    setAuthMode("offline");
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -144,10 +128,4 @@ export function AuthProvider({ children }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within <AuthProvider>");
-  return ctx;
 }

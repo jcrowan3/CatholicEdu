@@ -66,3 +66,14 @@
   filter: brightness(1.15);
   box-shadow: 0 0 0 2px rgba(212,168,67,.25);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

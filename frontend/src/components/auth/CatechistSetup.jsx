@@ -62,6 +62,7 @@ export default function CatechistSetup({ grade, onComplete }) {
       {step === 0 && (
         <div style={{ animation: "pi .3s ease" }}>
           <label
+            htmlFor="program-name"
             style={{
               color: "var(--text-tertiary)",
               fontSize: 11,
@@ -74,7 +75,9 @@ export default function CatechistSetup({ grade, onComplete }) {
             PARISH / PROGRAM NAME (OPTIONAL)
           </label>
           <input
+            id="program-name"
             type="text"
+            autoComplete="organization"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. St. Mary's CCD"
@@ -125,6 +128,7 @@ export default function CatechistSetup({ grade, onComplete }) {
           </p>
 
           <label
+            htmlFor="setup-pin"
             style={{
               color: "var(--text-tertiary)",
               fontSize: 11,
@@ -137,8 +141,11 @@ export default function CatechistSetup({ grade, onComplete }) {
             PIN
           </label>
           <input
+            id="setup-pin"
             type="password"
             inputMode="numeric"
+            autoComplete="new-password"
+            aria-describedby={error ? "setup-error" : undefined}
             maxLength={4}
             value={pin}
             onChange={(e) => {
@@ -163,6 +170,7 @@ export default function CatechistSetup({ grade, onComplete }) {
           />
 
           <label
+            htmlFor="setup-pin-confirm"
             style={{
               color: "var(--text-tertiary)",
               fontSize: 11,
@@ -176,8 +184,11 @@ export default function CatechistSetup({ grade, onComplete }) {
             CONFIRM PIN
           </label>
           <input
+            id="setup-pin-confirm"
             type="password"
             inputMode="numeric"
+            autoComplete="new-password"
+            aria-describedby={error ? "setup-error" : undefined}
             maxLength={4}
             value={confirm}
             onChange={(e) => {
@@ -203,6 +214,8 @@ export default function CatechistSetup({ grade, onComplete }) {
 
           {error && (
             <p
+              id="setup-error"
+              role="alert"
               style={{
                 color: "#D94A4A",
                 fontSize: 12,

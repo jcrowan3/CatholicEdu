@@ -1,11 +1,11 @@
-import { jsPDF } from "jspdf";
 import { CONTENT_PROVENANCE } from "../data/contentProvenance";
 
 /**
  * Generate a printable PDF for a session.
  * Uses Helvetica (built-in) — no emoji rendering.
  */
-export function generateSessionPdf(session) {
+export async function generateSessionPdf(session) {
+  const { jsPDF } = await import("jspdf");
   const doc = new jsPDF({ unit: "pt", format: "letter" });
   const pageW = doc.internal.pageSize.getWidth();
   const margin = 50;

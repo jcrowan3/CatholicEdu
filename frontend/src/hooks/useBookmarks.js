@@ -52,7 +52,8 @@ export function useBookmarks(grade, classId = null, userId = null) {
   // Map local bookmark key → backend bookmark UUID (needed for deletes)
   const backendIds = useRef({});
 
-  // Load bookmarks: API first when online, localStorage fallback
+  // Hydrate from the API or localStorage whenever the active learner changes.
+  /* eslint-disable react-hooks/set-state-in-effect -- Synchronizing external bookmark storage with hook state. */
   useEffect(() => {
     if (!grade) {
       setState(EMPTY);
@@ -102,6 +103,7 @@ export function useBookmarks(grade, classId = null, userId = null) {
       setState(saved ? { bookmarks: saved.bookmarks } : EMPTY);
     }
   }, [grade, classId, userId]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Persist every state change to localStorage
   useEffect(() => {

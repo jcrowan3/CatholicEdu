@@ -1,188 +1,156 @@
-# Catholic Catechist Toolkit ✝️
+# Catholic Catechist Toolkit
 
-Interactive faith formation app for parish CCD and Catholic classrooms. Students work through 30 weeks of sessions per grade with discover cards, sorting games, timelines, fill-in-the-blanks, quizzes, and guided prayers — earning stars along the way.
+[![CI](https://github.com/jcrowan3/CatholicEdu/actions/workflows/ci.yml/badge.svg)](https://github.com/jcrowan3/CatholicEdu/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Grades 2–8](https://img.shields.io/badge/grades-2--8-D4A843.svg)](#curriculum-and-content)
 
-**Grades available:** 2, 3, 4, 5, 6, 7, 8 (30 weeks each)
+An offline-friendly, open-source toolkit for Catholic parish faith formation. It gives catechists 30 interactive sessions per grade and gives students short activities, quizzes, guided prayer, vocabulary, bookmarks, and progress tracking.
 
-## Where to Play
+![Catholic Catechist Toolkit grade selector](docs/images/landing.png)
 
-### Quick Start — Offline Mode (no setup needed)
+> [!IMPORTANT]
+> This is an independent community project. It is not an official publication of the Holy See, a diocese, the USCCB, or a curriculum publisher. Parishes remain responsible for local safe-environment, privacy, accessibility, and doctrinal review requirements.
+
+## Why use it?
+
+- **Start locally in minutes.** Offline mode needs only Node.js and stores data in the browser.
+- **Use classroom-friendly activities.** Discover cards, sorting, timelines, fill-in-the-blank exercises, quizzes, and guided prayers are included.
+- **Choose the operating model.** Run entirely offline or add the FastAPI/PostgreSQL backend for multi-device sync and class join codes.
+- **Inspect and adapt it.** The application, curriculum files, tests, provenance notes, and deterministic doctrinal-review rules are all visible in the repository.
+- **Export useful artifacts.** Catechists can create session handouts, standards-coverage PDFs, progress CSVs, and family communication exports.
+
+## Quick start
+
+### Offline classroom mode
+
+Requirements: Node.js 22 or later and npm.
 
 ```bash
-cd frontend
-npm install
+git clone https://github.com/jcrowan3/CatholicEdu.git
+cd CatholicEdu/frontend
+npm ci
 npm run dev
 ```
 
-Open **http://localhost:5173** — pick a grade, set a PIN, add students, and go. Everything saves to your browser's localStorage. No account or server needed.
+Open <http://localhost:5173>, choose a grade, and complete the local setup. Data remains in that browser's `localStorage`; it is not synchronized or backed up automatically.
 
-### Full Stack — Online Mode (synced data)
+### Full stack with Docker
 
-If you want multi-device sync, class join codes, and a catechist dashboard backed by a real database:
+Requirements: Docker with Compose.
 
 ```bash
-# 1. Start Postgres
-docker compose up -d db
+git clone https://github.com/jcrowan3/CatholicEdu.git
+cd CatholicEdu
+docker compose up --build
+```
 
-# 2. Set up the backend
+Open:
+
+- Application: <http://localhost:5173>
+- API documentation: <http://localhost:8000/docs>
+
+The Compose configuration is for local development. Its database password and JWT secret must never be reused in a deployed environment. See [deployment guidance](docs/deployment.md) before hosting the toolkit.
+
+### Full stack without Docker
+
+Requirements: Node.js 22+, Python 3.12+, [uv](https://docs.astral.sh/uv/), and PostgreSQL 17+.
+
+```bash
+# Backend
 cd backend
 cp .env.example .env
-uv sync --extra dev
+# Replace JWT_SECRET with: openssl rand -hex 32
+uv sync --frozen --extra dev
 uv run alembic upgrade head
 uv run uvicorn catechist_api.main:app --reload
 
-# 3. Start the frontend (in another terminal)
+# Frontend, in another terminal
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
 
-Open **http://localhost:5173** — you'll see "Catechist Sign In" and "Join a Class" buttons.
+## Operating modes
 
-Alternatively, run everything via Docker:
+| Capability | Offline | Online |
+| --- | --- | --- |
+| Curriculum and activities | Yes | Yes |
+| Browser-local progress and bookmarks | Yes | Cached locally |
+| Multi-device synchronization | No | Yes |
+| Catechist accounts and class join codes | No | Yes |
+| PostgreSQL reporting | No | Yes |
+| Internet required during a session | No, after PWA assets are cached | Normally yes |
 
-```bash
-docker compose up
-```
+## Development
 
-### Backend Verification (no Postgres required)
-
-The backend test fixtures use a self-contained SQLite database by default. From the
-repository root, install the development dependencies and run the report tests:
-
-```bash
-cd backend
-uv sync --extra dev
-uv run --extra dev pytest tests/test_reports.py
-```
-
-Run the full backend test suite with:
+Run the complete repository gate from the project root:
 
 ```bash
-uv run --extra dev pytest
+./scripts/check.sh
 ```
 
-To exercise a real Postgres database instead, set `TEST_DATABASE_URL` to a
-`postgresql+asyncpg://...` URL before running pytest.
+Or run each side independently:
 
-## How It Works
+```bash
+cd frontend
+npm run lint
+npm test
+npm run audit:content
+npm run build
 
-### For Catechists (Teachers)
-
-1. **Offline mode**: Pick a grade → set a 4-digit PIN → add students → they play on shared devices
-2. **Online mode**: Register with email/password → creates your parish → add grades, classes, students → students join with a code
-
-As catechist, you get:
-- **Dashboard** — student count, average stars, per-week completion rates
-- **Student Manager** — add/edit/remove students with emoji avatars
-- **Progress Grid** — see every student's completion by week (○ not started, ◐ in progress, ● complete)
-- **Session Editor** — customize any session's content (discover cards, quiz questions, prayer lines)
-- **PDF Export** — print any session as a take-home sheet
-
-### For Students
-
-1. **Offline**: Tap your name on the login screen
-2. **Online**: Enter the join code your catechist gives you → tap your name
-
-Each week has up to 6 activities:
-
-| Activity | What it is | Stars |
-|----------|-----------|-------|
-| **Discover** | Tap-to-reveal teaching cards with bookmarking | ⭐⭐ |
-| **Sort & Match** | Drag items into the right categories | ⭐⭐⭐ |
-| **Put in Order** | Arrange events chronologically | ⭐⭐⭐ |
-| **Fill the Blank** | Complete sentences with word choices | ⭐⭐⭐ |
-| **Quick Quiz** | 5 multiple-choice questions | ⭐⭐⭐⭐⭐ |
-| **Closing Prayer** | Call-and-response guided prayer | ⭐ |
-
-Students also get:
-- **Bookmarks** — save favorite discover cards to review later
-- **Vocabulary** — browse all key terms across the curriculum
-- **Take-Home** — printable session summaries
-
-## Project Structure
-
-```
-catechist-toolkit/
-├── frontend/                 # React + Vite SPA
-│   ├── src/
-│   │   ├── api/client.js         # API client (auth, fetch, all endpoints)
-│   │   ├── context/AuthContext.jsx # Online/offline auth provider
-│   │   ├── components/
-│   │   │   ├── activities/       # Discover, Sort, Timeline, FillBlank, Quiz, Prayer
-│   │   │   ├── auth/             # LoginScreen, CatechistSetup, OnlineAuth, JoinClass
-│   │   │   ├── dashboard/        # Dashboard, ProgressGrid, UserManager, ClassSelector
-│   │   │   ├── admin/            # SessionEditor
-│   │   │   ├── session/          # SessionHome, TopBar, Picker, Bookmarks, Vocabulary
-│   │   │   └── landing/          # LandingPage (grade selector)
-│   │   ├── hooks/
-│   │   │   ├── useProgress.js    # Dual-mode: API when online, localStorage offline
-│   │   │   └── useBookmarks.js   # Same dual-mode pattern
-│   │   ├── data/
-│   │   │   ├── grade[2-8].js     # 30 sessions per grade (bundled curriculum)
-│   │   │   └── store.js          # localStorage data layer
-│   │   └── utils/
-│   │       └── migrateToApi.js   # Export localStorage → import to API
-│   ├── package.json
-│   └── vite.config.js            # Proxy /api → backend
-│
-├── backend/                  # FastAPI + PostgreSQL
-│   ├── src/catechist_api/
-│   │   ├── models/           # 10 SQLAlchemy models
-│   │   ├── schemas/          # Pydantic request/response DTOs
-│   │   ├── services/         # Business logic
-│   │   ├── routers/          # 35 API endpoints
-│   │   ├── auth/             # JWT + bcrypt
-│   │   └── main.py           # FastAPI app
-│   ├── alembic/              # Database migrations
-│   ├── tests/                # 37 pytest tests
-│   └── pyproject.toml
-│
-└── docker-compose.yml        # Postgres + API containers
+cd ../backend
+uv sync --frozen --extra dev
+uv run ruff check src tests
+uv run ruff format --check src tests
+uv run pytest --cov=catechist_api
 ```
 
-## API Overview (35 endpoints)
+Pull requests run the same checks in GitHub Actions. See [CONTRIBUTING.md](CONTRIBUTING.md) for the expected workflow.
 
-| Group | Endpoints |
-|-------|-----------|
-| **Auth** | Register parish, login, refresh tokens, student roster, student login |
-| **Parish** | Get/update parish info |
-| **Grades** | List/create/update grade configs |
-| **Classes** | CRUD classes (each gets a join code), list students in class |
-| **Students** | Create/update/deactivate students |
-| **Progress** | Record + retrieve per-activity star progress (idempotent upserts) |
-| **Bookmarks** | CRUD student bookmarks on discover cards |
-| **Sessions** | CRUD session content overrides per grade/week |
-| **Reports** | Parish overview, class progress grid, student summary, CSV export |
+## Architecture
 
-Interactive API docs at **http://localhost:8000/docs** when the backend is running.
+```text
+Browser / PWA
+├── React + Vite interface
+├── grade curriculum loaded on demand
+├── offline localStorage adapter
+└── optional REST client
+        │
+        ▼
+FastAPI service
+├── JWT authentication
+├── parish-scoped services
+├── SQLAlchemy models and Alembic migrations
+└── PostgreSQL
+```
 
-## Tech Stack
+Read [docs/architecture.md](docs/architecture.md) for the main modules, data boundaries, and extension points.
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 19, Vite 7, Tailwind CSS v4 |
-| Backend | Python 3.14, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2 |
-| Database | PostgreSQL 17 via asyncpg |
-| Auth | JWT (python-jose) + bcrypt |
-| Migrations | Alembic (async) |
-| Testing | pytest + pytest-asyncio + httpx |
-| Packaging | uv + pyproject.toml (backend), npm (frontend) |
-| Deploy | Docker Compose |
+## Curriculum and content
 
-## Content Guidelines
+Grades 2–8 currently include 30 sessions each. Curriculum modules live in `frontend/src/data/grade*.js` and are loaded only when a grade is selected.
 
-- All Scripture uses the **Catholic Public Domain Version (CPDV)** — public domain
-- CCC (Catechism) paragraph numbers are cited but all content is original
-- Curriculum text may include AI-assisted drafting and is reviewed before release; provenance is tracked in `frontend/src/data/contentProvenance.js`
-- Doctrinally aligned with official Catholic teaching
-- The Real Presence in the Eucharist is taught as transubstantiation, not symbolic
-- AI provenance and disclosure posture is documented in [docs/ai-provenance-audit.md](docs/ai-provenance-audit.md)
+- Scripture quotations identify the Catholic Public Domain Version (CPDV). The [translator's site](https://sacredbible.org/studybible/version.htm) states that the CPDV is in the public domain.
+- Catechism references point readers to numbered paragraphs; the project does not reproduce the full Catechism.
+- Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-provenance-audit.md](docs/ai-provenance-audit.md) and enforced by `npm run audit:content`.
+- Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
-## Target Devices
+See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.
 
-Chromebooks and tablets (parish classrooms). Mobile-friendly. Works offline.
+## Privacy and safeguarding
+
+This application can store student display names, progress, family contact information, permissions, and sensitive notes. Do not enter data unless your parish has an approved purpose, retention policy, access model, and parent/guardian process. Review [docs/privacy-and-safeguarding.md](docs/privacy-and-safeguarding.md) before using real student information.
+
+Security issues should be reported privately according to [SECURITY.md](SECURITY.md), not through a public issue.
+
+## Project status
+
+The toolkit is suitable for evaluation and local pilots. It should not be treated as a hosted, compliance-certified student information system. Current priorities are tracked through GitHub issues and [CHANGELOG.md](CHANGELOG.md).
+
+## Contributing
+
+Contributions are welcome, especially for accessibility, test coverage, curriculum review, translations, privacy safeguards, and deployment documentation. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
-Private repository. All curriculum content is original.
+Unless a file says otherwise, repository code and original project content are available under the [MIT License](LICENSE). Public-domain source material remains public domain, and third-party names and references remain subject to their respective rights.
