@@ -2,7 +2,9 @@
 
 Notable project changes are documented here. The project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and intends to use semantic versioning after its first public release.
 
-## Unreleased
+## [Unreleased]
+
+## [0.1.0] - 2026-08-22
 
 ### Added
 
@@ -31,3 +33,6 @@ Notable project changes are documented here. The project follows [Keep a Changel
 
 - Updated frontend dependencies to remove known production dependency advisories reported by `npm audit`.
 - Updated backend dependencies to remove all known findings reported by `pip-audit`.
+
+[Unreleased]: https://github.com/jcrowan3/CatholicEdu/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/jcrowan3/CatholicEdu/releases/tag/v0.1.0
