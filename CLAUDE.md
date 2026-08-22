@@ -6,7 +6,7 @@ Interactive web app for parish CCD/faith formation programs. Monorepo with a Rea
 Grades 2-8, 30 weeks per grade, 6 activity types per session.
 
 ## Tech Stack
-- **Frontend**: React 19 + Vite 7 + Tailwind CSS v4
+- **Frontend**: React 19 + Vite 8 + Tailwind CSS v4 on Node.js 22.13+
 - **Backend**: Python 3.12+, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2
 - **Database**: PostgreSQL 17 (asyncpg)
 - **Auth**: JWT (PyJWT) + bcrypt

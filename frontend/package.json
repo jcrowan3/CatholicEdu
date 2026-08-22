@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "description": "Offline-friendly Catholic faith-formation activities for grades 2–8",
   "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
