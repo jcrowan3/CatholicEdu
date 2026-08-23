@@ -61,7 +61,7 @@ for (const grade of requestedGrades()) {
       const last = chapter === endChapter ? endVerse : first + 150;
       for (let verse = first; verse <= last; verse += 1) {
         const match = source.match(new RegExp(`\\{${chapter}:${verse}\\} ([\\s\\S]*?)<BR>`, "i"));
-        if (match) verses.push(match[1].replace(/<[^>]+>/g, ""));
+        if (match && !match[1].includes("<")) verses.push(match[1]);
       }
     }
 
