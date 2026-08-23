@@ -57,7 +57,7 @@ export default function RelatedSessions({ sessions, pillarColors, onSelect }) {
                 style={{
                   fontFamily: displayFont,
                   fontSize: 9,
-                  color: "#fff",
+                  color: "#101522",
                   letterSpacing: 0.5,
                 }}
               >
