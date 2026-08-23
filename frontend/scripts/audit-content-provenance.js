@@ -48,6 +48,20 @@ for (const review of CONTENT_PROVENANCE.gradeReviews) {
   }
 }
 
+for (const audit of CONTENT_PROVENANCE.scriptureSourceAudits) {
+  if (!activeGradeNumbers.includes(audit.grade)) {
+    failures.push(`Scripture source audit references inactive Grade ${audit.grade}.`);
+  }
+  if (audit.status !== "verified-automated" || !audit.verifiedAt || !audit.source) {
+    failures.push(`Grade ${audit.grade} Scripture audit must include status, date, and source.`);
+  }
+}
+
+if (new Set(CONTENT_PROVENANCE.scriptureSourceAudits.map(({ grade }) => grade)).size
+    !== CONTENT_PROVENANCE.scriptureSourceAudits.length) {
+  failures.push("Scripture source audit grades must be unique.");
+}
+
 for (const surface of CONTENT_PROVENANCE.trackedSurfaces) {
   if (!surface.surface || !surface.path || !surface.status) {
     failures.push("Each tracked surface must include surface, path, and status.");

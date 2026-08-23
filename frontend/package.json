@@ -12,8 +12,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "node --test src/**/*.test.js",
+    "audit:curriculum": "node scripts/audit-curriculum.js",
     "test:e2e": "playwright test",
     "audit:content": "node scripts/audit-content-provenance.js",
+    "verify:scripture": "node scripts/verify-scripture-sources.js",
     "preview": "vite preview"
   },
   "dependencies": {

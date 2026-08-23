@@ -23,6 +23,14 @@ export const CONTENT_PROVENANCE = {
     reviewedAt: null,
     record: null,
   })),
+  scriptureSourceAudits: [
+    {
+      grade: 8,
+      status: "verified-automated",
+      verifiedAt: "2026-08-23",
+      source: "https://sacredbible.org/catholic/",
+    },
+  ],
   trackedSurfaces: [
     {
       surface: "Bundled grade curriculum",

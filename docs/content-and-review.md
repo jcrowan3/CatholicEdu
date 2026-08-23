@@ -27,3 +27,5 @@ Use the [qualified curriculum review workflow](curriculum-review/README.md) and 
 - Update `contentProvenance.js` when a tracked surface is added or materially changed.
 - Request review from a qualified human before describing content as ready for parish use.
 - Record completed reviews in `docs/ai-content-provenance-audit.md`; do not infer review from a passing automated check.
+
+The [curriculum authoring guide](curriculum-authoring.md) documents schema version 1 and the required lesson shape. Run `npm run audit:curriculum` for an offline structural and reference report. `npm run verify:scripture -- --grade=N` performs an online textual comparison against CPDV for source-audited grades.

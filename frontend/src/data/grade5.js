@@ -1,4 +1,6 @@
 // ============================================================
+
+import { defineCurriculum } from "./curriculumSchema.js";
 // GRADE 5 — CATHOLIC CATECHIST TOOLKIT
 // "Jesus Christ: Lord, Savior, and Teacher"
 // 30 Weekly Sessions | Age 10–11
@@ -1765,3 +1767,4 @@ export const SESSIONS = [
   }
 
 ];
+export const CURRICULUM = defineCurriculum(5, SESSIONS);

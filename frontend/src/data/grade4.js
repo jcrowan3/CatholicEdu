@@ -1,4 +1,6 @@
 // ============================================================
+
+import { defineCurriculum } from "./curriculumSchema.js";
 //  GRADE 4 — SESSION DATA
 //  "Who Is Jesus? The Life and Mission of Christ"
 //  30 Weekly Sessions | Catholic Catechist Toolkit
@@ -1759,3 +1761,4 @@ export const SESSIONS = [
   },
 
 ]; // end SESSIONS
+export const CURRICULUM = defineCurriculum(4, SESSIONS);

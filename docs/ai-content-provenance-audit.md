@@ -44,6 +44,8 @@ The [qualified review workflow](curriculum-review/README.md) defines the evidenc
 
 All eight grades currently have the grade-level status `review-required`.
 
+Grade 8 session headers were text-matched to the online CPDV source on 2026-08-23. This automated source audit checks wording, not interpretation or approval. Remaining grades should be normalized and recorded separately rather than inferred from Grade 8.
+
 ## Maintenance
 
 Run the audit check after adding or removing active grade files:

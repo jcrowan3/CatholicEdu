@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   getDefaultSessions,
+  getCurriculumMetadata,
   getPillarColors,
   loadDefaultSessions,
 } from "./gradeLoader.js";
@@ -15,6 +16,11 @@ test("loads one grade on demand and caches it for synchronous use", async () => 
   assert.equal(sessions.length, 30);
   assert.equal(getDefaultSessions(1), sessions);
   assert.equal(sessions[0].week, 1);
+  assert.deepEqual(getCurriculumMetadata(1), {
+    grade: 1,
+    schemaVersion: 1,
+    sessionCount: 30,
+  });
 });
 
 test("returns grade-specific colors without loading curriculum content", () => {

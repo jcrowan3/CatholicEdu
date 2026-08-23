@@ -30,7 +30,13 @@ export async function loadGradeData(grade) {
   if (!loadModule) return null;
 
   const module = await loadModule();
-  const data = { sessions: module.SESSIONS, pillarColors: module.PILLAR_COLORS };
+  const curriculum = module.CURRICULUM;
+  const data = {
+    sessions: curriculum?.sessions || module.SESSIONS,
+    pillarColors: module.PILLAR_COLORS,
+    schemaVersion: curriculum?.schemaVersion || null,
+    grade: curriculum?.grade || numericGrade,
+  };
   gradeCache.set(numericGrade, data);
   return data;
 }
@@ -50,4 +56,11 @@ export function getDefaultSessions(grade) {
 
 export function getPillarColors(grade) {
   return pillarColors[Number(grade)] || {};
+}
+
+export function getCurriculumMetadata(grade) {
+  const data = getGradeData(grade);
+  return data
+    ? { grade: data.grade, schemaVersion: data.schemaVersion, sessionCount: data.sessions.length }
+    : null;
 }
