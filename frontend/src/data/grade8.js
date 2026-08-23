@@ -8,6 +8,7 @@ export const SESSIONS = [
     week: 1,
     title: "Who Am I? Made in God's Image",
     pillar: "Creed",
+    ccc: "355-357",
     verse: "God created man in his own image, in the image of God he created him. — Genesis 1:27",
     discover: {
       title: "Discover: Imago Dei",
@@ -67,6 +68,7 @@ export const SESSIONS = [
     week: 2,
     title: "Free Will and Human Freedom",
     pillar: "Creed",
+    ccc: "1730-1748",
     verse: "Before man are life and death, good and evil; whichever he chooses shall be given to him. — Sirach 15:14-15",
     discover: {
       title: "Discover: Free Will",
@@ -119,7 +121,8 @@ export const SESSIONS = [
     week: 3,
     title: "Conscience: God's Voice Within",
     pillar: "Creed",
-    verse: "Deep within his conscience man discovers a law which he has not laid upon himself but which he must obey. — Gaudium et Spes 16",
+    ccc: "1776-1794",
+    verse: "They reveal the work of the law written in their hearts, while their conscience renders testimony about them. — Romans 2:15",
     discover: {
       title: "Discover: Conscience",
       instruction: "Tap each card to learn about the voice God placed within you.",
@@ -178,6 +181,7 @@ export const SESSIONS = [
     week: 4,
     title: "Sin: What It Is and What It Does",
     pillar: "Creed",
+    ccc: "1849-1864",
     verse: "If we say that we have no sin, we deceive ourselves. If we confess our sins, He is faithful and just to forgive us. — 1 John 1:8-9",
     discover: {
       title: "Discover: Sin",
@@ -237,7 +241,8 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review",
     pillar: "Review",
-    verse: "Review session",
+    ccc: "1730-1876",
+    verse: "God established man from the beginning, and he left him in the hand of his own counsel. He added his commandments and precepts. — Sirach 15:14-15",
     discover: {
       title: "Unit 1 Review: Identity, Freedom & Conscience",
       instruction: "Tap to review the big ideas from Weeks 1-4.",
@@ -293,6 +298,7 @@ export const SESSIONS = [
     week: 6,
     title: "The Sources of Morality",
     pillar: "Morality",
+    ccc: "1750-1761",
     verse: "Do not be conformed to this world, but be transformed by the renewal of your mind. — Romans 12:2",
     discover: {
       title: "Discover: The Sources of Morality",
@@ -343,6 +349,7 @@ export const SESSIONS = [
     week: 7,
     title: "The Natural Moral Law",
     pillar: "Morality",
+    ccc: "1954-1960",
     verse: "For what can be known about God is plain to them, because God has shown it to them. — Romans 1:19-20",
     discover: {
       title: "Discover: Natural Law",
@@ -400,6 +407,7 @@ export const SESSIONS = [
     week: 8,
     title: "Virtue: The Key to a Good Life",
     pillar: "Morality",
+    ccc: "1803-1845",
     verse: "Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure — think about these things. — Philippians 4:8",
     discover: {
       title: "Discover: Virtue",
@@ -459,6 +467,7 @@ export const SESSIONS = [
     week: 9,
     title: "Prudence and Moral Decision-Making",
     pillar: "Morality",
+    ccc: "1806",
     verse: "The Lord gives wisdom; from His mouth come knowledge and understanding. — Proverbs 2:6-7",
     discover: {
       title: "Discover: Prudence",
@@ -510,7 +519,8 @@ export const SESSIONS = [
     week: 10,
     title: "Unit 2 Review",
     pillar: "Review",
-    verse: "Review session",
+    ccc: "1750-1845",
+    verse: "Whatever is true, whatever is chaste, whatever is just, whatever is holy... meditate on these. — Philippians 4:8",
     discover: {
       title: "Unit 2 Review: Moral Decision-Making",
       instruction: "Tap to review the big ideas from Weeks 6-9.",
@@ -569,6 +579,7 @@ export const SESSIONS = [
     week: 11,
     title: "Social Justice and the Common Good",
     pillar: "Morality",
+    ccc: "1905-1912, 1928-1942",
     verse: "He has shown you what is good: to act justly, love mercy, and walk humbly with your God. \u2014 Micah 6:8",
     discover: {
       title: "Discover: The Common Good",
@@ -628,6 +639,7 @@ export const SESSIONS = [
     week: 12,
     title: "Life and Human Dignity",
     pillar: "Morality",
+    ccc: "2258-2262",
     verse: "Before I formed you in the womb I knew you. \u2014 Jeremiah 1:5",
     discover: {
       title: "Discover: Life and Dignity",
@@ -681,6 +693,7 @@ export const SESSIONS = [
     week: 13,
     title: "Truth, Justice, and the 8th Commandment",
     pillar: "Morality",
+    ccc: "2464-2513",
     verse: "And you will know the truth, and the truth will set you free. \u2014 John 8:32",
     discover: {
       title: "Discover: Truth and the 8th Commandment",
@@ -733,6 +746,7 @@ export const SESSIONS = [
     week: 14,
     title: "Sexuality, Chastity, and the 6th Commandment",
     pillar: "Morality",
+    ccc: "2337-2359",
     verse: "Your body is a temple of the Holy Spirit within you. Glorify God in your body. \u2014 1 Corinthians 6:19-20",
     discover: {
       title: "Discover: Chastity and the 6th Commandment",
@@ -792,6 +806,7 @@ export const SESSIONS = [
     week: 15,
     title: "Stewardship: Property, Poverty, and the 7th Commandment",
     pillar: "Morality",
+    ccc: "2401-2463",
     verse: "Take care and guard against all greed, for one\u2019s life does not consist in the abundance of possessions. \u2014 Luke 12:15",
     discover: {
       title: "Discover: Stewardship and the 7th Commandment",
@@ -845,7 +860,8 @@ export const SESSIONS = [
     week: 16,
     title: "Unit 3 Review: Social Justice",
     pillar: "Review",
-    verse: "Review session",
+    ccc: "1877-1948, 2401-2463",
+    verse: "Act with judgment, and love mercy, and walk carefully with your God. — Micah 6:8",
     discover: {
       title: "Unit 3 Review: Social Justice",
       instruction: "Tap to review the big ideas from Weeks 11-15.",
@@ -904,6 +920,7 @@ export const SESSIONS = [
     week: 17,
     title: "What Is Discipleship?",
     pillar: "Creed",
+    ccc: "1694-1698, 1816",
     verse: "If anyone wishes to come after me, let him deny himself and take up his cross daily. \u2014 Luke 9:23",
     discover: {
       title: "Discover: Discipleship",
@@ -957,6 +974,7 @@ export const SESSIONS = [
     week: 18,
     title: "The Sacraments as Encounter with Christ",
     pillar: "Sacraments",
+    ccc: "1113-1134",
     verse: "I am the vine, you are the branches. Without me you can do nothing. \u2014 John 15:5",
     discover: {
       title: "Discover: Sacraments as Encounter",
@@ -1015,6 +1033,7 @@ export const SESSIONS = [
     week: 19,
     title: "Confirmation: Living the Mission",
     pillar: "Sacraments",
+    ccc: "1285-1321",
     verse: "You will receive power when the Holy Spirit comes upon you, and you will be my witnesses. \u2014 Acts 1:8",
     discover: {
       title: "Discover: Confirmation",
@@ -1067,6 +1086,7 @@ export const SESSIONS = [
     week: 20,
     title: "Prayer as Relationship, Not Ritual",
     pillar: "Prayer",
+    ccc: "2558-2565",
     verse: "When you pray, go into your room, close the door, and pray to your Father in secret. \u2014 Matthew 6:6",
     discover: {
       title: "Discover: Prayer as Relationship",
@@ -1120,7 +1140,8 @@ export const SESSIONS = [
     week: 21,
     title: "Unit 4 Review: Discipleship & Sacraments",
     pillar: "Review",
-    verse: "Review session",
+    ccc: "1113-1134, 1691-1698",
+    verse: "You will receive the power of the Holy Spirit, passing over you, and you shall be witnesses for me. — Acts 1:8",
     discover: {
       title: "Unit 4 Review: Discipleship & Sacraments",
       instruction: "Tap to review the big ideas from Weeks 17-20.",
@@ -1178,6 +1199,7 @@ export const SESSIONS = [
     week: 22,
     title: "Faith and Reason: Partners, Not Enemies",
     pillar: "Creed",
+    ccc: "156-159",
     verse: "Come now and let us reason together, says the Lord. — Isaiah 1:18",
     discover: {
       title: "Discover: Faith and Reason",
@@ -1230,6 +1252,7 @@ export const SESSIONS = [
     week: 23,
     title: "The Existence of God: Natural Arguments",
     pillar: "Creed",
+    ccc: "31-35",
     verse: "For the invisible things of Him, from the creation of the world, are clearly seen. — Wisdom 13:1-5",
     discover: {
       title: "Discover: Arguments for God's Existence",
@@ -1283,6 +1306,7 @@ export const SESSIONS = [
     week: 24,
     title: "Scripture and Tradition: How We Know What We Know",
     pillar: "Creed",
+    ccc: "80-83, 101-141",
     verse: "All Scripture is inspired by God and is useful for teaching. — 2 Timothy 3:16-17",
     discover: {
       title: "Discover: Scripture and Tradition",
@@ -1335,7 +1359,8 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 5 Review: Faith, Reason & Revelation",
     pillar: "Review",
-    verse: "Review session",
+    ccc: "31-184",
+    verse: "All Scripture, having been divinely inspired, is useful for teaching, for reproof, for correction, and for instruction in justice. — 2 Timothy 3:16",
     discover: {
       title: "Unit 5 Review: Faith, Reason & Revelation",
       instruction: "Tap to review the big ideas from Weeks 22-24.",
@@ -1390,6 +1415,7 @@ export const SESSIONS = [
     week: 26,
     title: "The Call to Evangelization",
     pillar: "Creed",
+    ccc: "849-856",
     verse: "Go therefore and make disciples of all nations, baptizing them. — Matthew 28:19-20",
     discover: {
       title: "Discover: Evangelization",
@@ -1449,6 +1475,7 @@ export const SESSIONS = [
     week: 27,
     title: "Works of Mercy: Faith in Action",
     pillar: "Morality",
+    ccc: "2447",
     verse: "I was hungry and you gave me food. Whatever you did for one of these least brothers of mine, you did for me. — Matthew 25:35-36",
     discover: {
       title: "Discover: Works of Mercy",
@@ -1508,6 +1535,7 @@ export const SESSIONS = [
     week: 28,
     title: "Saints as Models of Discipleship",
     pillar: "Prayer",
+    ccc: "828, 956-957",
     verse: "We are surrounded by so great a cloud of witnesses. — Hebrews 12:1",
     discover: {
       title: "Discover: Saints as Models",
@@ -1567,6 +1595,7 @@ export const SESSIONS = [
     week: 29,
     title: "Eschatology: The Last Things",
     pillar: "Creed",
+    ccc: "1020-1060",
     verse: "Death is swallowed up in victory. O death, where is your sting? — 1 Corinthians 15:54-55",
     discover: {
       title: "Discover: The Last Things",
@@ -1620,6 +1649,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review & Sending Forth",
     pillar: "Review",
+    ccc: "849-856",
     verse: "I can do all things through Christ who strengthens me. — Philippians 4:13",
     discover: {
       title: "What We Built This Year!",

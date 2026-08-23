@@ -14,10 +14,11 @@ test("every active grade has 30 structurally complete, playable sessions", () =>
   });
 });
 
-test("every Grade 1 session passes deterministic citation and doctrine checks", () => {
-  const failures = gradeModules[0].SESSIONS.flatMap((session) =>
-    reviewSessionLocally(session).findings.map((finding) =>
-      `Week ${session.week}: ${finding.code}`));
+test("every active grade passes deterministic citation and doctrine checks", () => {
+  const failures = gradeModules.flatMap(({ SESSIONS }, gradeIndex) =>
+    SESSIONS.flatMap((session) =>
+      reviewSessionLocally(session).findings.map((finding) =>
+        `Grade ${gradeIndex + 1}, week ${session.week}: ${finding.code}`)));
 
   assert.deepEqual(failures, []);
 });

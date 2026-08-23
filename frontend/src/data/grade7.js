@@ -260,6 +260,7 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review: God and the Church",
     pillar: "Review",
+    ccc: "198-421, 748-975",
     verse: "And this is eternal life: that they may know you, the only true God, and Jesus Christ whom you have sent. — John 17:3",
 
     discover: {
@@ -556,6 +557,7 @@ export const SESSIONS = [
     week: 10,
     title: "Unit 2 Review: Sacraments in Depth",
     pillar: "Review",
+    ccc: "1113-1666",
     verse: "As many of you as were baptized into Christ have put on Christ. — Galatians 3:27",
 
     discover: {
@@ -852,6 +854,7 @@ export const SESSIONS = [
     week: 15,
     title: "Unit 3 Review: Morality and Conscience",
     pillar: "Review",
+    ccc: "1691-1802",
     verse: "Do not be conformed to this world, but be transformed by the renewal of your mind. — Romans 12:2",
 
     discover: {
@@ -1154,6 +1157,7 @@ export const SESSIONS = [
     week: 20,
     title: "Unit 4 Review: Justice and Moral Life",
     pillar: "Review",
+    ccc: "1928-1948",
     verse: "Act justly, love tenderly, and walk humbly with your God. — Micah 6:8",
 
     discover: {
@@ -1455,6 +1459,7 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 5 Review: Prayer and the Spiritual Life",
     pillar: "Review",
+    ccc: "2558-2758",
     verse: "Seek the Lord while he may be found; call upon him while he is near. — Isaiah 55:6",
 
     discover: {
@@ -1636,6 +1641,7 @@ export const SESSIONS = [
     week: 28,
     title: "Living the Beatitudes as a Teenager",
     pillar: "Morality",
+    ccc: "1716-1729",
     verse: "Blessed are the pure in heart, for they shall see God. — Matthew 5:8",
 
     discover: {
@@ -1765,6 +1771,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review: Disciples of Christ",
     pillar: "Review",
+    ccc: "1691-1698, 1816",
     verse: "I can do all things through Christ who strengthens me. — Philippians 4:13",
 
     discover: {

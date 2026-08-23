@@ -8,10 +8,14 @@ Notable project changes are documented here. The project follows [Keep a Changel
 
 - A complete 30-session Grade 1 curriculum covering creation, the Trinity, Jesus, the Church, sacraments, Christian life, and prayer.
 - Curriculum-integrity tests for all active grades, including playable sorting groups, ordered timelines, selectable fill-in answers, complete quizzes, and guided prayers.
+- Grade-level qualified-review records, a reviewer template, and machine-checked evidence requirements.
+- Deterministic citation and doctrine enforcement for all 240 bundled sessions.
 
 ### Fixed
 
 - Grade 5 Week 29 now provides destinations, colors, and icons for all seven saint patronage cards.
+- Added missing Catechism anchors to 59 sessions and replaced non-Scripture session headers with referenced CPDV passages.
+- Doctrinal checks now evaluate the answer a quiz teaches without treating intentionally incorrect distractors as assertions.
 
 ## [0.1.0] - 2026-08-22
 

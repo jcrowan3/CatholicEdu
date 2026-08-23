@@ -81,6 +81,7 @@ export const SESSIONS = [
     week: 2,
     title: "The Annunciation and Nativity",
     pillar: "Creed",
+    ccc: "484-525",
     verse: "Behold, you will conceive in your womb and bring forth a son, and you shall call his name Jesus. — Luke 1:31",
 
     discover: {
@@ -247,6 +248,7 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review: Who Is Jesus?",
     pillar: "Review",
+    ccc: "422-682",
     verse: "I am the way, the truth, and the life. — John 14:6",
 
     discover: {
@@ -600,6 +602,7 @@ export const SESSIONS = [
     week: 11,
     title: "Palm Sunday and Holy Week",
     pillar: "Creed",
+    ccc: "557-560",
     verse: "Hosanna! Blessed is he who comes in the name of the Lord. — Mark 11:9",
 
     discover: {
@@ -767,6 +770,7 @@ export const SESSIONS = [
     week: 14,
     title: "The Ascension and Pentecost",
     pillar: "Creed",
+    ccc: "659-667, 731-732",
     verse: "You will receive power when the Holy Spirit has come upon you. — Acts 1:8",
 
     discover: {
@@ -1109,6 +1113,7 @@ export const SESSIONS = [
     week: 20,
     title: "Unit 4 Review: How Jesus Saves and Heals",
     pillar: "Review",
+    ccc: "1420-1498",
     verse: "Come to me, all you who labor and are burdened, and I will give you rest. — Matthew 11:28",
 
     discover: {
@@ -1405,6 +1410,7 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 5 Review: Following Jesus",
     pillar: "Review",
+    ccc: "1694-1698",
     verse: "By this all people will know that you are my disciples, if you have love for one another. — John 13:35",
 
     discover: {
@@ -1576,6 +1582,7 @@ export const SESSIONS = [
     week: 28,
     title: "Praying with the Saints",
     pillar: "Prayer",
+    ccc: "956-957",
     verse: "Therefore, since we are surrounded by such a great cloud of witnesses... — Hebrews 12:1",
 
     discover: {
@@ -1637,6 +1644,7 @@ export const SESSIONS = [
     week: 29,
     title: "Sharing the Faith: We Are Missionaries",
     pillar: "Morality",
+    ccc: "849-856",
     verse: "Go therefore and make disciples of all nations. — Matthew 28:19",
 
     discover: {
@@ -1692,6 +1700,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review & Celebration",
     pillar: "Review",
+    ccc: "1822-1829",
     verse: "For I am convinced that neither death nor life... shall be able to separate us from the love of God in Christ Jesus. — Romans 8:38–39",
 
     discover: {

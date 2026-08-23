@@ -253,6 +253,7 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review: God and Creation",
     pillar: "Review",
+    ccc: "198-421",
     verse: "You shall love the Lord your God with all your heart and with all your soul and with all your mind. — Matthew 22:37",
 
     discover: {
@@ -883,6 +884,7 @@ export const SESSIONS = [
     week: 16,
     title: "Unit 2 Review: Jesus, the Spirit, and the Church",
     pillar: "Review",
+    ccc: "422-975",
     verse: "Jesus Christ is the same, yesterday and today and forever. — Hebrews 13:8",
 
     discover: {
@@ -1181,6 +1183,7 @@ export const SESSIONS = [
     week: 21,
     title: "Unit 3 Review: The Moral Life",
     pillar: "Review",
+    ccc: "1691-1698",
     verse: "Be doers of the word and not hearers only. — James 1:22",
 
     discover: {
@@ -1405,6 +1408,7 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 4 Review: Prayer and the Life of Faith",
     pillar: "Review",
+    ccc: "2558-2758",
     verse: "The prayer of a just man avails much, as it is effective. — James 5:16",
 
     discover: {
@@ -1704,6 +1708,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review: The Creed and Our Catholic Faith",
     pillar: "Review",
+    ccc: "185-1065",
     verse: "I have fought the good fight, I have finished the race, I have kept the faith. — 2 Timothy 4:7",
 
     discover: {

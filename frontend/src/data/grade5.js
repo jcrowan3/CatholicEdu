@@ -246,6 +246,7 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review: Jesus Christ and His Mission",
     pillar: "Review",
+    ccc: "422-682",
     verse: "I am the way, the truth, and the life. — John 14:6",
 
     discover: {
@@ -644,6 +645,7 @@ export const SESSIONS = [
     week: 12,
     title: "Unit 2 Review: The Life of Christ",
     pillar: "Review",
+    ccc: "512-682",
     verse: "Jesus Christ is the same yesterday, today, and forever. — Hebrews 13:8",
 
     discover: {
@@ -1114,6 +1116,7 @@ export const SESSIONS = [
     week: 20,
     title: "Unit 3 Review: The Moral Life",
     pillar: "Review",
+    ccc: "1691-1698",
     verse: "Be perfect, therefore, as your heavenly Father is perfect. — Matthew 5:48",
 
     discover: {
@@ -1410,7 +1413,8 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 4 Review: Sacraments",
     pillar: "Review",
-    verse: "Christ has no body now but yours. — St. Teresa of Ávila",
+    ccc: "1113-1134",
+    verse: "I am the vine; you are the branches. Whoever abides in me, and I in him, bears much fruit. — John 15:5",
 
     discover: {
       title: "Review: The Sacraments",
@@ -1701,6 +1705,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review & Celebration",
     pillar: "Review",
+    ccc: "426-429",
     verse: "I have come that they may have life and have it more abundantly. — John 10:10",
 
     discover: {

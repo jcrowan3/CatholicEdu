@@ -1,4 +1,5 @@
 const CCC_REFERENCE = /\bCCC\s*\d{1,4}(?:\s*[–-]\s*\d{1,4})?\b/i;
+const CCC_FIELD = /^(?:CCC\s*)?\d{1,4}(?:\s*[–-]\s*\d{1,4})?(?:\s*,\s*\d{1,4}(?:\s*[–-]\s*\d{1,4})?)*$/i;
 const SCRIPTURE_REFERENCE = /\b(?:Genesis|Exodus|Leviticus|Numbers|Deuteronomy|Joshua|Judges|Ruth|Samuel|Kings|Chronicles|Ezra|Nehemiah|Tobit|Judith|Esther|Maccabees|Job|Psalms?|Proverbs|Ecclesiastes|Song of Songs|Wisdom|Sirach|Isaiah|Jeremiah|Lamentations|Baruch|Ezekiel|Daniel|Hosea|Joel|Amos|Obadiah|Jonah|Micah|Nahum|Habakkuk|Zephaniah|Haggai|Zechariah|Malachi|Matthew|Mark|Luke|John|Acts|Romans|Corinthians|Galatians|Ephesians|Philippians|Colossians|Thessalonians|Timothy|Titus|Philemon|Hebrews|James|Peter|Jude|Revelation)\s+\d{1,3}:\d{1,3}(?:[–-]\d{1,3})?\b/i;
 
 const WEAKENED_DOCTRINE = [
@@ -16,17 +17,36 @@ function collectStrings(value, strings = []) {
   if (typeof value === "string") strings.push(value);
   else if (Array.isArray(value)) value.forEach((child) => collectStrings(child, strings));
   else if (value && typeof value === "object") {
-    Object.values(value).forEach((child) => collectStrings(child, strings));
+    Object.entries(value).forEach(([key, child]) => {
+      if (key !== "quiz" && key !== "opts" && key !== "options") {
+        collectStrings(child, strings);
+      }
+    });
   }
   return strings;
 }
 
+function collectSelectedQuizAnswers(sessionData) {
+  const quizItems = [
+    ...(sessionData?.quiz?.questions || []),
+    sessionData?.quiz?.bonus,
+  ].filter(Boolean);
+  return quizItems.flatMap((question) => {
+    const options = question.opts || question.options;
+    return Array.isArray(options) && Number.isInteger(question.correct)
+      && typeof options[question.correct] === "string"
+      ? [options[question.correct]]
+      : [];
+  });
+}
+
 /** Keep offline review behavior in parity with the API's deterministic rules. */
 export function reviewSessionLocally(sessionData) {
-  const text = collectStrings(sessionData).join("\n");
+  const text = [...collectStrings(sessionData), ...collectSelectedQuizAnswers(sessionData)].join("\n");
   const findings = [];
 
-  if (!CCC_REFERENCE.test(text)) {
+  if (!CCC_REFERENCE.test(text)
+      && !(typeof sessionData.ccc === "string" && CCC_FIELD.test(sessionData.ccc.trim()))) {
     findings.push({
       code: "missing_ccc_reference",
       severity: "error",

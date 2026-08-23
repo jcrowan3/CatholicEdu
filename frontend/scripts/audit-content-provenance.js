@@ -13,6 +13,9 @@ const failures = [];
 const activeGrades = GRADES.filter((grade) => grade.status === "active").map(
   (grade) => `frontend/src/data/grade${grade.grade}.js`,
 );
+const activeGradeNumbers = GRADES.filter((grade) => grade.status === "active").map(
+  ({ grade }) => grade,
+);
 
 for (const file of activeGrades) {
   if (!CONTENT_PROVENANCE.activeGradeFiles.includes(file)) {
@@ -23,6 +26,25 @@ for (const file of activeGrades) {
 for (const file of CONTENT_PROVENANCE.activeGradeFiles) {
   if (!fs.existsSync(path.join(repoRoot, file))) {
     failures.push(`Provenance inventory references missing file: ${file}`);
+  }
+}
+
+for (const grade of activeGradeNumbers) {
+  const review = CONTENT_PROVENANCE.gradeReviews.find((entry) => entry.grade === grade);
+  if (!review) {
+    failures.push(`Missing Grade ${grade} from the review inventory.`);
+  } else if (review.status === "reviewed"
+      && (!review.reviewer || !review.reviewedAt || !review.record)) {
+    failures.push(`Grade ${grade} cannot be marked reviewed without reviewer, date, and record.`);
+  }
+}
+
+for (const review of CONTENT_PROVENANCE.gradeReviews) {
+  if (!activeGradeNumbers.includes(review.grade)) {
+    failures.push(`Review inventory references inactive Grade ${review.grade}.`);
+  }
+  if (!["review-required", "in-review", "reviewed"].includes(review.status)) {
+    failures.push(`Grade ${review.grade} has an unsupported review status.`);
   }
 }
 

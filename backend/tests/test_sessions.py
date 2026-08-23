@@ -117,3 +117,40 @@ async def test_doctrinal_review_passes_supported_session(client: AsyncClient):
     )
     assert response.status_code == 200
     assert response.json() == {"passed": True, "findings": []}
+
+
+@pytest.mark.asyncio
+async def test_doctrinal_review_checks_taught_quiz_answer_not_distractors(client: AsyncClient):
+    ctx = await _setup_with_grade(client, "review-3")
+    supported = {
+        "ccc": "1374",
+        "verse": "John 6:51",
+        "quiz": {
+            "questions": [
+                {
+                    "q": "What is the Eucharist?",
+                    "opts": [
+                        "The Body and Blood of Christ",
+                        "The Eucharist is merely a symbol",
+                    ],
+                    "correct": 0,
+                }
+            ]
+        },
+    }
+    response = await client.post(
+        "/api/v1/grades/4/sessions/review",
+        json={"session_data": supported},
+        headers=ctx["headers"],
+    )
+    assert response.status_code == 200
+    assert response.json() == {"passed": True, "findings": []}
+
+    supported["quiz"]["questions"][0]["correct"] = 1
+    response = await client.post(
+        "/api/v1/grades/4/sessions/review",
+        json={"session_data": supported},
+        headers=ctx["headers"],
+    )
+    assert response.status_code == 200
+    assert [finding["code"] for finding in response.json()["findings"]] == ["weakened_doctrine"]

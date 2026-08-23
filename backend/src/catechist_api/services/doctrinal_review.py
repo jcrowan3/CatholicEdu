@@ -4,6 +4,11 @@ import re
 from typing import Any
 
 CCC_REFERENCE = re.compile(r"\bCCC\s*\d{1,4}(?:\s*[\u2013-]\s*\d{1,4})?\b", re.IGNORECASE)
+CCC_FIELD = re.compile(
+    r"^(?:CCC\s*)?\d{1,4}(?:\s*[\u2013-]\s*\d{1,4})?"
+    r"(?:\s*,\s*\d{1,4}(?:\s*[\u2013-]\s*\d{1,4})?)*$",
+    re.IGNORECASE,
+)
 SCRIPTURE_REFERENCE = re.compile(
     r"\b(?:Genesis|Exodus|Leviticus|Numbers|Deuteronomy|Joshua|Judges|Ruth|Samuel|Kings|"
     r"Chronicles|Ezra|Nehemiah|Tobit|Judith|Esther|Maccabees|Job|Psalms?|Proverbs|"
@@ -52,19 +57,45 @@ def _strings(value: Any):
     if isinstance(value, str):
         yield value
     elif isinstance(value, dict):
-        for child in value.values():
-            yield from _strings(child)
+        for key, child in value.items():
+            if key not in {"quiz", "opts", "options"}:
+                yield from _strings(child)
     elif isinstance(value, list):
         for child in value:
             yield from _strings(child)
 
 
+def _selected_quiz_answers(session_data: dict[str, Any]):
+    quiz = session_data.get("quiz")
+    if not isinstance(quiz, dict):
+        return
+    questions = quiz.get("questions")
+    quiz_items = list(questions) if isinstance(questions, list) else []
+    if isinstance(quiz.get("bonus"), dict):
+        quiz_items.append(quiz["bonus"])
+    for question in quiz_items:
+        if not isinstance(question, dict):
+            continue
+        options = question.get("opts", question.get("options"))
+        correct = question.get("correct")
+        if (
+            isinstance(options, list)
+            and isinstance(correct, int)
+            and 0 <= correct < len(options)
+            and isinstance(options[correct], str)
+        ):
+            yield options[correct]
+
+
 def review_session(session_data: dict[str, Any]) -> list[dict[str, str]]:
     """Return a concrete, stable fix checklist for a customized session."""
-    text = "\n".join(_strings(session_data))
+    text = "\n".join((*_strings(session_data), *_selected_quiz_answers(session_data)))
     findings: list[dict[str, str]] = []
 
-    if not CCC_REFERENCE.search(text):
+    ccc = session_data.get("ccc")
+    if not CCC_REFERENCE.search(text) and not (
+        isinstance(ccc, str) and CCC_FIELD.fullmatch(ccc.strip())
+    ):
         findings.append(
             {
                 "code": "missing_ccc_reference",
