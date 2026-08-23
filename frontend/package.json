@@ -2,7 +2,7 @@
   "name": "catechist-toolkit",
   "private": true,
   "version": "0.1.0",
-  "description": "Offline-friendly Catholic faith-formation activities for grades 2–8",
+  "description": "Offline-friendly Catholic faith-formation activities for grades 1–8",
   "type": "module",
   "engines": {
     "node": ">=22.13.0"

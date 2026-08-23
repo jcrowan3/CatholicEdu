@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jcrowan3/CatholicEdu/actions/workflows/ci.yml/badge.svg)](https://github.com/jcrowan3/CatholicEdu/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Grades 2–8](https://img.shields.io/badge/grades-2--8-D4A843.svg)](#curriculum-and-content)
+[![Grades 1–8](https://img.shields.io/badge/grades-1--8-D4A843.svg)](#curriculum-and-content)
 
 An offline-friendly, open-source toolkit for Catholic parish faith formation. It gives catechists 30 interactive sessions per grade and gives students short activities, quizzes, guided prayer, vocabulary, bookmarks, and progress tracking.
 
@@ -147,11 +147,12 @@ Read [docs/architecture.md](docs/architecture.md) for the main modules, data bou
 
 ## Curriculum and content
 
-Grades 2–8 currently include 30 sessions each. Curriculum modules live in `frontend/src/data/grade*.js` and are loaded only when a grade is selected.
+Grades 1–8 include 30 sessions each: 240 sessions in total. Every session includes discover cards, one interactive practice activity, a five-question quiz plus bonus, and guided prayer. Curriculum modules live in `frontend/src/data/grade*.js` and are loaded only when a grade is selected.
 
 - Scripture quotations identify the Catholic Public Domain Version (CPDV). The [translator's site](https://sacredbible.org/studybible/version.htm) states that the CPDV is in the public domain.
 - Catechism references point readers to numbered paragraphs; the project does not reproduce the full Catechism.
 - Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-content-provenance-audit.md](docs/ai-content-provenance-audit.md) and enforced by `npm run audit:content`.
+- Automated tests verify the 30-week sequence and the integrity of discover cards, sorting groups, timelines, fill-in-the-blank prompts, quizzes, bonuses, and prayers across every active grade.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.

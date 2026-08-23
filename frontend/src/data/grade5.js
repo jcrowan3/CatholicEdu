@@ -1666,9 +1666,9 @@ export const SESSIONS = [
         { name: "St. Dymphna", icon: "💙", group: "Patron of Mental Health" },
         { name: "St. Christopher", icon: "🚗", group: "Patron of Travelers" }
       ],
-      groups: ["Patron of Doctors", "Patron of Workers", "Patron of the Environment", "Patron of Students"],
-      colors: { "Patron of Doctors": "#6DB87B", "Patron of Workers": "#4A90D9", "Patron of the Environment": "#27AE60", "Patron of Students": "#D4A843" },
-      icons:  { "Patron of Doctors": "🩺", "Patron of Workers": "🔨", "Patron of the Environment": "🌿", "Patron of Students": "📚" }
+      groups: ["Patron of Doctors", "Patron of Workers", "Patron of the Environment", "Patron of Students", "Patron of Musicians", "Patron of Mental Health", "Patron of Travelers"],
+      colors: { "Patron of Doctors": "#6DB87B", "Patron of Workers": "#4A90D9", "Patron of the Environment": "#27AE60", "Patron of Students": "#D4A843", "Patron of Musicians": "#C0607A", "Patron of Mental Health": "#9B6DB8", "Patron of Travelers": "#D9704A" },
+      icons:  { "Patron of Doctors": "🩺", "Patron of Workers": "🔨", "Patron of the Environment": "🌿", "Patron of Students": "📚", "Patron of Musicians": "🎵", "Patron of Mental Health": "💙", "Patron of Travelers": "🚗" }
     },
 
     quiz: {
