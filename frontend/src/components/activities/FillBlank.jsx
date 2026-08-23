@@ -3,6 +3,7 @@ import { useState } from "react";
 import ActivityHeader from "../shared/ActivityHeader";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
+import { shuffle } from "../../utils/shuffle";
 
 
 export default function FillBlank({ data, earn, isDone, onBack }) {
@@ -13,7 +14,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
   const done = isDone("fillblank");
 
   const [shuffled] = useState(() =>
-    data.sentences.map((s) => [...s.options].sort(() => Math.random() - 0.5))
+    data.sentences.map((s) => shuffle(s.options))
   );
 
   const current = data.sentences[idx];
@@ -131,11 +132,15 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
         {shuffled[idx].map((opt) => {
           const { bg, borderColor } = answerOptionStyle(picked, opt, current.answer);
           return (
-            <div
+            <button
               key={opt}
+              type="button"
               className="bh"
               onClick={() => pick(opt)}
+              disabled={picked !== null}
               style={{
+                fontFamily: "inherit",
+                cursor: picked === null ? "pointer" : "default",
                 background: bg,
                 border: `2px solid ${borderColor}`,
                 borderRadius: 10,
@@ -146,7 +151,7 @@ export default function FillBlank({ data, earn, isDone, onBack }) {
               <span style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}>
                 {opt}
               </span>
-            </div>
+            </button>
           );
         })}
       </div>

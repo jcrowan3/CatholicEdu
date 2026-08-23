@@ -54,7 +54,6 @@ export default function Discover({
             <div
               key={i}
               className="ch"
-              onClick={() => toggle(i)}
               style={{
                 background: open
                   ? "rgba(74,144,217,.08)"
@@ -70,20 +69,44 @@ export default function Discover({
               <div
                 style={{ display: "flex", alignItems: "center", gap: 10 }}
               >
-                <span style={{ fontSize: 24 }}>{item.icon}</span>
-                <div
+                <button
+                  type="button"
+                  onClick={() => toggle(i)}
+                  aria-expanded={open}
                   style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
                     flex: 1,
+                    minWidth: 0,
+                    padding: 0,
+                    border: 0,
+                    background: "transparent",
+                    textAlign: "left",
+                    cursor: "pointer",
                     fontFamily: displayFont,
                     fontSize: 14,
                     color: "var(--text-primary)",
                   }}
                 >
-                  {item.name}
-                </div>
+                  <span style={{ fontSize: 24 }}>{item.icon}</span>
+                  <span style={{ flex: 1 }}>{item.name}</span>
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      color: "var(--text-ghost)",
+                      fontSize: 14,
+                      transition: "transform .3s",
+                      transform: open ? "rotate(180deg)" : "rotate(0)",
+                    }}
+                  >
+                    ▼
+                  </span>
+                </button>
                 {/* Bookmark button */}
                 {toggleBookmark && week != null && (
                   <button
+                    type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleBookmark(week, i, {
@@ -107,16 +130,6 @@ export default function Discover({
                     {bookmarked ? "🔖" : "📑"}
                   </button>
                 )}
-                <span
-                  style={{
-                    color: "var(--text-ghost)",
-                    fontSize: 14,
-                    transition: "transform .3s",
-                    transform: open ? "rotate(180deg)" : "rotate(0)",
-                  }}
-                >
-                  ▼
-                </span>
               </div>
               {open && (
                 <div

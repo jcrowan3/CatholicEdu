@@ -60,3 +60,11 @@ Completed on 2026-08-22:
 - The production landing page scored 96 performance and 100 for accessibility, best practices, and SEO in Lighthouse.
 
 Estimated source-release readiness: **96/100**, up from 48/100. The remaining publication gates are the maintainer's history/privacy choice, repository visibility change, and post-public security settings. Independent curriculum/privacy review and production-specific controls remain prerequisites for parish or hosted production use.
+
+## Loop 7 — curriculum and product quality
+
+- All 240 sessions pass deterministic structure, citation, doctrine, and activity-playability checks; Grade 8 Scripture headers also pass exact CPDV source verification.
+- A versioned curriculum schema, contributor template, grade-level review records, and qualified-review workflow now make curriculum changes auditable.
+- The frontend suite now includes 22 focused tests and six Playwright journeys across desktop and mobile Chromium.
+- Automated WCAG checks now cover the public landing page, student session home, and a learning activity; identified interaction semantics and contrast findings were fixed.
+- Activity randomization now uses one tested Fisher-Yates utility instead of duplicated comparator-based shuffling.

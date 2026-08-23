@@ -155,6 +155,7 @@ Grades 1–8 include 30 sessions each: 240 sessions in total. Every session incl
 - Catechism references point readers to numbered paragraphs; the project does not reproduce the full Catechism.
 - Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-content-provenance-audit.md](docs/ai-content-provenance-audit.md) and enforced by `npm run audit:content`.
 - Automated tests verify the 30-week sequence and the integrity of discover cards, sorting groups, timelines, fill-in-the-blank prompts, quizzes, bonuses, and prayers across every active grade.
+- Playwright exercises the landing, offline setup, student home, and learning surfaces in desktop and mobile Chromium; axe-core checks both public and signed-in student views against WCAG 2.0/2.1 A and AA rules.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.

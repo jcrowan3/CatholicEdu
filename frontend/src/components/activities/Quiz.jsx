@@ -89,11 +89,15 @@ export default function Quiz({ data, earn, isDone, onBack }) {
           {b.opts.map((opt, i) => {
             const { bg, borderColor } = answerOptionStyle(bonusPicked, i, b.correct);
             return (
-              <div
+              <button
                 key={i}
+                type="button"
                 className="bh"
                 onClick={() => answerBonus(i)}
+                disabled={bonusPicked !== null}
                 style={{
+                  fontFamily: "inherit",
+                  cursor: bonusPicked === null ? "pointer" : "default",
                   background: bg,
                   border: `2px solid ${borderColor}`,
                   borderRadius: 10,
@@ -110,7 +114,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
                 >
                   {opt}
                 </span>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -323,11 +327,15 @@ export default function Quiz({ data, earn, isDone, onBack }) {
         {q.opts.map((opt, i) => {
           const { bg, borderColor } = answerOptionStyle(selected, i, q.correct);
           return (
-            <div
+            <button
               key={i}
+              type="button"
               className="bh"
               onClick={() => answer(i)}
+              disabled={selected !== null}
               style={{
+                fontFamily: "inherit",
+                cursor: selected === null ? "pointer" : "default",
                 background: bg,
                 border: `2px solid ${borderColor}`,
                 borderRadius: 10,
@@ -338,7 +346,7 @@ export default function Quiz({ data, earn, isDone, onBack }) {
               <span style={{ color: "var(--text-primary)", fontSize: 14, fontWeight: 700 }}>
                 {opt}
               </span>
-            </div>
+            </button>
           );
         })}
       </div>

@@ -11,6 +11,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - Grade-level qualified-review records, a reviewer template, and machine-checked evidence requirements.
 - Deterministic citation and doctrine enforcement for all 240 bundled sessions.
 - A versioned curriculum schema, contributor authoring template, offline audit report, and online CPDV source-verification command.
+- Desktop and mobile Chromium coverage for student learning screens, including automated WCAG checks.
 
 ### Fixed
 
@@ -18,6 +19,11 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - Added missing Catechism anchors to 59 sessions and replaced non-Scripture session headers with referenced CPDV passages.
 - Doctrinal checks now evaluate the answer a quiz teaches without treating intentionally incorrect distractors as assertions.
 - Grade 8 session headers now use text verified against the identified CPDV source.
+- Activity cards and answer controls now expose native keyboard and assistive-technology semantics, and the student pillar badge meets WCAG AA contrast.
+
+### Changed
+
+- Interactive activities now share an unbiased, non-mutating Fisher-Yates shuffle utility with focused tests.
 
 ## [0.1.0] - 2026-08-22
 

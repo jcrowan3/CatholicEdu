@@ -149,7 +149,7 @@ export default function SessionHome({
             style={{
               fontFamily: displayFont,
               fontSize: 10,
-              color: "#fff",
+              color: "#101522",
               letterSpacing: 1,
             }}
           >
