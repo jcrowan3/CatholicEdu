@@ -11,6 +11,7 @@ import {
   mapApiStudent,
   mapProgressGrid,
 } from "../../utils/progressData";
+import OfflineDataTools from "./OfflineDataTools";
 
 
 export default function Dashboard({ grade, classId, onClassChange, onGradeChange, onNavigate }) {
@@ -769,6 +770,8 @@ export default function Dashboard({ grade, classId, onClassChange, onGradeChange
           📄 Standards PDF
         </button>
       </div>
+
+      {!isOnline && <OfflineDataTools />}
 
       {/* 30-week overview */}
       <p

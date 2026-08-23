@@ -2,7 +2,7 @@ import {
   getDefaultSessions,
   getPillarColors,
   loadDefaultSessions,
-} from "./gradeLoader";
+} from "./gradeLoader.js";
 
 /* ─── Shared storage key builders ─── */
 
@@ -38,72 +38,87 @@ const progressKey = (grade, classId, userId) => {
   return `catechist_progress_g${grade}_v1`;
 };
 
-/* ─── One-time migration from old unscoped keys → grade-scoped → class-scoped ─── */
+/* ─── Versioned local-data migrations ─── */
 
-export function migrateOldKeys() {
-  const MIGRATED_KEY = "catechist_migrated_v2";
-  if (localStorage.getItem(MIGRATED_KEY)) return;
+export const LOCAL_DATA_SCHEMA_VERSION = 3;
+const LOCAL_DATA_VERSION_KEY = "catechist_local_schema_version_v1";
+const LEGACY_MIGRATED_KEY = "catechist_migrated_v2";
 
-  const migrate = (oldKey, newKey) => {
-    const val = localStorage.getItem(oldKey);
-    if (val && !localStorage.getItem(newKey)) {
-      localStorage.setItem(newKey, val);
-    }
+export function migrateOldKeys(storage = localStorage, now = () => new Date()) {
+  const copyIfMissing = (oldKey, newKey) => {
+    const value = storage.getItem(oldKey);
+    if (value && !storage.getItem(newKey)) storage.setItem(newKey, value);
   };
 
-  // Phase 1: old unscoped → grade-scoped (from v1 migration)
-  migrate("catechist_sessions_v1", sessionsKey(3));
-  migrate("catechist_users_v1", `catechist_users_g3_v1`);
-  migrate("catechist_pin_v1", pinKey(3));
-  migrate("catechist_program_v1", programKey(3));
-
-  try {
-    const usersRaw = localStorage.getItem("catechist_users_v1");
-    if (usersRaw) {
-      const users = JSON.parse(usersRaw);
-      for (const u of users) {
-        migrate(`catechist_progress_${u.id}`, `catechist_progress_g3_${u.id}`);
-      }
-    }
-    migrate("catechist_progress_v1", `catechist_progress_g3_v1`);
-  } catch {
-    /* ignore */
+  let version = Number(storage.getItem(LOCAL_DATA_VERSION_KEY));
+  if (!Number.isInteger(version) || version < 0) {
+    version = storage.getItem(LEGACY_MIGRATED_KEY) ? 2 : 0;
   }
 
-  // Phase 2: grade-scoped users → class-scoped (wrap into "Default Class")
-  for (const g of [2, 3, 4, 5, 6, 7, 8]) {
-    const oldUsersKey = `catechist_users_g${g}_v1`;
-    const classListKey = classesKey(g);
+  if (version < 1) {
+    copyIfMissing("catechist_sessions_v1", sessionsKey(3));
+    copyIfMissing("catechist_users_v1", "catechist_users_g3_v1");
+    copyIfMissing("catechist_pin_v1", pinKey(3));
+    copyIfMissing("catechist_program_v1", programKey(3));
+    try {
+      const users = JSON.parse(storage.getItem("catechist_users_v1") || "[]");
+      for (const user of users) {
+        copyIfMissing(`catechist_progress_${user.id}`, `catechist_progress_g3_${user.id}`);
+      }
+      copyIfMissing("catechist_progress_v1", "catechist_progress_g3_v1");
+    } catch {
+      /* Leave malformed legacy records untouched for manual recovery. */
+    }
+    version = 1;
+  }
 
-    // Only migrate if there are grade-scoped users and no classes yet
-    if (localStorage.getItem(oldUsersKey) && !localStorage.getItem(classListKey)) {
-      // Create Default Class
-      const classes = [{ id: "default", name: "Default Class", createdAt: new Date().toISOString() }];
-      localStorage.setItem(classListKey, JSON.stringify(classes));
-      localStorage.setItem(activeClassKey(g), "default");
+  if (version < 2) {
+    for (const grade of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      const oldUsersKey = `catechist_users_g${grade}_v1`;
+      if (!storage.getItem(oldUsersKey) || storage.getItem(classesKey(grade))) continue;
 
-      // Move users to class-scoped key
-      migrate(oldUsersKey, usersKey(g, "default"));
-
-      // Move progress keys for each user
+      storage.setItem(classesKey(grade), JSON.stringify([
+        { id: "default", name: "Default Class", createdAt: now().toISOString() },
+      ]));
+      storage.setItem(activeClassKey(grade), "default");
+      copyIfMissing(oldUsersKey, usersKey(grade, "default"));
       try {
-        const usersRaw = localStorage.getItem(oldUsersKey);
-        if (usersRaw) {
-          const users = JSON.parse(usersRaw);
-          for (const u of users) {
-            migrate(
-              `catechist_progress_g${g}_${u.id}`,
-              progressKey(g, "default", u.id)
-            );
-          }
+        const users = JSON.parse(storage.getItem(oldUsersKey));
+        for (const user of users) {
+          copyIfMissing(
+            `catechist_progress_g${grade}_${user.id}`,
+            progressKey(grade, "default", user.id)
+          );
         }
       } catch {
-        /* ignore */
+        /* Leave malformed legacy records untouched for manual recovery. */
       }
     }
+    storage.setItem(LEGACY_MIGRATED_KEY, "1");
+    version = 2;
   }
 
-  localStorage.setItem(MIGRATED_KEY, "1");
+  if (version < 3) {
+    for (const grade of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      const key = sessionsKey(grade);
+      try {
+        const value = JSON.parse(storage.getItem(key));
+        if (Array.isArray(value)) {
+          storage.setItem(key, JSON.stringify({
+            version: 1,
+            lastUpdated: now().toISOString(),
+            sessions: value,
+          }));
+        }
+      } catch {
+        /* A malformed override is ignored by getStoredSessions. */
+      }
+    }
+    version = 3;
+  }
+
+  storage.setItem(LOCAL_DATA_VERSION_KEY, String(version));
+  return version;
 }
 
 /* ─── Class Management ─── */

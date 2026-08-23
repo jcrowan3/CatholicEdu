@@ -156,6 +156,7 @@ Grades 1–8 include 30 sessions each: 240 sessions in total. Every session incl
 - Curriculum may include AI-assisted drafting. Provenance and current review posture are documented in [docs/ai-content-provenance-audit.md](docs/ai-content-provenance-audit.md) and enforced by `npm run audit:content`.
 - Automated tests verify the 30-week sequence and the integrity of discover cards, sorting groups, timelines, fill-in-the-blank prompts, quizzes, bonuses, and prayers across every active grade.
 - Playwright exercises the landing, offline setup, student home, and learning surfaces in desktop and mobile Chromium; axe-core checks both public and signed-in student views against WCAG 2.0/2.1 A and AA rules.
+- Offline catechists can download and restore a versioned JSON backup from the dashboard. Backups include browser-local classroom data and the local PIN, exclude online authentication tokens, and must be stored securely.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.
@@ -163,6 +164,8 @@ See [docs/content-and-review.md](docs/content-and-review.md) before editing or r
 ## Privacy and safeguarding
 
 This application can store student display names, progress, family contact information, permissions, and sensitive notes. Do not enter data unless your parish has an approved purpose, retention policy, access model, and parent/guardian process. Review [docs/privacy-and-safeguarding.md](docs/privacy-and-safeguarding.md) before using real student information.
+
+Browser storage is device-specific. Use the dashboard's **Offline data backup** controls before clearing site data or moving devices; restoring a backup replaces the toolkit's existing offline records in that browser but leaves online sign-in tokens and unrelated site data untouched.
 
 Security issues should be reported privately according to [SECURITY.md](SECURITY.md), not through a public issue.
 

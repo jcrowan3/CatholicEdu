@@ -12,6 +12,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - Deterministic citation and doctrine enforcement for all 240 bundled sessions.
 - A versioned curriculum schema, contributor authoring template, offline audit report, and online CPDV source-verification command.
 - Desktop and mobile Chromium coverage for student learning screens, including automated WCAG checks.
+- Versioned offline JSON backup and validated restore controls, with token exclusion, rollback safety, migration support, and browser coverage.
 
 ### Fixed
 
@@ -24,6 +25,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 ### Changed
 
 - Interactive activities now share an unbiased, non-mutating Fisher-Yates shuffle utility with focused tests.
+- Browser-local data upgrades now run through an idempotent, versioned migration sequence.
 
 ## [0.1.0] - 2026-08-22
 

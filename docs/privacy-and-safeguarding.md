@@ -6,6 +6,8 @@ Depending on mode and features used, the toolkit can store student display names
 
 Offline mode stores data in the browser. Online mode stores data in PostgreSQL and caches some student state in the browser. Clearing a browser, losing a device, or sharing a browser profile can therefore affect availability or confidentiality.
 
+The offline dashboard can export browser-local toolkit records as JSON and restore them later. That backup intentionally excludes online access and refresh tokens, but it can contain student details, progress, curriculum edits, program configuration, and the local catechist PIN. Treat it as a sensitive education record: store it in an approved encrypted location, restrict access, test recovery with non-production data, and delete superseded copies according to parish policy.
+
 ## Parish deployment checklist
 
 Before entering real student information, assign an accountable owner and decide:

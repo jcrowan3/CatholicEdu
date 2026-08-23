@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { Buffer } from "node:buffer";
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -7,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-async function openDemoStudent(page) {
+async function setupOfflineClass(page) {
   await page.getByRole("button", { name: /Grade 1/ }).click();
   await expect(page.getByRole("heading", { name: "Welcome, Catechist!" })).toBeVisible();
 
@@ -18,6 +19,10 @@ async function openDemoStudent(page) {
   await page.getByRole("button", { name: "Start Teaching" }).click();
 
   await expect(page.getByRole("heading", { name: "St. Raphael Faith Formation" })).toBeVisible();
+}
+
+async function openDemoStudent(page) {
+  await setupOfflineClass(page);
   await page.getByRole("button", { name: /Maria \(Demo\)/ }).click();
   await expect(page.getByRole("button", { name: /Discover/ })).toBeVisible();
 }
@@ -32,6 +37,28 @@ test("landing page exposes the curriculum and passes automated accessibility che
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
     .analyze();
   expect(results.violations).toEqual([]);
+});
+
+test("offline catechists can download a versioned backup without account tokens", async ({ page }) => {
+  await setupOfflineClass(page);
+  await page.evaluate(() => localStorage.setItem("catechist_access_token", "never-export-this"));
+  await page.getByRole("button", { name: "Catechist Mode" }).click();
+  await page.getByLabel("Catechist PIN").fill("2468");
+  await page.getByRole("button", { name: "Go" }).click();
+  await expect(page.getByRole("heading", { name: "Offline data backup" })).toBeVisible();
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download backup" }).click();
+  const download = await downloadPromise;
+  const stream = await download.createReadStream();
+  const chunks = [];
+  for await (const chunk of stream) chunks.push(chunk);
+  const backup = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+
+  expect(backup.format).toBe("catechist-toolkit-offline-backup");
+  expect(backup.schemaVersion).toBe(1);
+  expect(backup.entries.some(({ key }) => key === "catechist_pin_g1_v1")).toBe(true);
+  expect(backup.entries.some(({ key }) => key === "catechist_access_token")).toBe(false);
 });
 
 test("a new offline classroom can be configured and opened as a student", async ({ page }) => {
