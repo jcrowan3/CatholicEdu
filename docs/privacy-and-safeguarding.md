@@ -8,6 +8,8 @@ Offline mode stores data in the browser. Online mode stores data in PostgreSQL a
 
 The offline dashboard can export browser-local toolkit records as JSON and restore them later. That backup intentionally excludes online access and refresh tokens, but it can contain student details, progress, curriculum edits, program configuration, and the local catechist PIN. Treat it as a sensitive education record: store it in an approved encrypted location, restrict access, test recovery with non-production data, and delete superseded copies according to parish policy.
 
+Hosted mode supplies tenant-scoped subject export, deactivation, confirmation-gated hard deletion, privacy-minimized audit events, and a dry-run-first retention command. Configure and operate them using the [data operations runbook](data-operations.md). These controls support—not replace—an approved records schedule, identity verification for requests, legal-hold handling, and review by the responsible organization.
+
 ## Parish deployment checklist
 
 Before entering real student information, assign an accountable owner and decide:

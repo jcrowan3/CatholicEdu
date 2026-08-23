@@ -14,13 +14,13 @@ Before multi-instance production hosting:
 
 ## Privacy operations
 
-- Define retention periods for student profiles, progress, family contacts, permissions, notes, activity logs, and backups.
-- Implement verified hard-deletion and export workflows, including associated records and documented backup expiry.
-- Minimize sensitive free-text fields and document who can see every field and export.
+Implemented baseline controls include configurable inactive-student and audit-event retention, a dry-run-first operator command, versioned student export, confirmation-gated associated-record deletion, documented external-backup expiry, and privacy-minimized audit events.
+
+Before production use, the operator must approve jurisdiction-appropriate periods, request-identity verification, legal holds, job scheduling/monitoring, encrypted external storage expiry, sensitive-field minimization, and role-by-role field/export access.
 
 ## Accountability and operations
 
-- Record security-relevant audit events such as sign-in, failed authentication, roster import, export, permission changes, and deletion without logging secrets or unnecessary student data.
+- Forward privacy-minimized application audit events and infrastructure security telemetry into monitored, access-controlled, bounded storage appropriate to the host.
 - Add centralized monitoring, bounded logs, encrypted backups, restoration exercises, incident response, and dependency/container scanning for the chosen host.
 - Complete qualified privacy, accessibility, safeguarding, and curriculum reviews for the actual organization and jurisdiction.
 

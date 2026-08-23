@@ -92,3 +92,20 @@ class RosterImportResponse(BaseModel):
 
     imported_students: list[StudentResponse]
     preview: RosterImportPreviewResponse
+
+
+class PermanentDeleteRequest(BaseModel):
+    """Explicit confirmation required for irreversible student deletion."""
+
+    confirmation: str = Field(..., min_length=43, max_length=43)
+
+
+class StudentDataExportResponse(BaseModel):
+    """Versioned subject-data export for one student."""
+
+    schema_version: int = 1
+    exported_at: datetime
+    student: dict
+    enrollments: list[dict]
+    progress: list[dict]
+    bookmarks: list[dict]

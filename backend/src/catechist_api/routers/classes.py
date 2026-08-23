@@ -17,7 +17,7 @@ from catechist_api.schemas.student import (
     StudentCreateRequest,
     StudentResponse,
 )
-from catechist_api.services import class_service, grade_service, student_service
+from catechist_api.services import audit_service, class_service, grade_service, student_service
 
 router = APIRouter()
 
@@ -163,6 +163,14 @@ async def export_family_communication_csv(
     await class_service.get_class(db, class_id=class_id, grade_config_id=gc.id)
     students = await student_service.list_students_in_class(db, class_id=class_id)
     csv_body = student_service.build_family_communication_csv(students)
+    await audit_service.record_event(
+        db,
+        parish_id=user.parish_id,
+        actor_type="catechist",
+        actor_id=user.sub,
+        action="class.communication_exported",
+        metadata={"class_id": str(class_id), "grade": grade, "student_count": len(students)},
+    )
     return Response(
         content=csv_body,
         media_type="text/csv",
@@ -216,6 +224,19 @@ async def import_roster(
         parish_id=user.parish_id,
         class_id=class_id,
         rows=body.rows,
+    )
+    await audit_service.record_event(
+        db,
+        parish_id=user.parish_id,
+        actor_type="catechist",
+        actor_id=user.sub,
+        action="class.roster_imported",
+        metadata={
+            "class_id": str(class_id),
+            "grade": grade,
+            "imported_count": len(students),
+            "submitted_count": len(body.rows),
+        },
     )
     return RosterImportResponse(
         imported_students=[_build_student_response(s) for s in students],

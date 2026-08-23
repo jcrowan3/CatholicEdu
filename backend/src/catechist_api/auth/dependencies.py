@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from catechist_api.auth.jwt import TokenPayload, decode_token
 from catechist_api.database import get_db
-from catechist_api.models import Catechist
+from catechist_api.models import Catechist, Student
 
 _bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -46,6 +46,15 @@ async def get_current_user(
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Session has been revoked",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+    elif user.type == "student":
+        result = await db.execute(select(Student).where(Student.id == user.sub))
+        student = result.scalar_one_or_none()
+        if student is None or not student.is_active or student.parish_id != user.parish_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Student session is no longer active",
                 headers={"WWW-Authenticate": "Bearer"},
             )
 

@@ -25,6 +25,11 @@ class Settings(BaseSettings):
     auth_rate_limit_requests: int = Field(default=30, ge=5, le=1000)
     auth_rate_limit_window_seconds: int = Field(default=60, ge=1, le=3600)
 
+    # Privacy operations
+    inactive_student_retention_days: int = Field(default=365, ge=1, le=3650)
+    audit_event_retention_days: int = Field(default=365, ge=30, le=3650)
+    exported_backup_retention_days: int = Field(default=30, ge=1, le=3650)
+
     # CORS
     cors_origins: list[str] = ["http://localhost:5173", "http://localhost:5175"]
 

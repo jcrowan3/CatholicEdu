@@ -68,3 +68,12 @@ Estimated source-release readiness: **96/100**, up from 48/100. The remaining pu
 - The frontend suite now includes 22 focused tests and six Playwright journeys across desktop and mobile Chromium.
 - Automated WCAG checks now cover the public landing page, student session home, and a learning activity; identified interaction semantics and contrast findings were fixed.
 - Activity randomization now uses one tested Fisher-Yates utility instead of duplicated comparator-based shuffling.
+
+## Loop 8 — data resilience and hosted operations
+
+- Offline mode now provides versioned backup/restore, validated key boundaries, token exclusion, rollback safety, and idempotent local-data migrations.
+- Hosted authentication now includes configurable lockout, public-route throttling, global email identity, database-checked token versions, and account-wide logout revocation.
+- Parish administrators can export a versioned student record, perform exact-confirmation permanent deletion, and review privacy-minimized audit events.
+- Retention tooling previews by default and deletes expired inactive students and audit events only with an explicit execution flag; external-file expiry remains an operator responsibility.
+- Tenant checks now protect student progress and bookmarks, and student tokens stop working after deactivation or deletion.
+- The combined gate now runs 27 frontend unit tests, eight desktop/mobile browser journeys, and 61 backend tests at 95.68% coverage.

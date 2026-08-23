@@ -9,7 +9,7 @@ from catechist_api.auth.dependencies import get_current_user
 from catechist_api.auth.jwt import TokenPayload
 from catechist_api.database import get_db
 from catechist_api.schemas.bookmark import BookmarkCreateRequest, BookmarkResponse
-from catechist_api.services import bookmark_service
+from catechist_api.services import bookmark_service, student_service
 
 router = APIRouter()
 
@@ -24,6 +24,8 @@ async def get_bookmarks(
     """Get all bookmarks for a student in a grade."""
     if user.type == "student" and user.sub != student_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+    if user.type == "catechist":
+        await student_service.get_student(db, student_id=student_id, parish_id=user.parish_id)
 
     bookmarks = await bookmark_service.get_student_bookmarks(db, student_id=student_id, grade=grade)
     return bookmarks
@@ -39,6 +41,8 @@ async def create_bookmark(
     """Save a discover item as a bookmark."""
     if user.type == "student" and user.sub != student_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+    if user.type == "catechist":
+        await student_service.get_student(db, student_id=student_id, parish_id=user.parish_id)
 
     bookmark = await bookmark_service.create_bookmark(
         db,
@@ -64,5 +68,7 @@ async def delete_bookmark(
     """Remove a bookmark."""
     if user.type == "student" and user.sub != student_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+    if user.type == "catechist":
+        await student_service.get_student(db, student_id=student_id, parish_id=user.parish_id)
 
     await bookmark_service.delete_bookmark(db, bookmark_id=bookmark_id, student_id=student_id)

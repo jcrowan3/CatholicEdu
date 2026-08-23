@@ -13,7 +13,7 @@ from catechist_api.schemas.progress import (
     ProgressCreateRequest,
     ProgressEntryResponse,
 )
-from catechist_api.services import progress_service
+from catechist_api.services import progress_service, student_service
 
 router = APIRouter()
 
@@ -34,6 +34,8 @@ async def get_progress(
         from fastapi import HTTPException, status
 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+    if user.type == "catechist":
+        await student_service.get_student(db, student_id=student_id, parish_id=user.parish_id)
 
     result = await progress_service.get_student_grade_progress(
         db, student_id=student_id, grade=grade
@@ -56,6 +58,8 @@ async def record_progress(
         from fastapi import HTTPException, status
 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+    if user.type == "catechist":
+        await student_service.get_student(db, student_id=student_id, parish_id=user.parish_id)
 
     entry = await progress_service.record_progress(
         db,
