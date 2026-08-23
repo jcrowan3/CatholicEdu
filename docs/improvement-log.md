@@ -50,7 +50,7 @@
 - Two Playwright Chromium journeys now cover the public landing page, WCAG rules through axe-core, and complete offline classroom setup through the first student session.
 - Frontend and backend packages now share the pre-release version `0.1.0`.
 
-## Release gate
+## Release gate — 2026-08-22 checkpoint
 
 Completed on 2026-08-22:
 
@@ -59,7 +59,7 @@ Completed on 2026-08-22:
 - Gitleaks scanned all 51 commits and found no secrets.
 - The production landing page scored 96 performance and 100 for accessibility, best practices, and SEO in Lighthouse.
 
-Estimated source-release readiness: **96/100**, up from 48/100. The remaining publication gates are the maintainer's history/privacy choice, repository visibility change, and post-public security settings. Independent curriculum/privacy review and production-specific controls remain prerequisites for parish or hosted production use.
+At this checkpoint, estimated source-release readiness was **96/100**, up from 48/100. The remaining publication gates were the maintainer's history/privacy choice, repository visibility change, and post-public security settings. Independent curriculum/privacy review and production-specific controls remained prerequisites for parish or hosted production use.
 
 ## Loop 7 — curriculum and product quality
 
@@ -77,3 +77,4 @@ Estimated source-release readiness: **96/100**, up from 48/100. The remaining pu
 - Retention tooling previews by default and deletes expired inactive students and audit events only with an explicit execution flag; external-file expiry remains an operator responsibility.
 - Tenant checks now protect student progress and bookmarks, and student tokens stop working after deactivation or deletion.
 - The combined gate now runs 27 frontend unit tests, eight desktop/mobile browser journeys, and 61 backend tests at 95.68% coverage.
+- On 2026-08-23 the repository was confirmed public with a protected, linear-history `main` branch, strict required CI and CodeQL checks, and no open code-scanning, Dependabot, or secret-scanning alerts.
