@@ -13,7 +13,7 @@ The frontend can operate without the backend. That boundary is intentional: a pa
 
 Curriculum modules are loaded on demand by `gradeLoader.js`. After a grade loads, `store.js` exposes synchronous access to cached defaults and browser-local overrides. Progress and bookmark hooks choose between API-backed operation and local storage while retaining the same component-facing interface.
 
-Browser-local data is not a durable backup. Any change to its key or schema must include migration logic and a regression test.
+Browser-local records use a versioned migration runner. Offline backups use a separately versioned, validated JSON envelope; restore validates every key before mutation and rolls back if a storage write fails. Authentication tokens and unrelated browser data are outside the backup boundary. Any change to a local key or schema must include migration and round-trip regression tests.
 
 PDF code is dynamically imported so classrooms that do not export documents do not pay that initial download cost.
 
