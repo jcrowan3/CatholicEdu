@@ -31,6 +31,8 @@ The canonical disclosure lives in `frontend/src/data/contentProvenance.js`:
 
 No grade-by-grade qualified human review record is currently committed to this repository. The status below therefore records the bundled curriculum as `review-required`; automated checks are guardrails and are not evidence of doctrinal, pedagogical, or diocesan approval.
 
+The [qualified review workflow](curriculum-review/README.md) defines the evidence required before changing any grade to `reviewed`. Grade-level status is machine checked in `CONTENT_PROVENANCE.gradeReviews`.
+
 ## Inventory
 
 | Surface | Path | Status |
@@ -39,6 +41,8 @@ No grade-by-grade qualified human review record is currently committed to this r
 | Family take-home summaries | `frontend/src/components/session/TakeHome.jsx` | Disclosed |
 | Session PDF exports | `frontend/src/utils/generateSessionPdf.js` | Disclosed |
 | Landing page curriculum overview | `frontend/src/components/landing/LandingPage.jsx` | Disclosed |
+
+All eight grades currently have the grade-level status `review-required`.
 
 ## Maintenance
 

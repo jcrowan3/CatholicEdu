@@ -229,7 +229,7 @@ export const SESSIONS = [
     week: 5,
     title: "Unit 1 Review: The Church",
     pillar: "Creed",
-    ccc: "",
+    ccc: "748-780",
     verse: "You are Peter, and upon this rock I will build my Church. \u2014 Matthew 16:18",
     discover: {
       title: "Review: The Church",
@@ -827,7 +827,7 @@ export const SESSIONS = [
     week: 16,
     title: "Unit 2-3 Review: Sacraments & Mass",
     pillar: "Sacraments",
-    ccc: "",
+    ccc: "1113-1134, 1322-1419",
     verse: "Jesus breathed on them and said: Receive the Holy Spirit. — John 20:22",
     discover: {
       title: "Review: Sacraments & Mass",
@@ -1053,7 +1053,7 @@ export const SESSIONS = [
     week: 20,
     title: "Unit 4 Review: Liturgical Year",
     pillar: "Sacraments",
-    ccc: "",
+    ccc: "1163-1173",
     verse: "For all things there is a time. — Ecclesiastes 3:1",
     discover: {
       title: "Review: Liturgical Year",
@@ -1330,7 +1330,7 @@ export const SESSIONS = [
     week: 25,
     title: "Unit 5 Review: The Moral Life",
     pillar: "Morality",
-    ccc: "",
+    ccc: "1691-1698",
     verse: "You shall love the Lord your God with all your heart. — Matthew 22:37",
     discover: {
       title: "Review: The Moral Life",
@@ -1623,7 +1623,7 @@ export const SESSIONS = [
     week: 30,
     title: "Year in Review & Celebration",
     pillar: "Creed",
-    ccc: "",
+    ccc: "426-429",
     verse: "I am the way, the truth, and the life. — John 14:6",
     discover: {
       title: "What We Learned This Year!",

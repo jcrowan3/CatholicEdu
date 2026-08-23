@@ -16,6 +16,8 @@ Automated checks are deliberately limited. Passing them does not constitute an i
 
 No grade-by-grade qualified human review record is currently committed. Treat the bundled curriculum as evaluation material until an appropriately qualified reviewer records their name or role, review scope, date, and disposition.
 
+Use the [qualified curriculum review workflow](curriculum-review/README.md) and its committed review template. `CONTENT_PROVENANCE.gradeReviews` is the canonical grade-level status inventory; the provenance audit prevents a grade from being marked reviewed without a reviewer, date, and record path.
+
 ## Editing checklist
 
 - State the grade, lesson objective, and intended learner outcome.

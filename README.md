@@ -141,6 +141,7 @@ Read [docs/architecture.md](docs/architecture.md) for the main modules, data bou
 - [Production hosting roadmap](docs/production-roadmap.md) — controls required before operating an internet-facing student service.
 - [Content and review](docs/content-and-review.md) — curriculum editing and human-review expectations.
 - [AI content provenance audit](docs/ai-content-provenance-audit.md) — content origins and tracked review posture.
+- [Qualified curriculum review](docs/curriculum-review/README.md) — grade-level review workflow and evidence requirements.
 - [Contributing](CONTRIBUTING.md) — development workflow and pull-request expectations.
 - [Security policy](SECURITY.md) — supported versions and private vulnerability reporting.
 - [Changelog](CHANGELOG.md) — notable release changes.

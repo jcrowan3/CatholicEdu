@@ -16,6 +16,13 @@ export const CONTENT_PROVENANCE = {
     "frontend/src/data/grade7.js",
     "frontend/src/data/grade8.js",
   ],
+  gradeReviews: [1, 2, 3, 4, 5, 6, 7, 8].map((grade) => ({
+    grade,
+    status: "review-required",
+    reviewer: null,
+    reviewedAt: null,
+    record: null,
+  })),
   trackedSurfaces: [
     {
       surface: "Bundled grade curriculum",
