@@ -1,8 +1,10 @@
 """Authentication router — register, login, refresh, student login."""
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from catechist_api.auth.dependencies import require_catechist
+from catechist_api.auth.jwt import TokenPayload
 from catechist_api.database import get_db
 from catechist_api.schemas.auth import (
     ClassRosterResponse,
@@ -51,6 +53,16 @@ async def refresh(body: RefreshRequest, db: AsyncSession = Depends(get_db)):
         refresh_token_str=body.refresh_token,
     )
     return result
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+async def logout(
+    user: TokenPayload = Depends(require_catechist),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Revoke every access and refresh token for the current catechist."""
+    await auth_service.revoke_catechist_sessions(db, catechist_id=user.sub)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/student/roster", response_model=ClassRosterResponse)

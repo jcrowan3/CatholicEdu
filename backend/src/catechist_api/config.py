@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 30
     student_token_expire_hours: int = 2
+    max_login_attempts: int = Field(default=5, ge=3, le=20)
+    login_lockout_minutes: int = Field(default=15, ge=1, le=1440)
+    auth_rate_limit_requests: int = Field(default=30, ge=5, le=1000)
+    auth_rate_limit_window_seconds: int = Field(default=60, ge=1, le=3600)
 
     # CORS
     cors_origins: list[str] = ["http://localhost:5173", "http://localhost:5175"]

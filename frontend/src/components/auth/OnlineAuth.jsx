@@ -53,8 +53,8 @@ export default function OnlineAuth({ onComplete, onBack }) {
       setError("Email and password are required");
       return;
     }
-    if (regPassword.length < 8) {
-      setError("Password must be at least 8 characters");
+    if (regPassword.length < 12) {
+      setError("Password must be at least 12 characters");
       return;
     }
     if (regPassword !== regConfirm) {
@@ -245,7 +245,7 @@ export default function OnlineAuth({ onComplete, onBack }) {
             type="password"
             value={regPassword}
             onChange={(e) => setRegPassword(e.target.value)}
-            placeholder="Minimum 8 characters"
+            placeholder="Minimum 12 characters"
             style={inputStyle}
           />
 

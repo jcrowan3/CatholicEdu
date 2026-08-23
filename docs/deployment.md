@@ -15,6 +15,7 @@ At minimum, a deployment owner must provide:
 - Dependency and container-image updates.
 - A deployment-specific Content Security Policy at the public reverse proxy or ingress.
 - An approved student-data, parent/guardian, safe-environment, and incident-response process.
+- A shared edge or datastore-backed authentication rate limiter when running more than one API process; the built-in limiter is process-local defense in depth and deliberately ignores spoofable forwarding headers.
 
 Generate a suitable JWT secret with:
 
@@ -37,6 +38,10 @@ Run migrations as an explicit release step:
 cd backend
 uv run alembic upgrade head
 ```
+
+The authentication-hardening migration makes catechist email globally unique. Before upgrading an existing populated database, check for duplicate normalized emails and resolve them; the unique constraint intentionally stops the migration if ambiguous login identities remain.
+
+Tune `MAX_LOGIN_ATTEMPTS`, `LOGIN_LOCKOUT_MINUTES`, `AUTH_RATE_LIMIT_REQUESTS`, and `AUTH_RATE_LIMIT_WINDOW_SECONDS` for the deployment. Keep edge limits at least as strict as the process-local baseline, monitor `429` responses, and provide an operator-assisted recovery process before real users depend on hosted mode.
 
 Do not expose PostgreSQL's port publicly. Run the API behind a reverse proxy or managed ingress, and restrict API documentation if local policy requires it.
 

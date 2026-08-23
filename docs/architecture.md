@@ -25,7 +25,7 @@ The backend stores curriculum overrides rather than the full curriculum. Package
 
 ## Authentication
 
-Catechists authenticate with email/password and receive short-lived access plus refresh tokens. Students enter a class join code and optionally a PIN. Authorization checks must distinguish parish administrators, catechists, and students; authentication alone is not sufficient authorization.
+Catechists authenticate with a globally unique email/password and receive short-lived access plus refresh tokens. A server-side account version is checked on authenticated requests so logout invalidates all previously issued catechist tokens. Repeated password failures temporarily lock the account, and public authentication routes have a process-local sliding-window limiter. Students enter a class join code and optionally a PIN. Authorization checks distinguish parish administrators, catechists, and students; authentication alone is not sufficient authorization.
 
 ## Extension points
 

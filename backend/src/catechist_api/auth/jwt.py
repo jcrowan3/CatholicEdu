@@ -19,6 +19,7 @@ class TokenPayload(BaseModel):
     role: str | None = None  # 'parish_admin' or 'catechist' (catechist tokens only)
     class_id: uuid.UUID | None = None  # Student tokens only
     grade: int | None = None  # Student tokens only
+    auth_version: int = 0  # Catechist-wide revocation counter
     exp: datetime | None = None
 
 
@@ -30,6 +31,7 @@ def create_access_token(
     role: str | None = None,
     class_id: uuid.UUID | None = None,
     grade: int | None = None,
+    auth_version: int = 0,
 ) -> str:
     """Create a JWT access token."""
     if token_type == "student":
@@ -44,6 +46,7 @@ def create_access_token(
         "type": token_type,
         "iat": now,
         "exp": now + expire_delta,
+        "ver": auth_version,
     }
 
     if role:
@@ -56,7 +59,7 @@ def create_access_token(
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
 
-def create_refresh_token(*, sub: uuid.UUID, parish_id: uuid.UUID) -> str:
+def create_refresh_token(*, sub: uuid.UUID, parish_id: uuid.UUID, auth_version: int = 0) -> str:
     """Create a long-lived refresh token for catechists."""
     now = datetime.now(UTC)
     payload = {
@@ -65,6 +68,7 @@ def create_refresh_token(*, sub: uuid.UUID, parish_id: uuid.UUID) -> str:
         "type": "refresh",
         "iat": now,
         "exp": now + timedelta(days=settings.refresh_token_expire_days),
+        "ver": auth_version,
     }
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
@@ -80,6 +84,7 @@ def decode_token(token: str) -> TokenPayload:
             role=payload.get("role"),
             class_id=uuid.UUID(payload["class_id"]) if payload.get("class_id") else None,
             grade=payload.get("grade"),
+            auth_version=payload.get("ver", 0),
             exp=datetime.fromtimestamp(payload["exp"], tz=UTC) if payload.get("exp") else None,
         )
     except (JWTError, KeyError, ValueError) as e:

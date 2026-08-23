@@ -13,6 +13,7 @@ Notable project changes are documented here. The project follows [Keep a Changel
 - A versioned curriculum schema, contributor authoring template, offline audit report, and online CPDV source-verification command.
 - Desktop and mobile Chromium coverage for student learning screens, including automated WCAG checks.
 - Versioned offline JSON backup and validated restore controls, with token exclusion, rollback safety, migration support, and browser coverage.
+- Hosted authentication lockout and route throttling, globally unique catechist email identities, and account-wide access/refresh token revocation on logout.
 
 ### Fixed
 
@@ -26,6 +27,10 @@ Notable project changes are documented here. The project follows [Keep a Changel
 
 - Interactive activities now share an unbiased, non-mutating Fisher-Yates shuffle utility with focused tests.
 - Browser-local data upgrades now run through an idempotent, versioned migration sequence.
+
+### Security
+
+- Registration now requires 12-character passwords, repeated failures produce a configurable temporary lockout, and public authentication routes return bounded `429` responses with `Retry-After`.
 
 ## [0.1.0] - 2026-08-22
 
