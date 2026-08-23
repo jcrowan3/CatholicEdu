@@ -3,7 +3,7 @@
 ## Project Overview
 Interactive web app for parish CCD/faith formation programs. Monorepo with a React SPA frontend and FastAPI + PostgreSQL backend. Supports offline (localStorage-only) and online (API-backed) modes.
 
-Grades 2-8, 30 weeks per grade, 6 activity types per session.
+Grades 1-8, 30 weeks per grade, 6 activity types per session.
 
 ## Tech Stack
 - **Frontend**: React 19 + Vite 8 + Tailwind CSS v4 on Node.js 22.13+
@@ -31,7 +31,7 @@ catechist-toolkit/
 │   │   │   ├── useProgress.js     # Dual-mode (API + localStorage)
 │   │   │   └── useBookmarks.js    # Dual-mode (API + localStorage)
 │   │   ├── data/
-│   │   │   ├── grade[2-8].js      # Curriculum data (30 sessions per grade)
+│   │   │   ├── grade[1-8].js      # Curriculum data (30 sessions per grade)
 │   │   │   ├── store.js           # localStorage data layer
 │   │   │   └── gradeLoader.js     # Dynamic grade import
 │   │   └── utils/

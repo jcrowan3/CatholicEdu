@@ -4,7 +4,7 @@ Audit date: 2026-08-22
 
 ## Scope
 
-This audit covers the bundled curriculum shipped in `frontend/src/data/grade[2-8].js` and the family-facing surfaces that reproduce or summarize that curriculum:
+This audit covers the bundled curriculum shipped in `frontend/src/data/grade[1-8].js` and the family-facing surfaces that reproduce or summarize that curriculum:
 
 - Landing page curriculum overview
 - In-app family take-home summaries
@@ -35,7 +35,7 @@ No grade-by-grade qualified human review record is currently committed to this r
 
 | Surface | Path | Status |
 | --- | --- | --- |
-| Bundled grade curriculum | `frontend/src/data/grade[2-8].js` | Review required |
+| Bundled grade curriculum | `frontend/src/data/grade[1-8].js` | Review required |
 | Family take-home summaries | `frontend/src/components/session/TakeHome.jsx` | Disclosed |
 | Session PDF exports | `frontend/src/utils/generateSessionPdf.js` | Disclosed |
 | Landing page curriculum overview | `frontend/src/components/landing/LandingPage.jsx` | Disclosed |

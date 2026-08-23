@@ -7,9 +7,10 @@ Curriculum is stored as reviewable source code under `frontend/src/data/`. Scrip
 ## Review layers
 
 1. `npm run audit:content` checks that tracked content surfaces have provenance records.
-2. Deterministic review rules catch selected missing citations and statements that could weaken core doctrine.
-3. Tests keep frontend and backend review checklists aligned.
-4. Human reviewers assess age appropriateness, accuracy, pedagogy, context, local policy, and pastoral suitability.
+2. Curriculum-integrity tests verify 30 sequential sessions per active grade and validate every discover activity, sort, timeline, fill-in-the-blank exercise, quiz, bonus, and prayer.
+3. Deterministic review rules catch selected missing citations and statements that could weaken core doctrine.
+4. Tests keep frontend and backend review checklists aligned.
+5. Human reviewers assess age appropriateness, accuracy, pedagogy, context, local policy, and pastoral suitability.
 
 Automated checks are deliberately limited. Passing them does not constitute an imprimatur, nihil obstat, diocesan approval, or endorsement by any Church authority.
 

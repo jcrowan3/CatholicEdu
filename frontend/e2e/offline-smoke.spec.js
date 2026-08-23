@@ -8,8 +8,8 @@ test.beforeEach(async ({ page }) => {
 
 test("landing page exposes the curriculum and passes automated accessibility checks", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Catholic Catechist Toolkit" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Grade 1/ })).toBeEnabled();
   await expect(page.getByRole("button", { name: /Grade 2/ })).toBeEnabled();
-  await expect(page.getByRole("button", { name: /Grade 1/ })).toBeDisabled();
   await expect(page.getByText(/requires qualified human review before parish use/)).toBeVisible();
 
   const results = await new AxeBuilder({ page })
@@ -19,7 +19,7 @@ test("landing page exposes the curriculum and passes automated accessibility che
 });
 
 test("a new offline classroom can be configured and opened as a student", async ({ page }) => {
-  await page.getByRole("button", { name: /Grade 2/ }).click();
+  await page.getByRole("button", { name: /Grade 1/ }).click();
   await expect(page.getByRole("heading", { name: "Welcome, Catechist!" })).toBeVisible();
 
   await page.getByLabel(/Parish \/ Program Name/i).fill("St. Raphael Faith Formation");

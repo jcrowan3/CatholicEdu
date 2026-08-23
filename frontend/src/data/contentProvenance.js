@@ -7,6 +7,7 @@ export const CONTENT_PROVENANCE = {
   disclosure:
     "Curriculum text may include AI-assisted drafting and requires qualified human review before parish use. Scripture quotations use CPDV; CCC paragraph references point families to official teaching.",
   activeGradeFiles: [
+    "frontend/src/data/grade1.js",
     "frontend/src/data/grade2.js",
     "frontend/src/data/grade3.js",
     "frontend/src/data/grade4.js",
@@ -18,7 +19,7 @@ export const CONTENT_PROVENANCE = {
   trackedSurfaces: [
     {
       surface: "Bundled grade curriculum",
-      path: "frontend/src/data/grade[2-8].js",
+      path: "frontend/src/data/grade[1-8].js",
       status: "review-required",
     },
     {

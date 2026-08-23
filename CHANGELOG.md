@@ -4,6 +4,15 @@ Notable project changes are documented here. The project follows [Keep a Changel
 
 ## [Unreleased]
 
+### Added
+
+- A complete 30-session Grade 1 curriculum covering creation, the Trinity, Jesus, the Church, sacraments, Christian life, and prayer.
+- Curriculum-integrity tests for all active grades, including playable sorting groups, ordered timelines, selectable fill-in answers, complete quizzes, and guided prayers.
+
+### Fixed
+
+- Grade 5 Week 29 now provides destinations, colors, and icons for all seven saint patronage cards.
+
 ## [0.1.0] - 2026-08-22
 
 ### Added

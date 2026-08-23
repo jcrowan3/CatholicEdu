@@ -1,4 +1,5 @@
 const gradeModules = {
+  1: () => import("./grade1.js"),
   2: () => import("./grade2.js"),
   3: () => import("./grade3.js"),
   4: () => import("./grade4.js"),
@@ -11,6 +12,7 @@ const gradeModules = {
 const gradeCache = new Map();
 
 const pillarColors = {
+  1: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0607A" },
   2: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#C0607A" },
   3: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8" },
   4: { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8", Review: "#D9704A" },
