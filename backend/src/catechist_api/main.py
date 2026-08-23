@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from catechist_api.config import settings
 from catechist_api.database import engine
+from catechist_api.middleware.auth_rate_limit import AuthRateLimitMiddleware
 
 
 @asynccontextmanager
@@ -33,6 +34,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(AuthRateLimitMiddleware)
 
     # Health check
     @app.get("/api/v1/health")

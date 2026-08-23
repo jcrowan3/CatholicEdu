@@ -12,7 +12,7 @@ class RegisterRequest(BaseModel):
 
     parish_name: str = Field(..., min_length=1, max_length=200)
     email: EmailStr
-    password: str = Field(..., min_length=8, max_length=72)
+    password: str = Field(..., min_length=12, max_length=72)
     display_name: str = Field(..., min_length=1, max_length=100)
 
 

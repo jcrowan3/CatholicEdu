@@ -4,9 +4,13 @@ The repository is suitable for local evaluation and qualified curriculum review.
 
 ## Identity and abuse controls
 
-- Add rate limiting for registration, sign-in, token refresh, join-code, import, and export endpoints using a shared store appropriate to the deployment topology.
-- Add server-side session or refresh-token revocation and a protected account recovery flow.
-- Add configurable password policy, administrator identity lifecycle, and periodic access review.
+Implemented baseline controls include a 12-character registration minimum, globally unique login email, configurable failed-login lockout, process-local throttling for public authentication and join-code routes, and account-wide server-checked token revocation on logout.
+
+Before multi-instance production hosting:
+
+- Put registration, sign-in, token refresh, join-code, import, and export limits in a shared edge or datastore-backed limiter appropriate to the deployment topology.
+- Add a protected account recovery flow, administrator identity lifecycle, and periodic access review.
+- Consider per-device refresh sessions when operators need selective device revocation instead of the current account-wide logout.
 
 ## Privacy operations
 

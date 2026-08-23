@@ -103,10 +103,11 @@ export function AuthProvider({ children }) {
 
   // Logout
   const logout = useCallback(() => {
+    if (user?.type === "catechist") api.logout().catch(() => {});
     clearTokens();
     setUser(null);
     setAuthMode("offline");
-  }, []);
+  }, [user]);
 
   const value = useMemo(
     () => ({

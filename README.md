@@ -157,6 +157,7 @@ Grades 1–8 include 30 sessions each: 240 sessions in total. Every session incl
 - Automated tests verify the 30-week sequence and the integrity of discover cards, sorting groups, timelines, fill-in-the-blank prompts, quizzes, bonuses, and prayers across every active grade.
 - Playwright exercises the landing, offline setup, student home, and learning surfaces in desktop and mobile Chromium; axe-core checks both public and signed-in student views against WCAG 2.0/2.1 A and AA rules.
 - Offline catechists can download and restore a versioned JSON backup from the dashboard. Backups include browser-local classroom data and the local PIN, exclude online authentication tokens, and must be stored securely.
+- Hosted-mode authentication provides configurable login lockout and route throttling, globally unique catechist emails, short-lived access tokens, and account-wide token revocation on logout; multi-instance deployments still require a shared edge limiter.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.

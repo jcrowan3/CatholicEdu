@@ -56,7 +56,7 @@ async def test_register_duplicate_slug_gets_unique_suffix(client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_register_password_too_short(client: AsyncClient):
-    """Registration fails with a password shorter than 8 characters."""
+    """Registration fails with a password shorter than 12 characters."""
     response = await client.post(
         "/api/v1/auth/register",
         json={
@@ -67,6 +67,22 @@ async def test_register_password_too_short(client: AsyncClient):
         },
     )
     assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_register_rejects_email_already_used_by_another_parish(client: AsyncClient):
+    payload = {
+        "parish_name": "First Parish",
+        "email": "shared@example.org",
+        "password": "securepass123",
+        "display_name": "First Admin",
+    }
+    assert (await client.post("/api/v1/auth/register", json=payload)).status_code == 201
+
+    payload.update(parish_name="Second Parish", display_name="Second Admin")
+    response = await client.post("/api/v1/auth/register", json=payload)
+    assert response.status_code == 409
+    assert response.json()["detail"] == "Email already registered"
 
 
 @pytest.mark.asyncio
@@ -127,6 +143,33 @@ async def test_login_nonexistent_email(client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_login_temporarily_locks_account_after_repeated_failures(client: AsyncClient):
+    await client.post(
+        "/api/v1/auth/register",
+        json={
+            "parish_name": "Lockout Parish",
+            "email": "lockout@test.org",
+            "password": "securepass123",
+            "display_name": "Lockout Tester",
+        },
+    )
+
+    for _ in range(5):
+        response = await client.post(
+            "/api/v1/auth/login",
+            json={"email": "lockout@test.org", "password": "wrongpassword"},
+        )
+        assert response.status_code == 401
+
+    locked = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "lockout@test.org", "password": "securepass123"},
+    )
+    assert locked.status_code == 429
+    assert int(locked.headers["Retry-After"]) > 0
+
+
+@pytest.mark.asyncio
 async def test_refresh_token_flow(client: AsyncClient):
     """Refresh token returns new access + refresh tokens."""
     # Register
@@ -160,6 +203,33 @@ async def test_refresh_with_invalid_token(client: AsyncClient):
         json={"refresh_token": "invalid-token-here"},
     )
     assert response.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_logout_revokes_existing_access_and_refresh_tokens(client: AsyncClient):
+    registered = await client.post(
+        "/api/v1/auth/register",
+        json={
+            "parish_name": "Logout Parish",
+            "email": "logout@test.org",
+            "password": "securepass123",
+            "display_name": "Logout Tester",
+        },
+    )
+    tokens = registered.json()
+    headers = {"Authorization": f"Bearer {tokens['access_token']}"}
+
+    assert (await client.get("/api/v1/parish", headers=headers)).status_code == 200
+    assert (await client.post("/api/v1/auth/logout", headers=headers)).status_code == 204
+    revoked_access = await client.get("/api/v1/parish", headers=headers)
+    revoked_refresh = await client.post(
+        "/api/v1/auth/refresh",
+        json={"refresh_token": tokens["refresh_token"]},
+    )
+
+    assert revoked_access.status_code == 401
+    assert revoked_access.json()["detail"] == "Session has been revoked"
+    assert revoked_refresh.status_code == 401
 
 
 @pytest.mark.asyncio

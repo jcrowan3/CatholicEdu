@@ -144,6 +144,8 @@ export const api = {
     return data;
   },
 
+  logout: () => send("/auth/logout", { method: "POST" }),
+
   async getClassRoster(joinCode) {
     return authPost(`/auth/student/roster?join_code=${encodeURIComponent(joinCode)}`, undefined);
   },
