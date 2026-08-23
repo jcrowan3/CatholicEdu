@@ -100,6 +100,19 @@ async def test_parish_isolation_students(client: AsyncClient):
     )
     assert response.status_code == 404
 
+    for method, path, body in [
+        ("GET", f"/api/v1/students/{b['student_id']}/export", None),
+        (
+            "DELETE",
+            f"/api/v1/students/{b['student_id']}/permanent",
+            {"confirmation": f"DELETE {b['student_id']}"},
+        ),
+        ("GET", f"/api/v1/students/{b['student_id']}/progress/3", None),
+        ("GET", f"/api/v1/students/{b['student_id']}/bookmarks/3", None),
+    ]:
+        isolated = await client.request(method, path, json=body, headers=a["headers"])
+        assert isolated.status_code == 404
+
 
 @pytest.mark.asyncio
 async def test_parish_isolation_parish_info(client: AsyncClient):

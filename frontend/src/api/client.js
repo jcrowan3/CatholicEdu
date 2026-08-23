@@ -208,6 +208,12 @@ export const api = {
   updateStudent: (studentId, updates) =>
     json(`/students/${studentId}`, { method: "PATCH", body: JSON.stringify(updates) }),
   deleteStudent: (studentId) => send(`/students/${studentId}`, { method: "DELETE" }),
+  exportStudentData: (studentId) => json(`/students/${studentId}/export`),
+  permanentlyDeleteStudent: (studentId, confirmation) =>
+    send(`/students/${studentId}/permanent`, {
+      method: "DELETE",
+      body: JSON.stringify({ confirmation }),
+    }),
 
   // Progress
   getProgress: (studentId, grade) => json(`/students/${studentId}/progress/${grade}`),

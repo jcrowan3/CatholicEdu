@@ -43,6 +43,8 @@ The authentication-hardening migration makes catechist email globally unique. Be
 
 Tune `MAX_LOGIN_ATTEMPTS`, `LOGIN_LOCKOUT_MINUTES`, `AUTH_RATE_LIMIT_REQUESTS`, and `AUTH_RATE_LIMIT_WINDOW_SECONDS` for the deployment. Keep edge limits at least as strict as the process-local baseline, monitor `429` responses, and provide an operator-assisted recovery process before real users depend on hosted mode.
 
+Set the retention variables described in the [data operations runbook](data-operations.md), preview the maintenance command after each release, and schedule execution only after backup/restore verification. The API cannot expire downloaded browser files, so enforce the exported-backup period in the operator's storage platform.
+
 Do not expose PostgreSQL's port publicly. Run the API behind a reverse proxy or managed ingress, and restrict API documentation if local policy requires it.
 
 The bundled frontend container sets baseline browser security headers. A strict Content Security Policy is intentionally deployment-specific because the allowed API and asset origins vary by operator.

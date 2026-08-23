@@ -5,12 +5,20 @@ import io
 import uuid
 from collections import defaultdict
 from dataclasses import dataclass
+from datetime import UTC, datetime
 
 from fastapi import HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from catechist_api.models import ClassEnrollment, Student
+from catechist_api.models import (
+    ActivityLog,
+    Bookmark,
+    Class,
+    ClassEnrollment,
+    ProgressEntry,
+    Student,
+)
 from catechist_api.schemas.student import RosterImportPreviewRow, RosterImportRow
 from catechist_api.services.csv_safety import sanitize_csv_cell
 
@@ -250,6 +258,111 @@ async def deactivate_student(
 ) -> Student:
     """Soft-delete a student."""
     return await update_student(db, student_id=student_id, parish_id=parish_id, is_active=False)
+
+
+async def export_student_data(
+    db: AsyncSession,
+    *,
+    student_id: uuid.UUID,
+    parish_id: uuid.UUID,
+) -> dict:
+    """Build a complete tenant-scoped export without exposing the authentication PIN."""
+    student = await get_student(db, student_id=student_id, parish_id=parish_id)
+    enrollment_result = await db.execute(
+        select(ClassEnrollment, Class)
+        .join(Class, Class.id == ClassEnrollment.class_id)
+        .where(ClassEnrollment.student_id == student.id)
+        .order_by(ClassEnrollment.enrolled_at)
+    )
+    progress_result = await db.execute(
+        select(ProgressEntry)
+        .where(ProgressEntry.student_id == student.id)
+        .order_by(ProgressEntry.grade, ProgressEntry.week, ProgressEntry.activity)
+    )
+    bookmark_result = await db.execute(
+        select(Bookmark)
+        .where(Bookmark.student_id == student.id)
+        .order_by(Bookmark.grade, Bookmark.week, Bookmark.discover_index)
+    )
+
+    return {
+        "schema_version": 1,
+        "exported_at": datetime.now(UTC),
+        "student": {
+            "id": str(student.id),
+            "display_name": student.display_name,
+            "avatar_emoji": student.avatar_emoji,
+            "parent_email": student.parent_email,
+            "pickup_contact_notes": student.pickup_contact_notes,
+            "media_permission_granted": student.media_permission_granted,
+            "allergy_privacy_flags": student.allergy_privacy_flags,
+            "weekly_digest_permission": student.weekly_digest_permission,
+            "has_pin": student.access_pin is not None,
+            "is_active": student.is_active,
+            "created_at": student.created_at,
+            "updated_at": student.updated_at,
+        },
+        "enrollments": [
+            {
+                "class_id": str(enrollment.class_id),
+                "class_name": class_.name,
+                "is_active": enrollment.is_active,
+                "enrolled_at": enrollment.enrolled_at,
+            }
+            for enrollment, class_ in enrollment_result.all()
+        ],
+        "progress": [
+            {
+                "grade": entry.grade,
+                "week": entry.week,
+                "activity": entry.activity,
+                "stars_earned": entry.stars_earned,
+                "earned_at": entry.earned_at,
+            }
+            for entry in progress_result.scalars().all()
+        ],
+        "bookmarks": [
+            {
+                "grade": bookmark.grade,
+                "week": bookmark.week,
+                "discover_index": bookmark.discover_index,
+                "item_name": bookmark.item_name,
+                "item_desc": bookmark.item_desc,
+                "item_icon": bookmark.item_icon,
+                "pillar": bookmark.pillar,
+                "saved_at": bookmark.saved_at,
+            }
+            for bookmark in bookmark_result.scalars().all()
+        ],
+    }
+
+
+async def permanently_delete_student(
+    db: AsyncSession,
+    *,
+    student_id: uuid.UUID,
+    parish_id: uuid.UUID,
+) -> dict[str, int]:
+    """Hard-delete a student and every directly associated database record."""
+    student = await get_student(db, student_id=student_id, parish_id=parish_id)
+    deleted: dict[str, int] = {}
+    for label, model, condition in [
+        ("bookmarks", Bookmark, Bookmark.student_id == student.id),
+        ("progress", ProgressEntry, ProgressEntry.student_id == student.id),
+        ("enrollments", ClassEnrollment, ClassEnrollment.student_id == student.id),
+        (
+            "student_audit_events",
+            ActivityLog,
+            (ActivityLog.actor_type == "student") & (ActivityLog.actor_id == student.id),
+        ),
+    ]:
+        result = await db.execute(delete(model).where(condition))
+        deleted[label] = result.rowcount or 0
+
+    await db.delete(student)
+    await db.flush()
+    deleted["students"] = 1
+    return deleted
 
 
 def build_family_communication_csv(students: list[Student]) -> str:

@@ -152,9 +152,10 @@ export default function UserManager({ grade, classId, onRefresh }) {
       try {
         await api.deleteStudent(id);
         setUsers((prev) => prev.filter((u) => u.id !== id));
-      } catch {
-        const updated = removeUser(grade, classId, id);
-        setUsers(updated);
+      } catch (error) {
+        alert(error.message || "Student deactivation failed");
+        setConfirmDelete(null);
+        return;
       }
     } else {
       const updated = removeUser(grade, classId, id);
@@ -162,6 +163,39 @@ export default function UserManager({ grade, classId, onRefresh }) {
     }
     setConfirmDelete(null);
     onRefresh?.();
+  };
+
+  const handleStudentExport = async (id) => {
+    try {
+      const data = await api.exportStudentData(id);
+      const blob = new Blob([`${JSON.stringify(data, null, 2)}\n`], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `student-data-${id}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      alert(error.message || "Student export failed");
+    }
+  };
+
+  const handlePermanentDelete = async (id) => {
+    const confirmation = `DELETE ${id}`;
+    const entered = window.prompt(
+      `Permanent deletion cannot be undone. Type the exact phrase below to delete the student and all related records:\n\n${confirmation}`
+    );
+    if (entered !== confirmation) return;
+    try {
+      await api.permanentlyDeleteStudent(id, confirmation);
+      setUsers((prev) => prev.filter((user) => user.id !== id));
+      setConfirmDelete(null);
+      onRefresh?.();
+    } catch (error) {
+      alert(error.message || "Permanent deletion failed");
+    }
   };
 
   const startEdit = (user) => {
@@ -666,8 +700,8 @@ export default function UserManager({ grade, classId, onRefresh }) {
                     marginBottom: 10,
                   }}
                 >
-                  Remove <strong>{user.name}</strong>? Their progress will be
-                  deleted.
+                  Deactivate <strong>{user.name}</strong>? They will be hidden from the active
+                  roster, while their records remain available under the retention policy.
                 </p>
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
                   <button
@@ -683,8 +717,25 @@ export default function UserManager({ grade, classId, onRefresh }) {
                       cursor: "pointer",
                     }}
                   >
-                    Remove
+                    Deactivate
                   </button>
+                  {isOnline && auth.isAdmin && (
+                    <button
+                      onClick={() => handlePermanentDelete(user.id)}
+                      style={{
+                        padding: "8px 16px",
+                        borderRadius: 6,
+                        background: "transparent",
+                        color: "#D94A4A",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        border: "1px solid #D94A4A",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Delete permanently
+                    </button>
+                  )}
                   <button
                     onClick={() => setConfirmDelete(null)}
                     style={{
@@ -743,6 +794,22 @@ export default function UserManager({ grade, classId, onRefresh }) {
                 >
                   Edit
                 </button>
+                {isOnline && auth.isAdmin && (
+                  <button
+                    onClick={() => handleStudentExport(user.id)}
+                    style={{
+                      padding: "5px 10px",
+                      borderRadius: 6,
+                      background: "var(--surface-input)",
+                      color: "var(--text-faint)",
+                      fontSize: 11,
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Export data
+                  </button>
+                )}
                 <button
                   onClick={() => setConfirmDelete(user.id)}
                   style={{
@@ -755,7 +822,7 @@ export default function UserManager({ grade, classId, onRefresh }) {
                     cursor: "pointer",
                   }}
                 >
-                  Remove
+                  Deactivate
                 </button>
               </div>
             )}

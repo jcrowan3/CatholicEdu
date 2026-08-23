@@ -16,6 +16,7 @@ from catechist_api.auth.jwt import create_access_token, create_refresh_token, de
 from catechist_api.auth.password import hash_password, verify_password
 from catechist_api.config import settings
 from catechist_api.models import Catechist, Class, ClassEnrollment, Parish, Student
+from catechist_api.services import audit_service
 
 _DUMMY_PASSWORD_HASH = hash_password("not-a-real-account-password")
 
@@ -96,6 +97,13 @@ async def register_parish(
         parish_id=parish.id,
         auth_version=catechist.auth_version,
     )
+    await audit_service.record_event(
+        db,
+        parish_id=parish.id,
+        actor_type="catechist",
+        actor_id=catechist.id,
+        action="auth.registered",
+    )
 
     return {
         "access_token": access_token,
@@ -146,6 +154,18 @@ async def login_catechist(
         catechist.failed_login_attempts += 1
         if catechist.failed_login_attempts >= settings.max_login_attempts:
             catechist.locked_until = now + timedelta(minutes=settings.login_lockout_minutes)
+        await audit_service.record_event(
+            db,
+            parish_id=catechist.parish_id,
+            actor_type="catechist",
+            actor_id=catechist.id,
+            action=(
+                "auth.account_locked"
+                if catechist.failed_login_attempts >= settings.max_login_attempts
+                else "auth.login_failed"
+            ),
+            metadata={"attempt_count": catechist.failed_login_attempts},
+        )
         await db.commit()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -166,6 +186,13 @@ async def login_catechist(
         sub=catechist.id,
         parish_id=catechist.parish_id,
         auth_version=catechist.auth_version,
+    )
+    await audit_service.record_event(
+        db,
+        parish_id=catechist.parish_id,
+        actor_type="catechist",
+        actor_id=catechist.id,
+        action="auth.login_succeeded",
     )
 
     return {
@@ -235,6 +262,13 @@ async def revoke_catechist_sessions(db: AsyncSession, *, catechist_id: uuid.UUID
     catechist = result.scalar_one_or_none()
     if catechist is not None:
         catechist.auth_version += 1
+        await audit_service.record_event(
+            db,
+            parish_id=catechist.parish_id,
+            actor_type="catechist",
+            actor_id=catechist.id,
+            action="auth.sessions_revoked",
+        )
 
 
 async def get_class_roster(

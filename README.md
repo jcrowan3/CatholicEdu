@@ -138,6 +138,7 @@ Read [docs/architecture.md](docs/architecture.md) for the main modules, data bou
 - [Architecture](docs/architecture.md) — components, data flow, and extension points.
 - [Deployment](docs/deployment.md) — production configuration and operational requirements.
 - [Privacy and safeguarding](docs/privacy-and-safeguarding.md) — student-data and parish-process considerations.
+- [Data operations runbook](docs/data-operations.md) — retention preview/execution, subject export, verified deletion, and audit review.
 - [Production hosting roadmap](docs/production-roadmap.md) — controls required before operating an internet-facing student service.
 - [Content and review](docs/content-and-review.md) — curriculum editing and human-review expectations.
 - [Curriculum authoring](docs/curriculum-authoring.md) — versioned lesson schema, template, and validation commands.
@@ -158,6 +159,7 @@ Grades 1–8 include 30 sessions each: 240 sessions in total. Every session incl
 - Playwright exercises the landing, offline setup, student home, and learning surfaces in desktop and mobile Chromium; axe-core checks both public and signed-in student views against WCAG 2.0/2.1 A and AA rules.
 - Offline catechists can download and restore a versioned JSON backup from the dashboard. Backups include browser-local classroom data and the local PIN, exclude online authentication tokens, and must be stored securely.
 - Hosted-mode authentication provides configurable login lockout and route throttling, globally unique catechist emails, short-lived access tokens, and account-wide token revocation on logout; multi-instance deployments still require a shared edge limiter.
+- Hosted parish administrators can export one student's stored data, perform confirmation-gated permanent deletion, and review privacy-minimized audit events; an operator command previews or executes configured retention.
 - Automated doctrinal checks are guardrails, not a substitute for review by an appropriately qualified catechist, pastor, or diocesan authority.
 
 See [docs/content-and-review.md](docs/content-and-review.md) before editing or redistributing curriculum.
