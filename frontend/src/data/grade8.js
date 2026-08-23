@@ -1,5 +1,7 @@
 // Part 1: Weeks 1-10
 
+import { defineCurriculum } from "./curriculumSchema.js";
+
 export const PILLAR_COLORS = { Creed: "#3B5BA5", Sacraments: "#9B5D1A", Morality: "#2A6B3E", Prayer: "#6B3B9A", Review: "#4A4A6A" };
 
 export const SESSIONS = [
@@ -9,7 +11,7 @@ export const SESSIONS = [
     title: "Who Am I? Made in God's Image",
     pillar: "Creed",
     ccc: "355-357",
-    verse: "God created man in his own image, in the image of God he created him. — Genesis 1:27",
+    verse: "And God created man to his own image; to the image of God he created him. — Genesis 1:27",
     discover: {
       title: "Discover: Imago Dei",
       instruction: "Tap each card to explore what it means to be made in God's image.",
@@ -69,7 +71,7 @@ export const SESSIONS = [
     title: "Free Will and Human Freedom",
     pillar: "Creed",
     ccc: "1730-1748",
-    verse: "Before man are life and death, good and evil; whichever he chooses shall be given to him. — Sirach 15:14-15",
+    verse: "God established man from the beginning, and he left him in the hand of his own counsel. He added his commandments and precepts. — Sirach 15:14-15",
     discover: {
       title: "Discover: Free Will",
       instruction: "Tap each card to understand the gift of human freedom.",
@@ -182,7 +184,7 @@ export const SESSIONS = [
     title: "Sin: What It Is and What It Does",
     pillar: "Creed",
     ccc: "1849-1864",
-    verse: "If we say that we have no sin, we deceive ourselves. If we confess our sins, He is faithful and just to forgive us. — 1 John 1:8-9",
+    verse: "If we claim that we have no sin, then we are deceiving ourselves... If we confess our sins, then he is faithful and just, so as to forgive us our sins. — 1 John 1:8-9",
     discover: {
       title: "Discover: Sin",
       instruction: "Tap each card to understand what sin really is — and what it does.",
@@ -299,7 +301,7 @@ export const SESSIONS = [
     title: "The Sources of Morality",
     pillar: "Morality",
     ccc: "1750-1761",
-    verse: "Do not be conformed to this world, but be transformed by the renewal of your mind. — Romans 12:2",
+    verse: "Do not choose to be conformed to this age, but instead choose to be reformed in the newness of your mind. — Romans 12:2",
     discover: {
       title: "Discover: The Sources of Morality",
       instruction: "Tap each card to learn how to evaluate the morality of any act.",
@@ -350,7 +352,7 @@ export const SESSIONS = [
     title: "The Natural Moral Law",
     pillar: "Morality",
     ccc: "1954-1960",
-    verse: "For what can be known about God is plain to them, because God has shown it to them. — Romans 1:19-20",
+    verse: "What is known about God is manifest in them. For God has manifested it to them. — Romans 1:19-20",
     discover: {
       title: "Discover: Natural Law",
       instruction: "Tap each card to learn about the moral law God built into creation.",
@@ -408,7 +410,7 @@ export const SESSIONS = [
     title: "Virtue: The Key to a Good Life",
     pillar: "Morality",
     ccc: "1803-1845",
-    verse: "Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure — think about these things. — Philippians 4:8",
+    verse: "Whatever is true, whatever is chaste, whatever is just, whatever is holy... meditate on these. — Philippians 4:8",
     discover: {
       title: "Discover: Virtue",
       instruction: "Tap each card to learn about the habits that shape a good life.",
@@ -468,7 +470,7 @@ export const SESSIONS = [
     title: "Prudence and Moral Decision-Making",
     pillar: "Morality",
     ccc: "1806",
-    verse: "The Lord gives wisdom; from His mouth come knowledge and understanding. — Proverbs 2:6-7",
+    verse: "The Lord bestows wisdom, and out of his mouth, prudence and knowledge. — Proverbs 2:6-7",
     discover: {
       title: "Discover: Prudence",
       instruction: "Tap each card to learn about the most important virtue for making good decisions.",
@@ -580,7 +582,7 @@ export const SESSIONS = [
     title: "Social Justice and the Common Good",
     pillar: "Morality",
     ccc: "1905-1912, 1928-1942",
-    verse: "He has shown you what is good: to act justly, love mercy, and walk humbly with your God. \u2014 Micah 6:8",
+    verse: "The Lord requires from you... to act with judgment, and to love mercy, and to walk carefully with your God. — Micah 6:8",
     discover: {
       title: "Discover: The Common Good",
       instruction: "Tap each card to explore Catholic Social Teaching.",
@@ -694,7 +696,7 @@ export const SESSIONS = [
     title: "Truth, Justice, and the 8th Commandment",
     pillar: "Morality",
     ccc: "2464-2513",
-    verse: "And you will know the truth, and the truth will set you free. \u2014 John 8:32",
+    verse: "And you shall know the truth, and the truth shall set you free. — John 8:32",
     discover: {
       title: "Discover: Truth and the 8th Commandment",
       instruction: "Tap each card to learn about the importance of truth.",
@@ -747,7 +749,7 @@ export const SESSIONS = [
     title: "Sexuality, Chastity, and the 6th Commandment",
     pillar: "Morality",
     ccc: "2337-2359",
-    verse: "Your body is a temple of the Holy Spirit within you. Glorify God in your body. \u2014 1 Corinthians 6:19-20",
+    verse: "Your bodies are the Temple of the Holy Spirit, who is in you... Glorify and carry God in your body. — 1 Corinthians 6:19-20",
     discover: {
       title: "Discover: Chastity and the 6th Commandment",
       instruction: "Tap each card to learn about sexuality as a gift from God.",
@@ -807,7 +809,7 @@ export const SESSIONS = [
     title: "Stewardship: Property, Poverty, and the 7th Commandment",
     pillar: "Morality",
     ccc: "2401-2463",
-    verse: "Take care and guard against all greed, for one\u2019s life does not consist in the abundance of possessions. \u2014 Luke 12:15",
+    verse: "Be cautious and wary of all avarice. For a person's life is not found in the abundance of the things that he possesses. — Luke 12:15",
     discover: {
       title: "Discover: Stewardship and the 7th Commandment",
       instruction: "Tap each card to learn about property, poverty, and stewardship.",
@@ -861,7 +863,7 @@ export const SESSIONS = [
     title: "Unit 3 Review: Social Justice",
     pillar: "Review",
     ccc: "1877-1948, 2401-2463",
-    verse: "Act with judgment, and love mercy, and walk carefully with your God. — Micah 6:8",
+    verse: "The Lord requires from you... to act with judgment, and to love mercy, and to walk carefully with your God. — Micah 6:8",
     discover: {
       title: "Unit 3 Review: Social Justice",
       instruction: "Tap to review the big ideas from Weeks 11-15.",
@@ -921,7 +923,7 @@ export const SESSIONS = [
     title: "What Is Discipleship?",
     pillar: "Creed",
     ccc: "1694-1698, 1816",
-    verse: "If anyone wishes to come after me, let him deny himself and take up his cross daily. \u2014 Luke 9:23",
+    verse: "If anyone is willing to come after me: let him deny himself, and take up his cross every day, and follow me. — Luke 9:23",
     discover: {
       title: "Discover: Discipleship",
       instruction: "Tap each card to understand what it really means to follow Jesus.",
@@ -975,7 +977,7 @@ export const SESSIONS = [
     title: "The Sacraments as Encounter with Christ",
     pillar: "Sacraments",
     ccc: "1113-1134",
-    verse: "I am the vine, you are the branches. Without me you can do nothing. \u2014 John 15:5",
+    verse: "I am the vine; you are the branches... For without me, you are able to do nothing. — John 15:5",
     discover: {
       title: "Discover: Sacraments as Encounter",
       instruction: "Tap each card to learn how the sacraments are encounters with Christ.",
@@ -1034,7 +1036,7 @@ export const SESSIONS = [
     title: "Confirmation: Living the Mission",
     pillar: "Sacraments",
     ccc: "1285-1321",
-    verse: "You will receive power when the Holy Spirit comes upon you, and you will be my witnesses. \u2014 Acts 1:8",
+    verse: "You shall receive the power of the Holy Spirit, passing over you, and you shall be witnesses for me. — Acts 1:8",
     discover: {
       title: "Discover: Confirmation",
       instruction: "Tap each card to learn what Confirmation really means for your life.",
@@ -1087,7 +1089,7 @@ export const SESSIONS = [
     title: "Prayer as Relationship, Not Ritual",
     pillar: "Prayer",
     ccc: "2558-2565",
-    verse: "When you pray, go into your room, close the door, and pray to your Father in secret. \u2014 Matthew 6:6",
+    verse: "When you pray, enter into your room, and having shut the door, pray to your Father in secret. — Matthew 6:6",
     discover: {
       title: "Discover: Prayer as Relationship",
       instruction: "Tap each card to deepen your understanding of prayer.",
@@ -1141,7 +1143,7 @@ export const SESSIONS = [
     title: "Unit 4 Review: Discipleship & Sacraments",
     pillar: "Review",
     ccc: "1113-1134, 1691-1698",
-    verse: "You will receive the power of the Holy Spirit, passing over you, and you shall be witnesses for me. — Acts 1:8",
+    verse: "You shall receive the power of the Holy Spirit, passing over you, and you shall be witnesses for me. — Acts 1:8",
     discover: {
       title: "Unit 4 Review: Discipleship & Sacraments",
       instruction: "Tap to review the big ideas from Weeks 17-20.",
@@ -1200,7 +1202,7 @@ export const SESSIONS = [
     title: "Faith and Reason: Partners, Not Enemies",
     pillar: "Creed",
     ccc: "156-159",
-    verse: "Come now and let us reason together, says the Lord. — Isaiah 1:18",
+    verse: "By the greatness of the creation and its beauty, the creator of these will be able to be seen discernibly. — Wisdom 13:5",
     discover: {
       title: "Discover: Faith and Reason",
       instruction: "Tap each card to explore how faith and reason work together.",
@@ -1253,7 +1255,7 @@ export const SESSIONS = [
     title: "The Existence of God: Natural Arguments",
     pillar: "Creed",
     ccc: "31-35",
-    verse: "For the invisible things of Him, from the creation of the world, are clearly seen. — Wisdom 13:1-5",
+    verse: "By the greatness of the creation and its beauty, the creator of these will be able to be seen discernibly. — Wisdom 13:5",
     discover: {
       title: "Discover: Arguments for God's Existence",
       instruction: "Tap each card to explore how reason points to God.",
@@ -1307,7 +1309,7 @@ export const SESSIONS = [
     title: "Scripture and Tradition: How We Know What We Know",
     pillar: "Creed",
     ccc: "80-83, 101-141",
-    verse: "All Scripture is inspired by God and is useful for teaching. — 2 Timothy 3:16-17",
+    verse: "All Scripture, having been divinely inspired, is useful for teaching, for reproof, for correction, and for instruction in justice. — 2 Timothy 3:16-17",
     discover: {
       title: "Discover: Scripture and Tradition",
       instruction: "Tap each card to learn how God reveals Himself to us.",
@@ -1416,7 +1418,7 @@ export const SESSIONS = [
     title: "The Call to Evangelization",
     pillar: "Creed",
     ccc: "849-856",
-    verse: "Go therefore and make disciples of all nations, baptizing them. — Matthew 28:19-20",
+    verse: "Go forth and teach all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit. — Matthew 28:19-20",
     discover: {
       title: "Discover: Evangelization",
       instruction: "Tap each card to explore how we share the Gospel.",
@@ -1476,7 +1478,7 @@ export const SESSIONS = [
     title: "Works of Mercy: Faith in Action",
     pillar: "Morality",
     ccc: "2447",
-    verse: "I was hungry and you gave me food. Whatever you did for one of these least brothers of mine, you did for me. — Matthew 25:35-36",
+    verse: "I was hungry, and you gave me to eat; I was thirsty, and you gave me to drink; I was a stranger, and you took me in. — Matthew 25:35-36",
     discover: {
       title: "Discover: Works of Mercy",
       instruction: "Tap each card to learn how faith becomes action.",
@@ -1536,7 +1538,7 @@ export const SESSIONS = [
     title: "Saints as Models of Discipleship",
     pillar: "Prayer",
     ccc: "828, 956-957",
-    verse: "We are surrounded by so great a cloud of witnesses. — Hebrews 12:1",
+    verse: "Since we also have so great a cloud of witnesses over us, let us set aside every burden and sin. — Hebrews 12:1",
     discover: {
       title: "Discover: Saints as Models",
       instruction: "Tap each card to learn about saints who model discipleship.",
@@ -1596,7 +1598,7 @@ export const SESSIONS = [
     title: "Eschatology: The Last Things",
     pillar: "Creed",
     ccc: "1020-1060",
-    verse: "Death is swallowed up in victory. O death, where is your sting? — 1 Corinthians 15:54-55",
+    verse: "Death is swallowed up in victory. O death, where is your victory? O death, where is your sting? — 1 Corinthians 15:54-55",
     discover: {
       title: "Discover: The Last Things",
       instruction: "Tap each card to explore what the Church teaches about the end.",
@@ -1650,7 +1652,7 @@ export const SESSIONS = [
     title: "Year in Review & Sending Forth",
     pillar: "Review",
     ccc: "849-856",
-    verse: "I can do all things through Christ who strengthens me. — Philippians 4:13",
+    verse: "Everything is possible in him who has strengthened me. — Philippians 4:13",
     discover: {
       title: "What We Built This Year!",
       instruction: "Tap to review the five big themes of Grade 8.",
@@ -1704,3 +1706,4 @@ export const SESSIONS = [
     }
   },
 ];
+export const CURRICULUM = defineCurriculum(8, SESSIONS);

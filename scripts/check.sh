@@ -6,6 +6,7 @@ repo_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$repo_dir/frontend"
 npm run lint
 npm test
+npm run audit:curriculum
 npm run audit:content
 npm run build
 npm audit --omit=dev --audit-level=high

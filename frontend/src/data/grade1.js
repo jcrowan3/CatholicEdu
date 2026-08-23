@@ -3,6 +3,8 @@
 // 30 sessions for ages 6–7; see docs/ai-content-provenance-audit.md.
 // Scripture: Catholic Public Domain Version (CPDV)
 
+import { defineCurriculum } from "./curriculumSchema.js";
+
 export const PILLAR_COLORS = {
   Creed: "#4A90D9",
   Sacraments: "#D4A843",
@@ -606,3 +608,4 @@ function buildSession(lesson, lessonIndex) {
 }
 
 export const SESSIONS = LESSONS.map(buildSession);
+export const CURRICULUM = defineCurriculum(1, SESSIONS);

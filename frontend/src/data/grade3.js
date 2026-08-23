@@ -1,3 +1,5 @@
+import { defineCurriculum } from "./curriculumSchema.js";
+
 export const PILLAR_COLORS = { Creed: "#4A90D9", Sacraments: "#D4A843", Morality: "#6DB87B", Prayer: "#9B6DB8" };
 
 export const SESSIONS = [
@@ -1678,3 +1680,4 @@ export const SESSIONS = [
     }
   }
 ];
+export const CURRICULUM = defineCurriculum(3, SESSIONS);

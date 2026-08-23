@@ -140,6 +140,7 @@ Read [docs/architecture.md](docs/architecture.md) for the main modules, data bou
 - [Privacy and safeguarding](docs/privacy-and-safeguarding.md) — student-data and parish-process considerations.
 - [Production hosting roadmap](docs/production-roadmap.md) — controls required before operating an internet-facing student service.
 - [Content and review](docs/content-and-review.md) — curriculum editing and human-review expectations.
+- [Curriculum authoring](docs/curriculum-authoring.md) — versioned lesson schema, template, and validation commands.
 - [AI content provenance audit](docs/ai-content-provenance-audit.md) — content origins and tracked review posture.
 - [Qualified curriculum review](docs/curriculum-review/README.md) — grade-level review workflow and evidence requirements.
 - [Contributing](CONTRIBUTING.md) — development workflow and pull-request expectations.

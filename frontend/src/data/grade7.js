@@ -1,4 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
+
+import { defineCurriculum } from "./curriculumSchema.js";
 //  GRADE 7 — SESSION DATA
 //  "Discipleship, Justice, and the Call to Holiness"
 //  30 Weeks | 5 Pillars | Original content — Catholic Public Domain Version (CPDV)
@@ -1831,3 +1833,4 @@ export const SESSIONS = [
   }
 
 ];
+export const CURRICULUM = defineCurriculum(7, SESSIONS);

@@ -9,7 +9,10 @@ const gradeModules = await Promise.all(
 );
 
 test("every active grade has 30 structurally complete, playable sessions", () => {
-  gradeModules.forEach(({ SESSIONS }, index) => {
+  gradeModules.forEach(({ CURRICULUM, SESSIONS }, index) => {
+    assert.equal(CURRICULUM.schemaVersion, 1, `Grade ${index + 1} schema`);
+    assert.equal(CURRICULUM.grade, index + 1, `Grade ${index + 1} metadata`);
+    assert.equal(CURRICULUM.sessions, SESSIONS, `Grade ${index + 1} sessions`);
     assert.deepEqual(validateCurriculum(SESSIONS), [], `Grade ${index + 1}`);
   });
 });

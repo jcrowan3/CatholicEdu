@@ -1,4 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
+
+import { defineCurriculum } from "./curriculumSchema.js";
 //  GRADE 6 — "The Creed and Our Catholic Faith"
 //  Catholic Catechist Toolkit | grade6.js
 //  30 weekly sessions; see docs/ai-content-provenance-audit.md.
@@ -1767,3 +1769,4 @@ export const SESSIONS = [
   }
 
 ];
+export const CURRICULUM = defineCurriculum(6, SESSIONS);
