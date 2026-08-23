@@ -4,13 +4,12 @@ import ActivityHeader from "../shared/ActivityHeader";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
 import Feedback from "../shared/Feedback";
+import { shuffle } from "../../utils/shuffle";
 
 
 export default function Sort({ data, earn, isDone, onBack }) {
   const [items, setItems] = useState(() =>
-    [...data.items]
-      .sort(() => Math.random() - 0.5)
-      .map((it) => ({ ...it, placed: null }))
+    shuffle(data.items).map((it) => ({ ...it, placed: null }))
   );
   const [selected, setSelected] = useState(null);
   const [placing, setPlacing] = useState(null);
@@ -57,8 +56,9 @@ export default function Sort({ data, earn, isDone, onBack }) {
       >
         {items.map((item, i) =>
           !item.placed ? (
-            <div
+            <button
               key={item.name}
+              type="button"
               className="bh"
               onClick={() => {
                 if (!item.placed && placing === null)
@@ -66,6 +66,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
               }}
               style={{
                 padding: "6px 10px",
+                fontFamily: "inherit",
                 borderRadius: 8,
                 fontSize: 12,
                 fontWeight: 700,
@@ -89,7 +90,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
               }}
             >
               {item.icon} {item.name}
-            </div>
+            </button>
           ) : null
         )}
       </div>
@@ -99,11 +100,19 @@ export default function Sort({ data, earn, isDone, onBack }) {
       {/* Group buckets */}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {data.groups.map((group) => (
-          <div
+          <button
             key={group}
+            type="button"
             className="bh"
             onClick={() => hitGroup(group)}
+            aria-label={`Place selected card in ${group}`}
+            disabled={selected === null}
             style={{
+              width: "100%",
+              textAlign: "left",
+              fontFamily: "inherit",
+              color: "inherit",
+              cursor: selected !== null ? "pointer" : "default",
               background: "var(--surface-card)",
               borderRadius: 10,
               padding: "10px 12px",
@@ -161,7 +170,7 @@ export default function Sort({ data, earn, isDone, onBack }) {
                   </div>
                 ))}
             </div>
-          </div>
+          </button>
         ))}
       </div>
 

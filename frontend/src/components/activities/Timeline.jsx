@@ -19,6 +19,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import DoneButton from "../shared/DoneButton";
 import DoneBadge from "../shared/DoneBadge";
+import { shuffle } from "../../utils/shuffle";
 
 
 /* ─── Grip handle icon (6 dots) ─── */
@@ -85,21 +86,41 @@ function SortableItem({ item, index, isCorrect, isSelected, onTap, isDragging })
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes}>
+    <div ref={setNodeRef} style={style}>
       {/* Drag handle */}
-      <div {...listeners} style={{ cursor: "grab", padding: "4px 0" }}>
+      <button
+        type="button"
+        {...attributes}
+        {...listeners}
+        aria-label={`Drag ${item.text}`}
+        style={{
+          cursor: "grab",
+          padding: "4px 0",
+          border: 0,
+          background: "transparent",
+          color: "inherit",
+        }}
+      >
         <GripIcon />
-      </div>
+      </button>
 
       {/* Tap target: number badge + text */}
-      <div
+      <button
+        type="button"
         onClick={onTap}
+        aria-label={`Select ${item.text} to swap`}
         style={{
           display: "flex",
           alignItems: "center",
           gap: 10,
           flex: 1,
           cursor: "pointer",
+          border: 0,
+          background: "transparent",
+          color: "inherit",
+          textAlign: "left",
+          fontFamily: "inherit",
+          padding: 0,
         }}
       >
         <div
@@ -122,7 +143,7 @@ function SortableItem({ item, index, isCorrect, isSelected, onTap, isDragging })
         <span style={{ color: "var(--text-primary)", fontSize: 13, fontWeight: 600, flex: 1 }}>
           {item.text}
         </span>
-      </div>
+      </button>
     </div>
   );
 }
@@ -171,9 +192,7 @@ function OverlayItem({ item }) {
 
 /* ─── Main Timeline component ─── */
 export default function Timeline({ data, earn, isDone, onBack }) {
-  const [items, setItems] = useState(() =>
-    [...data.items].sort(() => Math.random() - 0.5)
-  );
+  const [items, setItems] = useState(() => shuffle(data.items));
   const [selected, setSelected] = useState(null);
   const [activeId, setActiveId] = useState(null);
   const done = isDone("timeline");
