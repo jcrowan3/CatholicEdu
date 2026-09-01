@@ -53,3 +53,23 @@ jobs:
       - run: uv run ruff format --check src tests
       - run: uv run pytest --cov=catechist_api --cov-report=term --cov-fail-under=95
       - run: uv run pip-audit --local
+
+  containers:
+    name: Containers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build and start the Docker Compose stack
+        run: docker compose up --build --detach --wait --wait-timeout 120
+      - name: Smoke-test the API and frontend containers
+        run: |
+          curl --fail --show-error http://127.0.0.1:8000/api/v1/health
+          curl --fail --show-error http://127.0.0.1:5173/
+      - name: Show container diagnostics on failure
+        if: failure()
+        run: |
+          docker compose ps
+          docker compose logs --no-color
+      - name: Stop the Docker Compose stack
+        if: always()
+        run: docker compose down --volumes
