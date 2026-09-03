@@ -3,36 +3,66 @@ updates:
   - package-ecosystem: npm
     directory: /frontend
     schedule:
-      interval: monthly
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     groups:
-      frontend-dependencies:
+      # Keep routine updates small; unmatched major updates remain individual PRs.
+      frontend-minor-patch:
+        applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
+      frontend-security:
+        applies-to: security-updates
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: uv
     directory: /backend
     schedule:
-      interval: monthly
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     groups:
-      backend-dependencies:
+      # Keep routine updates small; unmatched major updates remain individual PRs.
+      backend-minor-patch:
+        applies-to: version-updates
         patterns: ["*"]
+        update-types: [minor, patch]
+      backend-security:
+        applies-to: security-updates
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: docker
     directory: /backend
     schedule:
       interval: monthly
-    groups:
-      backend-container:
-        patterns: ["*"]
+    cooldown:
+      # Runtime image changes stay isolated and get the full container smoke gate.
+      default-days: 14
 
   - package-ecosystem: docker
     directory: /frontend
     schedule:
       interval: monthly
-    groups:
-      frontend-container:
-        patterns: ["*"]
+    cooldown:
+      # Node and nginx image changes should not share one failure domain.
+      default-days: 14
