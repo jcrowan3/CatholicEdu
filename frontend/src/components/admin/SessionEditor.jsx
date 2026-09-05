@@ -419,6 +419,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   const [confirmReset, setConfirmReset] = useState(false);
   const [reviewFindings, setReviewFindings] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [saveLifecycle] = useState(() => createSessionSaveLifecycle());
 
   if (!session) return <p style={{ color: "var(--text-primary)" }}>Session not found.</p>;
@@ -433,7 +434,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   };
 
   const handleSave = async () => {
-    if (saveLifecycle.isSaving) return;
+    if (saveLifecycle.isSaving || saveLifecycle.isResetting) return;
 
     const draft = JSON.parse(JSON.stringify({ session, sessions }));
     setSaving(true);
@@ -462,15 +463,24 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
   };
 
   const handleReset = async () => {
-    const updated = await resetSessionToDefault(grade, weekNum);
-    setSessions(updated);
-    onSessionsChange?.(updated);
-    setConfirmReset(false);
-    setSaved(false);
+    if (saveLifecycle.isResetting) return;
+    setResetting(true);
+    try {
+      await saveLifecycle.reset(async () => {
+        const updated = await resetSessionToDefault(grade, weekNum);
 
-    // Delete the override from API when online
-    if (isOnline) {
-      api.deleteSessionOverride(grade, weekNum).catch(() => {});
+        // Delete only after an in-flight upsert settles, so it cannot recreate
+        // the override after the local session has returned to its default.
+        if (isOnline) await api.deleteSessionOverride(grade, weekNum).catch(() => {});
+
+        setSessions(updated);
+        onSessionsChange?.(updated);
+        setConfirmReset(false);
+        setSaved(false);
+        setReviewFindings([]);
+      });
+    } finally {
+      setResetting(false);
     }
   };
 
@@ -557,7 +567,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
       <div style={{ display: "flex", gap: 8, marginTop: 16, marginBottom: 20 }}>
         <button
           onClick={handleSave}
-          disabled={saving}
+          disabled={saving || resetting}
           style={{
             flex: 1,
             padding: "14px 0",
@@ -569,14 +579,15 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
             fontFamily: displayFont,
             fontSize: 15,
             border: "none",
-            cursor: saving ? "wait" : "pointer",
+            cursor: saving || resetting ? "wait" : "pointer",
           }}
         >
-          {saving ? "Saving…" : saved ? "Saved ✓" : "Review & Save"}
+          {saving ? "Saving…" : resetting ? "Resetting…" : saved ? "Saved ✓" : "Review & Save"}
         </button>
         {!confirmReset ? (
           <button
             onClick={() => setConfirmReset(true)}
+            disabled={saving || resetting}
             style={{
               padding: "14px 16px",
               borderRadius: 10,
@@ -584,7 +595,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
               color: "var(--text-faint)",
               fontSize: 12,
               border: "none",
-              cursor: "pointer",
+              cursor: saving || resetting ? "wait" : "pointer",
             }}
           >
             Reset
@@ -592,6 +603,7 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
         ) : (
           <button
             onClick={handleReset}
+            disabled={saving || resetting}
             style={{
               padding: "14px 16px",
               borderRadius: 10,
@@ -600,10 +612,10 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
               fontWeight: 700,
               fontSize: 12,
               border: "none",
-              cursor: "pointer",
+              cursor: saving || resetting ? "wait" : "pointer",
             }}
           >
-            Confirm Reset
+            {resetting ? "Resetting…" : "Confirm Reset"}
           </button>
         )}
       </div>
