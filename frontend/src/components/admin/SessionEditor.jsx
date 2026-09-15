@@ -6,6 +6,7 @@ import { reviewSessionLocally } from "../../utils/doctrinalReview";
 import { createSessionSaveLifecycle } from "../../utils/sessionSaveLifecycle";
 import { useAuth } from "../../context/auth";
 import { api } from "../../api/client";
+import SessionComparison from "./SessionComparison";
 
 
 /* ─── Shared form styles ─── */
@@ -177,9 +178,10 @@ function QuizEditor({ quiz, onChange }) {
   };
   const updateOpt = (qi, oi, val) => {
     const questions = [...quiz.questions];
-    const opts = [...questions[qi].options];
+    const key = Array.isArray(questions[qi].opts) ? "opts" : "options";
+    const opts = [...questions[qi][key]];
     opts[oi] = val;
-    questions[qi] = { ...questions[qi], options: opts };
+    questions[qi] = { ...questions[qi], [key]: opts };
     onChange({ ...quiz, questions });
   };
 
@@ -207,7 +209,7 @@ function QuizEditor({ quiz, onChange }) {
             />
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>
-            {q.options.map((opt, oi) => (
+            {(q.opts || q.options).map((opt, oi) => (
               <div key={oi} style={{ display: "flex", gap: 3, alignItems: "center" }}>
                 <input
                   type="radio"
@@ -554,6 +556,8 @@ export default function SessionEditor({ grade, weekNum, onSessionsChange }) {
       <Section title="Closing Prayer" icon="🙏">
         <PrayerEditor prayer={session.prayer} onChange={(d) => updateSession("prayer", d)} />
       </Section>
+
+      <SessionComparison grade={grade} draft={session} />
 
       {/* Action buttons */}
       {reviewFindings.length > 0 && (
